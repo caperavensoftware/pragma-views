@@ -1,0 +1,52 @@
+assistant {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: $assistant-background;
+  color: $assistant-foreground;
+  will-change: transform, margin-right;
+  transition: all 0.2s;
+  z-index: 1000;
+
+  button {
+    @include ignore-device-rendering();
+    background: transparent;
+    border-width: 0;
+  }
+}
+
+.assist-logo {
+  height: 16px;
+  margin-left: 1rem;
+  @include stretch();
+}
+
+.assist-toolbar {
+  background: $assistant-toolbar-background;
+  height: $assist-toolbar-height;
+  width: 100%;
+  align-items: center;
+
+  @include flex();
+
+  button {
+    padding-top: 0.3rem;
+  }
+}
+
+.assist-search {
+  @include flex();
+  @include flex-row();
+  background: $assistant-toolbar-background;
+  border-radius: $border-radius;
+  height: $assist-search-height;
+  margin: $default-padding;
+
+  input {
+    @include stretch();
+    background: transparent;
+    color: white;
+    border-width: 0;
+    margin-left: 0.5rem;
+  }
+}

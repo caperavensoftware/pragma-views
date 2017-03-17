@@ -1,0 +1,77 @@
+[role="menubar"] {
+  .icon {
+    width: 2rem;
+    height: 2rem;
+    fill: $primary-background;
+  }
+}
+
+.assist-toolbar, .assist-search {
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: $icon-light-foreground;
+    opacity: 0.6;
+  }
+}
+
+.app-toolbar {
+  button {
+    margin-top: 0.4rem;
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: $primary-background;
+    opacity: 0.6;
+  }
+}
+
+.menu-search {
+  .icon {
+    padding-top: 0.3rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: $icon-light-foreground;
+    opacity: 0.6;
+  }
+}
+
+form-search {
+  input {
+    border-width: 0;
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: $primary-background;
+    opacity: 0.6;
+  }
+}
+
+.icon-collection {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0;
+  @include flex();
+  @include flex-wrap();
+}
+
+.icon-preview {
+  @include flex();
+  @include flex-column();
+  width: 6.25rem;
+  align-items: center;
+
+  div {
+    text-align: center;
+    opacity: 0.6;
+  }
+
+  icon, .icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

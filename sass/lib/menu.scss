@@ -1,0 +1,175 @@
+#menu-background {
+  background: $menu-background-background;
+  opacity: 0;
+  position: fixed;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  will-change: opacify;
+}
+
+.menu-search {
+  height: 3rem;
+  padding: 0.3rem;
+  padding-left: 1rem;
+  background: $menu-search-bar-background;
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 100%;
+    height: 2rem;
+    padding: 0.5rem;
+    border-width: 0;
+    background: $menu-search-bar-background;
+    color: $main-menu-foreground;
+    outline: none;
+  }
+}
+
+.main-menu {
+  position:absolute;
+  top:0;
+  left:0;
+  right:2.5rem;
+  bottom:0;
+  background: $main-menu-background;
+  color: $main-menu-foreground;
+
+  @include flex();
+  @include flex-column();
+}
+
+[role="menu"] {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  list-style: none;
+  @include stretch();
+
+  li {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+[role="menubar"] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  pointer-events: all;
+}
+
+[role="menuitem"] {
+  height: 1.5rem;
+
+  icon {
+    pointer-events: none;
+  }
+}
+
+.isQuick, .isNotQuick {
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.isQuick {
+  background: $main-menu-inQuickLaunch;
+}
+
+.isNotQuick {
+  background: $main-menu-notInQuickLaunch;
+}
+
+.mi {
+  cursor: pointer;
+  @include flex();
+
+  div {
+    pointer-events: none;
+  }
+}
+
+.mi-quick {
+  display: flex;
+  width: 3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.menu-header {
+  color: $toolbar-foreground;
+  padding: 2rem;
+}
+
+#userInformation {
+  @include flex();
+  @include flex-row();
+  align-items: center;
+}
+
+.portrait {
+  width: 4rem;
+  height: 4rem;
+  background: silver;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.header-definition {
+  @include flex();
+
+  border-bottom: 0.1rem;
+  border-bottom-style: solid;
+  border-color: $main-menu-foreground;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+
+  label {
+    display: block;
+    @include stretch();
+    margin: 0;
+  }
+}
+
+[type=checkbox] {
+  transform: scale(1.2);
+}
+
+.quick-menu-icon {
+  width: $quick-menu-icon-size;
+  height: $quick-menu-icon-size;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.quick-menu-icon:before {
+  content: attr(data-tooltip);
+  display: none;
+  background: #3B4753;
+  color: white;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  white-space: nowrap;
+  position: absolute;
+  left: 3rem;
+  border-radius: 10rem;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(255,255,255,1);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(255,255,255,1);
+  box-shadow: 0px 0px 10px 0px rgba(255,255,255,1);
+}
+
+.quick-menu-icon:hover:before {
+  display: block;
+}
+
+.quick-button {
+  cursor: pointer;
+}
+

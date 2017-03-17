@@ -1,0 +1,37 @@
+
+<template>
+    <pragma-menu ref="pragmaMenu">
+        <div slot="menu-content" class="main-menu">
+            <div class="header-definition">
+                <div class="mi-quick">
+                    <svg width="19" height="19" viewBox="-1 52 19 19" xmlns="http://www.w3.org/2000/svg"><g opacity=".8" fill="none" fill-rule="evenodd"><path d="M0 70h18V52H0z"/><path d="M3 67h12c.825 0 1.492-.675 1.492-1.5l.008-9c0-.825-.675-1.5-1.5-1.5H3c-.825 0-1.5.675-1.5 1.5v9c0 .825.675 1.5 1.5 1.5zm3.5-1.5H15v-9H6.5v9z" fill="#FFF"/></g></svg>
+                </div>
+                <label>Quicklaunch items</label>
+                <input type="checkbox" checked.bind="quickFilter" class="switch"/>
+            </div>
+
+            <ul role="menu" click.delegate="menuSelected($event)">
+                <li repeat.for="menuItem of menuItems" role="menuitem">
+                    <div class="mi" data-screen="${menuItem.screen}" data-resource="${menuItem.resource}">
+                        <div class="mi-quick">
+                            <svg if.bind="menuItem.inQuicklaunch" width="19" height="19" viewBox="-1 52 19 19" xmlns="http://www.w3.org/2000/svg"><g opacity=".8" fill="none" fill-rule="evenodd"><path d="M0 70h18V52H0z"/><path d="M3 67h12c.825 0 1.492-.675 1.492-1.5l.008-9c0-.825-.675-1.5-1.5-1.5H3c-.825 0-1.5.675-1.5 1.5v9c0 .825.675 1.5 1.5 1.5zm3.5-1.5H15v-9H6.5v9z" fill="#FFF"/></g></svg>
+                        </div>
+                        <div class="mi-text">${menuItem.text}</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="menu-search">
+                <icon name="search"></icon>
+                <input type="search" placeholder="Search" value.bind="searchText"/>
+            </div>
+        </div>
+
+        <div slot="menu-quick-content">
+            <ul role="menubar" click.delegate="menuSelected($event)">
+                <li role="menuitem" data-tooltip="${menuItem.text}" repeat.for="menuItem of quickItems" data-screen="${menuItem.screen}" data-resource="${menuItem.resource}" class="quick-menu-icon">
+                    <icon name="${menuItem.icon}"></icon>
+                </li>
+            </ul>
+        </div>
+    </pragma-menu>
+</template>

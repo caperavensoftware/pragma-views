@@ -1,0 +1,110 @@
+/*
+  APPLICATION
+ */
+
+// this is the primary dark background used in menu and other large volume surfaces.
+$primary-background: #3B4753;
+$primary-background-borders: rgba(59, 71, 83, 0.26);
+
+// this is used as darker toolbars and surfaces on the primary color, see On Key Assist design
+$primary-dark: #0A1929;
+
+$app-background: #F1F4F4;
+$app-text-color: $primary-background;
+$error-foreground: #E35050;
+
+/*
+  HR / SEPERATORS
+ */
+
+$seperator-background: $primary-dark;
+
+/*
+  ICONS
+ */
+
+$icon-light-foreground: white;
+
+/*
+  GROUPS
+ */
+
+$group-background: #FFF;
+$group-border: #E7E9EA;
+$group-highlight: #50E3AC;
+
+/*
+  TABS
+ */
+
+$tab-selected-highlight: #4C5760;
+$tab-bar-color: rgba(255, 255, 255, 0);
+
+/*
+  FOCUSED
+ */
+
+$focus-color: #35C184;
+
+/*
+  LISTS
+ */
+
+$list-background: #E7E9EA;
+$list-border: #CED1D4;
+
+/*
+  CARDS
+ */
+$card-background: #FFF;
+$card-border: rgba(206, 208,211, 50);
+$card-selected-highlight: $card-border;
+
+/*
+  INPUT
+ */
+
+$input-border: #E7E9EA;
+
+/*
+  SELECT
+ */
+$select-background: #FFF;
+
+/*
+  BUTTONS
+ */
+
+$button-action-background: #50E3AC;
+
+/*
+  SWITCH
+ */
+
+$switch-background: $primary-background;
+$switch-unchecked: #CED1D4;
+$switch-checked: #50E3AC;
+
+/*
+  MENU
+ */
+
+$menu-background-background: black;
+$main-menu-background: $primary-dark;
+$main-menu-foreground: #CED1D4;
+$main-menu-inQuickLaunch: cornflowerblue;
+$main-menu-notInQuickLaunch: $main-menu-background;
+$menu-search-bar-background: $primary-background;
+
+/*
+  TOOLBAR
+ */
+$toolbar-background: white;
+$toolbar-foreground: $app-text-color;
+
+/*
+  ON KEY ASSIST
+ */
+$assistant-background: $primary-background;
+$assistant-toolbar-background: $primary-dark;
+$assistant-foreground: white;

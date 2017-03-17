@@ -1,0 +1,75 @@
+master-detail {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.master-detail-mobile-layout {
+  display: block;
+
+  .master {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    will-change: transform;
+    transition: transform 0.3s ease-out;
+  }
+
+  .master.closed {
+    @include translateX(-100%);
+  }
+
+
+  .detail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    @include overflow-scroll();
+  }
+}
+
+.master-detail-desktop-layout {
+  @include flex();
+  @include flex-row();
+
+
+  .master {
+    width: $master-max-width;
+    will-change: margin-left;
+    transition: margin-left 0.2s ease-out;
+    order: 0;
+  }
+
+  .master.closed {
+    margin-left: -$master-max-width;
+  }
+
+  .detail {
+    order: 1;
+    @include stretch();
+  }
+}
+
+/**
+  The selected item gets a zindex of 1 so that it's shadow can be over the others.
+  But when closing you need to put the zindex away so that it's not over the menu
+ */
+.master.closed [aria-selected] {
+  z-index: -1;
+}
+
+.md-toolbar {
+  height: 4.5rem;
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  background: #E7E9EA;
+
+  padding-left: $default-padding;
+}

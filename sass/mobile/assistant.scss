@@ -1,0 +1,13 @@
+@import './../lib/variables';
+
+assistant {
+  position: absolute;
+  left: 0;
+  top:0;
+  bottom:0;
+  right:0;
+}
+
+assistant.close {
+  transform: translateX(100%)
+}

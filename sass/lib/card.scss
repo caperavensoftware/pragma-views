@@ -1,0 +1,21 @@
+.card {
+  position: relative;
+  background: $card-background;
+  border-width: $card-border-width;
+  border-style: $card-border-style;
+  border-radius: $card-border-radius;
+  border-color: $card-border;
+
+  transition: border-color 0.5s ease-out, box-shadow 0.2s cubic-bezier(0.26, -0.04, 0.24, 2.34);
+
+  .suppressed {
+    font-size: $rem-3;
+    opacity: $suppressed-opacity;
+  }
+}
+
+.card[aria-selected="true"] {
+  @include box-shadow(0, 0.5rem, 1rem, 0, 0, 0, 0, 0.5);
+  border-color: $card-selected-highlight;
+  z-index: 1;
+}

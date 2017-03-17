@@ -1,0 +1,80 @@
+@mixin stretch {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+@mixin flex-size($size) {
+  -webkit-box-flex: $size;
+  -ms-flex: $size;
+  flex: $size;
+}
+
+@mixin flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin flex-column {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@mixin flex-row {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+@mixin flex-nowrap {
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+@mixin flex-wrap {
+  -ms-flex-wrap:wrap;
+  flex-wrap:wrap
+}
+
+@mixin fullsize {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin space-around {
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+}
+
+@mixin space-between {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between
+}
+
+@mixin box-shadow($x, $y, $blur, $spread, $r, $g, $b, $a) {
+  -webkit-box-shadow: $x $y $blur $spread rgba($r, $g, $b, $a);
+  -moz-box-shadow: $x $y $blur $spread rgba($r, $g, $b, $a);
+  box-shadow: $x $y $blur $spread rgba($r, $g, $b, $a);
+}
+
+@mixin ignore-device-rendering {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+@mixin overflow-scroll {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin translateX($x) {
+  -webkit-transform: translateX($x);
+  transform: translateX($x)
+}

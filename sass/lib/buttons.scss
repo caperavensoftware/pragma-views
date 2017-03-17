@@ -1,0 +1,24 @@
+button {
+  cursor: pointer;
+  outline: none;
+  background: transparent;
+  border-width: 0;
+  outline: none;
+  @include ignore-device-rendering();
+}
+
+button.secondary-action, button.action {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  border-radius: $button-border-radius;
+}
+
+button.action {
+  background: $button-action-background;
+}
+
+button.secondary-action {
+  background: transparent;
+}

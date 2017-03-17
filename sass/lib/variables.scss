@@ -1,0 +1,99 @@
+/*
+  APPLICATION OBJECTS
+ */
+
+$app-toolbar-height: 2.5rem;
+$border-radius: 0.4rem;
+$suppressed-opacity: 0.4;
+
+/*
+ FONT SIZES:
+ REM = 16px;
+ rem-1 = 15;
+ rem-2 = 14; ...
+*/
+$rem-2 : 0.875rem;
+$rem-3 : 0.8125rem;
+
+/*
+  BORDER VARIABLES
+ */
+
+$group-border-width: 1px;
+$group-border-style: solid;
+$group-border-radius: $border-radius;
+
+/*
+  APPLICATION
+ */
+
+$default-padding: 1rem;
+$title-padding: 1rem;
+$router-view-left-padding: 2.5rem;
+
+/*
+  TABSHEET
+ */
+
+$tab-highlight-height: 0.2rem;
+$tab-highlight-style: solid;
+
+/*
+  LIST
+ */
+
+$list-border-width: 1px;
+$list-border-style: solid;
+
+/*
+  CARD
+ */
+
+$card-border-radius: 2px;
+$card-border-width: 1px;
+$card-border-style: solid;
+
+$md-card-width: 100%;
+$md-card-height: 4.5rem;
+$md-card-bottom-margin: 0.3125rem;
+
+/*
+  BUTTONS
+ */
+
+$button-border-radius: $border-radius;
+
+/*
+  SWITCH
+ */
+
+$switch-width-before: 2.5rem;
+$switch-width-after: $switch-width-before / 2;
+$switch-height: 1.25rem;
+$switch-corner-radius: 10px;
+
+/*
+  GROUP Composite
+ */
+
+$label-width: 11rem;
+
+/*
+  MASTER DETAIL
+ */
+
+$master-max-width: 22.5rem;
+
+/*
+  MENU
+ */
+
+$quick-menu-icon-size: 2.5rem;
+
+/*
+  ONKE ASSIST
+ */
+$assistant-width: 18.125rem;
+$assist-toolbar-height: $app-toolbar-height;
+$assist-search-width: 16rem;
+$assist-search-height: 2rem;

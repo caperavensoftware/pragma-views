@@ -1,0 +1,33 @@
+.app-toolbar {
+  height: $app-toolbar-height;
+  background: $group-background;
+
+  @include flex();
+
+  align-items: center;
+  padding-left: $title-padding;
+  padding-right: $default-padding;
+
+  h3 {
+    margin-bottom: 0;
+    @include stretch();
+  }
+}
+
+.application-layout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.application-body {
+  @include flex();
+  @include flex-column();
+  @include fullsize();
+}
+
+.prevent-mouse {
+  pointer-events: none;
+}

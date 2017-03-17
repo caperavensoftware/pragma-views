@@ -1,0 +1,25 @@
+.list {
+  display: block;
+  width: 100%;
+  max-width: 352px;
+  height: 100%;
+  background: $list-background;
+  border-color: $list-border;
+  border-width: $list-border-width;
+  border-style: $list-border-style;
+}
+
+ul {
+  @include ignore-device-rendering();
+}
+
+ul[role="listbox"] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+[role="listitem"] {
+  display: block;
+  cursor: pointer;
+}

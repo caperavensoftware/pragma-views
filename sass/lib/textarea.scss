@@ -1,0 +1,13 @@
+textarea {
+  outline: none;
+  border-color: $input-border;
+  height: 10rem;
+}
+
+textarea:focus {
+  border-color: $focus-color;
+}
+
+textarea:invalid {
+  border-color: $error-foreground;
+}

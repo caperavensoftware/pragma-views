@@ -1,0 +1,19 @@
+<template>
+    <div class="application-layout">
+        <div class="application-body">
+            <div class="app-toolbar">
+                <h3>${router.title}</h3>
+                <button click.delegate="showAssist()"><icon name="assist"></icon></button>
+            </div>
+
+            <router-view></router-view>
+        </div>
+
+        <assistant ref="assistant">
+            <div>some content</div>
+        </assistant>
+    </div>
+
+    <div id="menu-background" aria-hidden="true"></div>
+    <menu menu-items.bind="menuItems" quick-items.bind="quickItems"></menu>
+</template>

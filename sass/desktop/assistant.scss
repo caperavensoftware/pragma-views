@@ -1,0 +1,11 @@
+@import './../lib/variables';
+@import './../lib/mixins';
+
+assistant {
+  max-width: $assistant-width;
+  will-change: margin-right;
+}
+
+assistant.close {
+  margin-right: -$assistant-width;
+}

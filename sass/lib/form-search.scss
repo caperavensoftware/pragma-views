@@ -1,0 +1,19 @@
+form-search {
+  border-radius: $border-radius;
+  border-color: $primary-background-borders;
+  border-width: 1px;
+  border-style: solid;
+  padding-left: 0.5rem;
+
+  @include flex();
+  align-items: center;
+
+  input {
+    border-width: 0;
+    @include stretch();
+  }
+
+  .icon {
+    padding-top: 0.3rem;
+  }
+}

@@ -1,0 +1,12 @@
+@import './../lib/variables';
+@import './../lib/mixins';
+
+router-view {
+  @include stretch();
+  overflow: auto;
+}
+
+.application-layout {
+  left: $router-view-left-padding;
+  @include flex();
+}

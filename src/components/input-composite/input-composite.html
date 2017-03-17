@@ -1,0 +1,12 @@
+<template >
+    <div class="label">
+        <label id="${id}_label" for="${id}_input">${label}</label>
+        <span id="${id}_required" if.bind="isRequired" class="required-label">(Required)</span>
+    </div>
+    <div>
+        <div id="inputSlot">
+            <slot></slot>
+        </div>
+        <div id="${id}_descriptor" if.bind="hasDescriptor" class="descriptor-label">${descriptor}</div>
+    </div>
+</template>

@@ -1,0 +1,38 @@
+.switch {
+  @include ignore-device-rendering();
+  outline: none;
+  display: block;
+  width: $switch-width-before;
+  height: $switch-height;
+  position: relative;
+  border-width: 0;
+  background: transparent;
+}
+
+.switch:before {
+  content: "";
+  display: block;
+  width: $switch-width-before;
+  height: $switch-height;
+  background: $switch-background;
+  border-radius: $switch-corner-radius;
+}
+
+.switch:after {
+  content: "";
+  display: block;
+  width: $switch-width-after;
+  height: $switch-height;
+  background: $switch-unchecked;
+  border-radius: $switch-corner-radius;
+  position: absolute;
+  top: 0;
+  will-change: transform, background;
+  transition: transform 0.2s, background 0.2s  ease-out;
+  transform: translateX(0)
+}
+
+.switch:checked:after {
+  background: $switch-checked;
+  transform: translateX($switch-width-after);
+}

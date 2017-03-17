@@ -1,0 +1,37 @@
+{
+  "name": "pragma-views",
+  "version": "0.0.1",
+  "description": "Package that provides all required parts for pragma visuals",
+  "main": "commonjs/index.js",
+  "scripts": {
+    "test": "gulp test",
+    "audit": "gulp clean:coverage && gulp audit:all && gulp test:coverage && gulp build:all && gulp test:e2e && gulp test:generate-report && gulp serve:coverage-report",
+    "test:ui": "gulp build:all && gulp test:e2e",
+    "build": "gulp build:all",
+    "watch:ui": "gulp build:all && gulp watch:ui",
+    "watch:all": "gulp build:all && gulp watch:all",
+    "run": "gulp build:all && gulp serve",
+    "build-publish": "gulp build:publish"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "aurelia-pal-nodejs": "^1.0.0-beta.1.0.0",
+    "build-utilities": "0.0.127"
+  },
+  "jspm": {
+    "registry": "npm",
+    "main": "index",
+    "format": "amd",
+    "directories": {
+      "dist": "amd"
+    },
+    "dependencies": {
+      "aurelia-bootstrapper": "^1.0.0",
+      "aurelia-framework": "^1.0.1",
+      "pragma-menu": "^1.0.16"
+    },
+    "devDependencies": {}
+  }
+}

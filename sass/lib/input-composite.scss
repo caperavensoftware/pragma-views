@@ -1,0 +1,21 @@
+input-composite {
+  display: block;
+  margin-bottom: $default-padding;
+
+  label {
+    display: inline-block;
+    margin-right: 1rem;
+  }
+
+  .required-label {
+    font-size: $rem-3;
+    opacity: $suppressed-opacity;
+  }
+
+  .descriptor-label {
+    font-size: $rem-2;
+    opacity: $suppressed-opacity;
+  }
+}
+
+
