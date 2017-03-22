@@ -39,6 +39,14 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             dest: "publish"
         },
         {
+            src: ["app/src/components/icons/*.html"],
+            dest: "publish/amd/components/icons"
+        },
+        {
+            src: ["app/src/components/icons/*.html"],
+            dest: "publish/commonjs/components/icons"
+        },
+        {
             src: ["app/src/components/master-detail/*.html"],
             dest: "publish/amd/components/master-detail"
         },
