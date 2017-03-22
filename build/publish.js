@@ -39,6 +39,14 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             dest: "publish"
         },
         {
+            src: ["app/src/components/master-detail/*.html"],
+            dest: "publish/amd/components/master-detail"
+        },
+        {
+            src: ["app/src/components/master-detail/*.html"],
+            dest: "publish/commonjs/components/master-detail"
+        },
+        {
             src: ["app/src/components/assistant/*.html"],
             dest: "publish/amd/components/assistant"
         },
