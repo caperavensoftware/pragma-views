@@ -115,9 +115,21 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             dest: "publish/systemjs/components/menu"
         },
         {
+            src: ["distribute/amd/index.js"],
+            dest: "publish/amd"
+        },
+        {
+            src: ["distribute/commonjs/index.js"],
+            dest: "publish/commonjs"
+        },
+        {
+            src: ["distribute/systemjs/index.js"],
+            dest: "publish/systemjs"
+        },
+        {
             src: ["scss/**/*.*"],
             dest: "publish/scss"
-        }
+        },
     ]);
 
     publish.setPackage({
