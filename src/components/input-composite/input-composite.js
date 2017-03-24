@@ -5,14 +5,17 @@ export class InputComposite {
     @bindable id;
     @bindable label;
     @bindable descriptor;
+    @bindable required;
+
     element = null;
-    isRequired;
     isValid;
-    
+
+    // set by view using ref
+    labelControl;
+    inputSlot;
+
     constructor(element) {
         this.element = element;
-        this.isRequired = true;
-        this.hasDescriptor = false;
         this.isValid = null;
 
         this.focusHandler = this.focus.bind(this);
@@ -21,10 +24,7 @@ export class InputComposite {
     }
 
     attached() {
-        this.labelControl = this.element.querySelector("label");
-        const inputSlot = this.element.querySelector("#inputSlot");
-
-        this.input = inputSlot.children[0];
+        this.input = this.inputSlot.children[0];
         this.input.id = `${this.id}_input`;
         this.input.style.display = "block";
         this.input.style.width = "100%";
@@ -57,6 +57,10 @@ export class InputComposite {
     }
 
     checkValidity() {
+        if (!this.input.validity) {
+            return true;
+        }
+
         const isValid = this.input.validity.valid;
 
         if (isValid != this.isValid) {
@@ -67,5 +71,9 @@ export class InputComposite {
 
     descriptorChanged() {
         this.hasDescriptor = this.descriptor.length > 0;
+    }
+
+    requiredChanged() {
+        console.log(this.required);
     }
 }

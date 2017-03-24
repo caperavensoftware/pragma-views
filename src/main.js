@@ -10,6 +10,8 @@ export function configure(aurelia) {
                 'components/master-detail/master-detail',
                 'components/assistant/assistant',
                 'components/form-search/form-search.html',
+                'components/icons/icons.html',
+                'components/icons/icon.html',
                 'custom-attributes/selectable'
             );
 

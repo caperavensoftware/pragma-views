@@ -6,23 +6,16 @@ export const menuItems = [
     },
     {
         id: 1,
-        text: "Staff Members",
-        screen: "view",
-        resource: "staffmember"
-    },
-    {
-        id: 2,
-        text: "Icons",
-        screen: "icons"
+        text: "Input Tests",
+        screen: "input-tests"
     }
 ];
 
 export const quickItems = [
     {
         id: 1,
-        text: "Staff Members",
-        screen: "view",
-        resource: "staffmember",
-        icon: "staff"
+        text: "Input Tests",
+        screen: "input-tests",
+        icon: "input",
     }
 ];

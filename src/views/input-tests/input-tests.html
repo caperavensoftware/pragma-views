@@ -1,0 +1,16 @@
+<template>
+    <div class="group">
+        <h3>Input Tests</h3>
+        <input-composite id="code" label="Code" required.bind="true">
+            <input type="text" required/>
+        </input-composite>
+
+        <input-composite label="Notes" required.bind="false" descriptor="Please fill in some stuff">
+            <textarea></textarea>
+        </input-composite>
+
+        <input-composite label="Some Label" required.bind="false">
+            <div>Hello World</div>
+        </input-composite>
+    </div>
+</template>
