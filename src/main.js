@@ -12,6 +12,7 @@ export function configure(aurelia) {
                 'components/form-search/form-search.html',
                 'components/icons/icons.html',
                 'components/icons/icon.html',
+                'components/pragma-messages/pragma-messages',
                 'custom-attributes/selectable'
             );
 
