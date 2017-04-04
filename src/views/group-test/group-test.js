@@ -1,17 +1,20 @@
 import {inject} from 'aurelia-framework';
 import {GroupWorker, aggregates} from './../../lib/group-worker';
-//import assets from './../../../../data/assets.json!text';
+import assets from './../../../../data/assets.json!text';
 
 @inject(GroupWorker)
 export class GroupTest {
     constructor(groupWorker) {
         this.groupWorker = groupWorker;
 
-        this.updateCollection();
+        // this.updateCollection();
+        // this.groupWorker.createCache("assets", this.collection);
+        // this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
+        // this.groupWorker.createGroupPerspective("assets", "location-cost", ["location"], { aggregate: aggregates.sum, field: "cost" });
 
+        this.collection = JSON.parse(assets).data;
         this.groupWorker.createCache("assets", this.collection);
-//        this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
-        this.groupWorker.createGroupPerspective("assets", "location-cost", ["location"], { aggregate: aggregates.sum, field: "cost" });
+        this.groupWorker.createGroupPerspective("assets", "default", ["parent_asset_id", "last_confirmed_on"], { aggregate: aggregates.count });
     }
 
     updateCollection() {

@@ -8,7 +8,16 @@ export const aggregates = {
 
 export class GroupWorker {
     constructor() {
+        this.workerMessageHandler = this.workerMessage.bind(this);
+
         this.worker = new Worker('group-worker.js');
+        this.worker.addEventListener('message', this.workerMessageHandler);
+    }
+
+    workerMessage(args) {
+        console.log("got message");
+
+        document.write(JSON.stringify(args.data, null, 4));
     }
 
     createCache(id, data) {

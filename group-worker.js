@@ -71,49 +71,60 @@ class DataCache {
     createPerspectiveGroup(fieldsToGroup, aggegateOptions) {
         const dataCopy = this.data.splice(0);
 
-        const result = new GroupRow(0, "group", "root", new Aggregate(aggegateOptions.aggregate, aggegateOptions.field));
+        const root = {
+            level: 0,
+            title: "root",
+            items: dataCopy
+        };
 
-        let rowIndex = 0;
-        for (let row of dataCopy) {
-            this.processRowForField(0, fieldsToGroup, result, row, rowIndex, aggegateOptions);
-            rowIndex ++;
-        }
+        var t0 = performance.now();
 
-console.log(result);
+        this.groupRecursive(root, fieldsToGroup);
 
-        return null;
+        var t1 = performance.now();
+        console.log(`Call to groupRecursive took (${t1 - t0}) milliseconds on ${dataCopy.length} objects`);
+
+        postMessage({
+            msg: "saveToFile",
+            data: root
+        })
     }
 
-    processRowForField(fieldIndex, fieldsToGroup, groupRow, row, rowIndex, aggegateOptions) {
-        if (fieldIndex > fieldsToGroup.length -1) {
-            groupRow.children.set(rowIndex, new GroupRow(rowIndex, "data", null, row));
+    groupRecursive(group, fieldsToGroup) {
+        if (group.level > fieldsToGroup.length -1) {
+            return;
         }
-        else
-        {
-            const field = fieldsToGroup[fieldIndex];
-            const value = row[field];
 
-            if (groupRow.children.has(value)) {
-                const childRow = groupRow.children.get(value);
-                this.processRowForField(fieldIndex + 1, fieldsToGroup, childRow, row, rowIndex, aggegateOptions)
+        group.groups = this.group(group.items, fieldsToGroup[group.level], group.level + 1);
+
+        const keys = group.groups.keys();
+
+        for(let key of keys) {
+            const childGroup = group.groups.get(key);
+            this.groupRecursive(childGroup, fieldsToGroup);
+        }
+
+        group.items = Array.from(group.groups, items => items[1]);
+        delete group.groups;
+    }
+
+    group(array, fieldName, level) {
+        return array.reduce((groupMap, curr) => {
+            const key = curr[fieldName];
+
+            if (groupMap.has(key)) {
+                groupMap.get(key).items.push(curr);
             }
             else {
-                groupRow.children.set(value, new GroupRow(fieldIndex, "group", value, new Aggregate(aggegateOptions.aggregate, aggegateOptions.field)));
+                groupMap.set(key, {
+                    level: level,
+                    title: key,
+                    items: [curr]
+                })
             }
-        }
-    }
-}
 
-class GroupRow {
-    constructor(id, type, title, model) {
-        this.id = id;
-        this.type = type;
-        this.title = title;
-        this.model = model;
-
-        if (type === "group") {
-            this.children = new Map();
-        }
+            return groupMap;
+        }, new Map())
     }
 }
 
