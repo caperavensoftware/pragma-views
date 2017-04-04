@@ -77,17 +77,7 @@ class DataCache {
             items: dataCopy
         };
 
-        var t0 = performance.now();
-
         this.groupRecursive(root, fieldsToGroup);
-
-        var t1 = performance.now();
-        console.log(`Call to groupRecursive took (${t1 - t0}) milliseconds on ${dataCopy.length} objects`);
-
-        postMessage({
-            msg: "saveToFile",
-            data: root
-        })
     }
 
     groupRecursive(group, fieldsToGroup) {

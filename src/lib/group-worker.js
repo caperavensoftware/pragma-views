@@ -15,9 +15,7 @@ export class GroupWorker {
     }
 
     workerMessage(args) {
-        console.log("got message");
-
-        document.write(JSON.stringify(args.data, null, 4));
+        // process callback here
     }
 
     createCache(id, data) {
