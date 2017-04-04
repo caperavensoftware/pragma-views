@@ -10,7 +10,7 @@ export class GroupTest {
         this.updateCollection();
 
         this.groupWorker.createCache("assets", this.collection);
-        this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
+//        this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
         this.groupWorker.createGroupPerspective("assets", "location-cost", ["location"], { aggregate: aggregates.sum, field: "cost" });
     }
 
