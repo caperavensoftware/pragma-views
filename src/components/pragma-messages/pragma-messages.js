@@ -27,7 +27,6 @@ export class PragmaMessages {
     }
 
     addMessages(details) {
-        console.log(details);
         this.messages = details;
     }
 
