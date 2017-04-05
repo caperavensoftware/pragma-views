@@ -1,4 +1,7 @@
 class GroupWorker {
+    /**
+     * constructor
+     */
     constructor() {
         this.createCacheHandler = this.createCache.bind(this);
         this.createGroupPerspectiveHandler = this.createGroupPerspective.bind(this);
@@ -14,6 +17,9 @@ class GroupWorker {
         this.dataCache = new Map();
     }
 
+    /**
+     * dispose
+     */
     dispose() {
         this.createCacheHandler = null;
         this.createGroupPerspectiveHandler = null;
@@ -24,12 +30,20 @@ class GroupWorker {
         this.functionMap = null;
     }
 
+    /**
+     * process all incomming messages mapping it to handlers
+     * @param args
+     */
     onMessage(args) {
         if (this.functionMap.has(args.msg)) {
             this.functionMap.get(args.msg)(args);
         }
     }
 
+    /**
+     * create cache from data sent to worker
+     * @param args
+     */
     createCache(args) {
         if (this.dataCache.has(args.id)) {
             const dataCache = ths.dataCache.get(id);
@@ -41,6 +55,10 @@ class GroupWorker {
         }
     }
 
+    /**
+     * create a group perspective for data cached
+     * @param args
+     */
     createGroupPerspective(args) {
         const id = args.id;
         const perspectiveId = args.perspectiveId;
@@ -53,6 +71,10 @@ class GroupWorker {
         }
     }
 
+    /**
+     * remove perspective
+     * @param args
+     */
     disposeGroupPerspective(args) {
         const id = args.id;
         const perspectiveId = args.perspectiveId;
@@ -63,6 +85,10 @@ class GroupWorker {
         }
     }
 
+    /**
+     * remove perspectives and cache
+     * @param args
+     */
     disposeCache(args) {
         const id = args.id;
 
