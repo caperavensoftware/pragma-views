@@ -1,20 +1,23 @@
 import {inject} from 'aurelia-framework';
 import {GroupWorker, aggregates} from './../../lib/group-worker';
-import assets from './../../../../data/assets.json!text';
+// import assets from './../../../../data/assets.json!text';
 
 @inject(GroupWorker)
 export class GroupTest {
     constructor(groupWorker) {
         this.groupWorker = groupWorker;
 
-        // this.updateCollection();
-        // this.groupWorker.createCache("assets", this.collection);
-        // this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
-        // this.groupWorker.createGroupPerspective("assets", "location-cost", ["location"], { aggregate: aggregates.sum, field: "cost" });
-
-        this.collection = JSON.parse(assets).data;
+        this.updateCollection();
         this.groupWorker.createCache("assets", this.collection);
-        this.groupWorker.createGroupPerspective("assets", "default", ["parent_asset_id", "last_confirmed_on"], { aggregate: aggregates.count });
+        this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
+        this.groupWorker.createGroupPerspective("assets", "location-cost", ["location"], { aggregate: aggregates.sum, field: "cost" });
+        this.groupWorker.createGroupPerspective("assets", "isActive-cost-ave", ["isActive"], { aggregate: aggregates.min, field: "cost" });
+        this.groupWorker.createGroupPerspective("assets", "isActive-cost-max", ["isActive"], { aggregate: aggregates.max, field: "cost" });
+        this.groupWorker.createGroupPerspective("assets", "site-cost", ["site"], { aggregate: aggregates.ave, field: "cost" });
+
+        // this.collection = JSON.parse(assets).data;
+        // this.groupWorker.createCache("assets", this.collection);
+        // this.groupWorker.createGroupPerspective("assets", "default", ["parent_asset_id", "last_confirmed_on"], { aggregate: aggregates.count });
     }
 
     updateCollection() {
@@ -33,7 +36,7 @@ export class GroupTest {
                 site: "A11",
                 isActive: false,
                 location: "capetown",
-                cost: 10
+                cost: 11
             },
             {
                 id: 3,
@@ -41,7 +44,7 @@ export class GroupTest {
                 site: "A12",
                 isActive: true,
                 location: "capetown",
-                cost: 10
+                cost: 12
             },
             {
                 id: 4,
@@ -49,7 +52,7 @@ export class GroupTest {
                 site: "A11",
                 isActive: true,
                 location: "capetown",
-                cost: 10
+                cost: 13
             },
             {
                 id: 5,
@@ -57,7 +60,7 @@ export class GroupTest {
                 site: "B12",
                 isActive: true,
                 location: "johannesburg",
-                cost: 10
+                cost: 14
             },
             {
                 id: 6,
@@ -65,7 +68,7 @@ export class GroupTest {
                 site: "A11",
                 isActive: true,
                 location: "capetown",
-                cost: 10
+                cost: 15
             },
             {
                 id: 7,
@@ -73,7 +76,7 @@ export class GroupTest {
                 site: "A11",
                 isActive: false,
                 location: "capetown",
-                cost: 10
+                cost: 16
             },
             {
                 id: 8,
@@ -81,7 +84,7 @@ export class GroupTest {
                 site: "A12",
                 isActive: false,
                 location: "capetown",
-                cost: 10
+                cost: 17
             },
             {
                 id: 9,
@@ -89,7 +92,7 @@ export class GroupTest {
                 site: "B11",
                 isActive: true,
                 location: "johannesburg",
-                cost: 10
+                cost: 18
             },
             {
                 id: 10,
@@ -97,7 +100,7 @@ export class GroupTest {
                 site: "B11",
                 isActive: true,
                 location: "johannesburg",
-                cost: 10
+                cost: 19
             },
 
         ]

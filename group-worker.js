@@ -68,8 +68,14 @@ class DataCache {
         this.perspectiveGrouping.set(perspectiveId, this.createPerspectiveGroup(fieldsToGroup, aggegateOptions))
     }
 
+    /**
+     * Create a grouped and aggregated perspective from the data and store it with a key so that I can access it at any time from other views
+     * More than one view can use the same perspective, a example of tha is the grid on master detail and the group chart on the list
+     * @param fieldsToGroup: what fields are used in this grouping to define the perspective
+     * @param aggegateOptions: what are the calculations that need to be made on the group
+     */
     createPerspectiveGroup(fieldsToGroup, aggegateOptions) {
-        const dataCopy = this.data.splice(0);
+        const dataCopy = this.data.slice(0);
 
         const root = {
             level: 0,
@@ -77,11 +83,23 @@ class DataCache {
             items: dataCopy
         };
 
-        this.groupRecursive(root, fieldsToGroup);
+        this.groupRecursive(root, fieldsToGroup, aggegateOptions);
+
+        console.log(JSON.stringify(root, null, 4));
     }
 
-    groupRecursive(group, fieldsToGroup) {
+    /**
+     * Recursivly group items of a group oject grouping it according to level and the field defined for that level.
+     * @param group: the group to process
+     * @param fieldsToGroup: what are the fields to use while grouping
+     * @param aggegateOptions: what aggregate calculations should be used
+     */
+    groupRecursive(group, fieldsToGroup, aggegateOptions) {
         if (group.level > fieldsToGroup.length -1) {
+            group.aggregate = {
+                aggregate: aggegateOptions.aggregate,
+                value: aggregator[aggegateOptions.aggregate](group.items, aggegateOptions.field)
+            };
             return;
         }
 
@@ -91,13 +109,25 @@ class DataCache {
 
         for(let key of keys) {
             const childGroup = group.groups.get(key);
-            this.groupRecursive(childGroup, fieldsToGroup);
+            this.groupRecursive(childGroup, fieldsToGroup, aggegateOptions);
         }
+
+        group.aggregate = {
+            aggregate: aggegateOptions.aggregate,
+            value: aggregator[aggegateOptions.aggregate](group.items, aggegateOptions.field)
+        };
 
         group.items = Array.from(group.groups, items => items[1]);
         delete group.groups;
     }
 
+    /**
+     * Create a
+     * @param array
+     * @param fieldName
+     * @param level
+     * @returns {any|*}
+     */
     group(array, fieldName, level) {
         return array.reduce((groupMap, curr) => {
             const key = curr[fieldName];
@@ -108,6 +138,7 @@ class DataCache {
             else {
                 groupMap.set(key, {
                     level: level,
+                    field: fieldName,
                     title: key,
                     items: [curr]
                 })
@@ -118,12 +149,54 @@ class DataCache {
     }
 }
 
-class Aggregate {
-    constructor(title, aggregateType, field) {
-        this.aggregateType = aggregateType;
-        this.field = field;
+const aggregator = {
+    count(items) {
+        return items.length;
+    },
+
+    sum(items, field) {
+        let result = 0;
+
+        for(let item of items) {
+            result += item[field];
+        }
+
+        return result;
+    },
+
+    min(items, field) {
+        let result = items[0][field];
+
+        for(let item of items) {
+            if (item[field] < result) {
+                result = item[field];
+            }
+        }
+
+        return result;
+    },
+
+    max(items, field) {
+        let result = items[0][field];
+
+        for(let item of items) {
+            if (item[field] > result) {
+                result = item[field];
+            }
+        }
+
+        return result;
+    },
+
+    ave(items, field) {
+        let result = this.sum(items, field);
+
+        result = result / items.length;
+
+        return result;
     }
-}
+};
+
 
 const groupWorker = new GroupWorker();
 
