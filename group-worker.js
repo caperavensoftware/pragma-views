@@ -2,16 +2,23 @@ class GroupWorker {
     constructor() {
         this.createCacheHandler = this.createCache.bind(this);
         this.createGroupPerspectiveHandler = this.createGroupPerspective.bind(this);
+        this.disposeGroupPerspectiveHandler = this.disposeGroupPerspective.bind(this);
+        this.disposeCacheHandler = this.disposeCache.bind(this);
 
         this.functionMap = new Map();
         this.functionMap.set("createCache", this.createCacheHandler);
         this.functionMap.set("createGroupPerspective", this.createGroupPerspectiveHandler);
+        this.functionMap.set("disposeGroupPerspective", this.disposeGroupPerspectiveHandler);
+        this.functionMap.set("disposeCache", this.disposeCacheHandler);
 
         this.dataCache = new Map();
     }
 
     dispose() {
         this.createCacheHandler = null;
+        this.createGroupPerspectiveHandler = null;
+        this.disposeGroupPerspectiveHandler = null;
+        this.disposeCacheHandler = null;
 
         this.functionMap.clear();
         this.functionMap = null;
@@ -45,6 +52,27 @@ class GroupWorker {
             dataCache.createPerspective(perspectiveId, fieldsToGroup, aggegateOptions);
         }
     }
+
+    disposeGroupPerspective(args) {
+        const id = args.id;
+        const perspectiveId = args.perspectiveId;
+
+        if (this.dataCache.has(id)) {
+            const cache = this.dataCache.get(id);
+            cache.disposePerspective(perspectiveId);
+        }
+    }
+
+    disposeCache(args) {
+        const id = args.id;
+
+        if (this.dataCache.has(id)) {
+            const cache = this.dataCache.get(id);
+            cache.dispose();
+
+            this.dataCache.delete(id);
+        }
+    }
 }
 
 class DataCache {
@@ -55,6 +83,7 @@ class DataCache {
 
     dispose() {
         this.data = null;
+
         this.perspectiveGrouping.clear();
         this.perspectiveGrouping = null;
     }
@@ -64,6 +93,22 @@ class DataCache {
 
     }
 
+    /**
+     * Remove a perspective from the cache
+     * @param perspectiveId
+     */
+    disposePerspective(perspectiveId) {
+        if (this.perspectiveGrouping.has(perspectiveId)) {
+            this.perspectiveGrouping.delete(perspectiveId);
+        }
+    }
+
+    /**
+     * Create a perspective and group
+     * @param perspectiveId
+     * @param fieldsToGroup
+     * @param aggegateOptions
+     */
     createPerspective(perspectiveId, fieldsToGroup, aggegateOptions) {
         this.perspectiveGrouping.set(perspectiveId, this.createPerspectiveGroup(fieldsToGroup, aggegateOptions))
     }

@@ -6,8 +6,10 @@ import {GroupWorker, aggregates} from './../../lib/group-worker';
 export class GroupTest {
     constructor(groupWorker) {
         this.groupWorker = groupWorker;
-
         this.updateCollection();
+    }
+
+    attached() {
         this.groupWorker.createCache("assets", this.collection);
         this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
         this.groupWorker.createGroupPerspective("assets", "location-cost", ["location"], { aggregate: aggregates.sum, field: "cost" });
@@ -15,9 +17,16 @@ export class GroupTest {
         this.groupWorker.createGroupPerspective("assets", "isActive-cost-max", ["isActive"], { aggregate: aggregates.max, field: "cost" });
         this.groupWorker.createGroupPerspective("assets", "site-cost", ["site"], { aggregate: aggregates.ave, field: "cost" });
 
-        // this.collection = JSON.parse(assets).data;
-        // this.groupWorker.createCache("assets", this.collection);
-        // this.groupWorker.createGroupPerspective("assets", "default", ["parent_asset_id", "last_confirmed_on"], { aggregate: aggregates.count });
+        this.groupWorker.disposeGroupPerspective("assets", "site-cost");
+        this.groupWorker.disposeGroupPerspective("assets", "isActive-cost-max");
+        this.groupWorker.disposeGroupPerspective("assets", "isActive-cost-ave");
+        this.groupWorker.disposeGroupPerspective("assets", "location-cost");
+
+        this.groupWorker.disposeCache("assets");
+    }
+
+    detached() {
+        this.groupWorker.disposeCache("assets");
     }
 
     updateCollection() {

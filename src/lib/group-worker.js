@@ -18,6 +18,11 @@ export class GroupWorker {
         // process callback here
     }
 
+    /**
+     * add a data cache for processing to the work manager web worker
+     * @param id: cache id used for unique identification of cache
+     * @param data: what array of data do you want to cache for further processing on perspectives
+     */
     createCache(id, data) {
         this.worker.postMessage({
             msg: "createCache",
@@ -26,6 +31,13 @@ export class GroupWorker {
         });
     }
 
+    /**
+     * Given the cache id, create a perspective grouping and aggregation
+     * @param id: cache id to get data for processing
+     * @param perspectiveId: as what must the perspective be cached on.
+     * @param fieldsToGroup: string array of field names to group by during cache processing
+     * @param aggegateOptions: aggregation to be used
+     */
     createGroupPerspective(id, perspectiveId, fieldsToGroup, aggegateOptions) {
         this.worker.postMessage({
             msg: "createGroupPerspective",
@@ -33,6 +45,30 @@ export class GroupWorker {
             perspectiveId: perspectiveId,
             fieldsToGroup: fieldsToGroup,
             aggegateOptions: aggegateOptions
+        })
+    }
+
+    /**
+     * remove perspective from cache
+     * @param id
+     * @param perspectiveId
+     */
+    disposeGroupPerspective(id, perspectiveId) {
+        this.worker.postMessage({
+            msg: "disposeGroupPerspective",
+            id: id,
+            perspectiveId: perspectiveId
+        })
+    }
+
+    /**
+     * remove the cache and all it's perspectives
+     * @param id
+     */
+    disposeCache(id) {
+        this.worker.postMessage({
+            msg: "disposeCache",
+            id: id
         })
     }
 }
