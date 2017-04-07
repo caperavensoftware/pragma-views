@@ -1,0 +1,35 @@
+master-list-container ul li div {
+    @include flex();
+    @include flex-row();
+    align-items: center;
+    display: flex; 
+}
+
+master-list-container ul li {
+    margin: 3px;
+    padding: 10px;
+    position: relative;
+}
+
+.test {
+    background: whitesmoke;
+}
+
+.test:hover {
+    background: white;
+}
+
+.test:selection {
+    background: blueviolet;
+}
+
+.test:before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 0.25rem;
+    height: 4.25rem;
+    background: aquamarine;
+}

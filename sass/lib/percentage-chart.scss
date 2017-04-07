@@ -1,0 +1,23 @@
+#myProgress {
+    width: 100%;
+    background-color: grey;
+}
+#myBar {
+    width: 20%;
+    height: 10px;
+    background-color: lightcoral;
+}
+
+percentage-chart ul li {
+    margin: 3px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+percentage-chart ul li div {
+    @include flex();
+    @include flex-row();
+    align-items: center;
+    display: flex; 
+    font-size: $rem-3;
+}

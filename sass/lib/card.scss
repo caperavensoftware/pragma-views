@@ -5,12 +5,11 @@
   border-style: $card-border-style;
   border-radius: $card-border-radius;
   border-color: $card-border;
-
+  font-size: $rem-3;
   transition: border-color 0.5s ease-out, box-shadow 0.2s cubic-bezier(0.26, -0.04, 0.24, 2.34);
 
-  .suppressed {
-    font-size: $rem-3;
-    opacity: $suppressed-opacity;
+  .larger {
+    font-size: $rem-2;
   }
 }
 

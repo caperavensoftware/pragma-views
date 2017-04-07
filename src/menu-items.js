@@ -8,6 +8,10 @@ export const menuItems = [
         screen: "input-tests"
     },
     {
+        text: "Master View Tests",
+        screen: "master-view"
+    },
+    {
         text: "Group Tests",
         screen: "group-test"
     }

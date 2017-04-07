@@ -20,3 +20,12 @@ h3 {
 h4 {
   opacity: 0.4;
 }
+
+.bold {
+  font-weight: 600;
+}
+
+.suppressed {
+    opacity: $suppressed-opacity;
+}
+

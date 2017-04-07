@@ -5,3 +5,7 @@
 [invalid="true"] {
   color: $error-foreground;
 }
+
+.no-mouse {
+  pointer-events: none;
+}

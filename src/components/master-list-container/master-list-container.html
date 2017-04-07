@@ -1,0 +1,18 @@
+
+<template>
+    <ul selectable="selected-id.two-way: selectedId">
+        <li class="card test" repeat.for="item of items" click.delegate="menuSelected($event)" data-id="${item.id}">
+            <div class="no-mouse">
+                <div>
+                    <div class="stretch">${item.code}</div>
+                    <div>${item.siteCode}</div>
+                </div>
+                <div>
+                    <span class="bold">${item.name}</span>
+                    <span class="piped">${item.surname}</span>
+                </div>
+                <div class="suppressed">${item.sectionCode}</div>
+            </div>
+        </li>
+    </ul>
+</template>

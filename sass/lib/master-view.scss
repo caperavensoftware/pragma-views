@@ -1,0 +1,12 @@
+.master-view{
+    width: 300px;
+    border-radius: 0.5px;
+    border-width: 0.5px;
+    border-style: solid;
+}
+
+.toolbar {
+    @include flex();
+    @include flex-row();
+    padding: 5px;
+}
