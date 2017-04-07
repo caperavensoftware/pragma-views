@@ -1,0 +1,15 @@
+<template>
+    <div class="master-view">
+        <div class="toolbar">
+            <button>b</button>
+            <span class="stretch">description</span>
+            <button>d</button>
+            <button>s</button>
+            <button>m</button>
+            <input type="checkbox" checked.bind="isGroupBox" />
+        </div>
+        <order-group items.bind="orderItems" if.bind="isGroupBox"></order-group>
+        <percentage-chart items.bind="chartItems" if.bind="!isGroupBox"></percentage-chart>
+        <master-list-container items.bind="listItems"></master-list-container>
+    </div>
+</template>

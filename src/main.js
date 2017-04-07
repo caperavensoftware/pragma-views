@@ -13,8 +13,12 @@ export function configure(aurelia) {
                 'components/icons/icons.html',
                 'components/icons/icon.html',
                 'components/pragma-messages/pragma-messages',
-                'custom-attributes/selectable'
-            );
+                'custom-attributes/selectable',
+                'components/order-group/order-group',
+                'components/percentage-chart/percentage-chart',
+                'components/master-list-container/master-list-container'
+            )
+            .plugin("oribella-aurelia-sortable");
 
         aurelia.start().then(() => {
             aurelia.setRoot();

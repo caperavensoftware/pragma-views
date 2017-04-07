@@ -1,19 +1,20 @@
 export const menuItems = [
     {
-        id: 0,
         text: "Home",
         screen: "welcome"
     },
     {
-        id: 1,
         text: "Input Tests",
         screen: "input-tests"
+    },
+    {
+        text: "Master View Tests",
+        screen: "master-view"
     }
 ];
 
 export const quickItems = [
     {
-        id: 1,
         text: "Input Tests",
         screen: "input-tests",
         icon: "input",

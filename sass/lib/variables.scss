@@ -28,7 +28,8 @@ $group-border-radius: $border-radius;
  */
 
 $default-padding: 1rem;
-$title-padding: 1rem;
+$half-padding: $default-padding / 2;
+$title-padding: $default-padding;
 $router-view-left-padding: 2.5rem;
 
 /*
@@ -97,3 +98,12 @@ $assistant-width: 18.125rem;
 $assist-toolbar-height: $app-toolbar-height;
 $assist-search-width: 16rem;
 $assist-search-height: 2rem;
+
+/*
+  ORDER GROUP
+  */
+$order-group-padding: $half-padding;
+$order-group-height: 2rem;
+$order-group-radius: 2px;
+$order-group-width: 18rem;
+$order-group-style: solid;
