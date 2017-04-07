@@ -1,6 +1,6 @@
 {
   "name": "pragma-views",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "Package that provides all required parts for pragma visuals",
   "main": "commonjs/index.js",
   "scripts": {
@@ -33,7 +33,8 @@
       "aurelia-event-aggregator": "^1.0.1",
       "aurelia-framework": "^1.1.0",
       "oribella-aurelia-sortable": "^0.11.3",
-      "pragma-menu": "^1.0.16"
+      "pragma-menu": "^1.0.16",
+      "systemjs/plugin-text": "github:systemjs/plugin-text@^0.0.9"
     },
     "devDependencies": {}
   }

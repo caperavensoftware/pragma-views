@@ -1,4 +1,11 @@
-
 <template>
-    <div>Control Content</div>
+    <div>
+        <header>
+            <button click.delegate="clear()">Clear</button>
+            <button click.delegate="toggle()">Close</button>
+        </header>
+        <ul>
+            <li repeat.for="message of messages" data-type="message.type" class="message">${message.text}</li>
+        </ul>
+    </div>
 </template>

@@ -50,3 +50,12 @@ assistant {
     margin-left: 0.5rem;
   }
 }
+
+.assist-container {
+  @include flex();
+  @include flex-column();
+
+  button {
+    color: white;
+  }
+}

@@ -10,6 +10,10 @@ export const menuItems = [
     {
         text: "Master View Tests",
         screen: "master-view"
+    },
+    {
+        text: "Group Tests",
+        screen: "group-test"
     }
 ];
 

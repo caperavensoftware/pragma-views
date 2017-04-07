@@ -127,8 +127,16 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             dest: "publish/systemjs"
         },
         {
-            src: ["scss/**/*.*"],
-            dest: "publish/scss"
+            src: ["sass/**/*.*"],
+            dest: "publish/amd/scss"
+        },
+        {
+            src: ["sass/**/*.*"],
+            dest: "publish/commonjs/scss"
+        },
+        {
+            src: ["sass/**/*.*"],
+            dest: "publish/systemjs/scss"
         },
     ]);
 
