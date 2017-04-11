@@ -1,15 +1,21 @@
 import {inject} from 'aurelia-framework';
 import {GroupWorker, aggregates} from './../../lib/group-worker';
+import {EventAggregator} from 'aurelia-event-aggregator';
+
 // import assets from './../../../../data/assets.json!text';
 
-@inject(GroupWorker)
+@inject(GroupWorker, EventAggregator)
 export class GroupTest {
-    constructor(groupWorker) {
+    constructor(groupWorker, eventAggregator) {
+        this.eventAggregator = eventAggregator;
         this.groupWorker = groupWorker;
         this.updateCollection();
     }
 
     attached() {
+        this.handleDefaultAssetsHandler = this.handleDefaultAssets.bind(this);
+        this.assetsDefaultSubscription =  this.eventAggregator.subscribe("assets_default", this.handleDefaultAssetsHandler);
+
         this.groupWorker.createCache("assets", this.collection);
         this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
         this.groupWorker.createGroupPerspective("assets", "location-cost", ["location"], { aggregate: aggregates.sum, field: "cost" });
@@ -27,6 +33,11 @@ export class GroupTest {
 
     detached() {
         this.groupWorker.disposeCache("assets");
+        this.assetsDefaultSubscription.dispose();
+    }
+
+    handleDefaultAssets(args) {
+        console.log(args);
     }
 
     updateCollection() {
