@@ -17,8 +17,8 @@ pragma-messages {
   background-color: white;
   border-color: $error-primary-color;
 
-  will-change: transform, margin-bottom;
-  transition: all 0.2s ease-in;
+  will-change: transform, background, color, margin-bottom;
+  transition: all 0.2s linear;
 
   header {
     background: $error-primary-color;
@@ -29,9 +29,26 @@ pragma-messages {
   ul {
     background: $error-secondary-color;
   }
+
+  #contextToolbar {
+    display:none;
+  }
 }
 
 pragma-messages.closed {
   transform: translateY(100%);
   margin-bottom: $header-height;
+
+  header {
+    background: transparent;
+    color: $app-text-color;
+  }
+
+  #messageToolbar {
+    display: none;
+  }
+
+  #contextToolbar {
+    display:block;
+  }
 }
