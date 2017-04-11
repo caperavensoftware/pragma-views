@@ -72,8 +72,4 @@ export class InputComposite {
     descriptorChanged() {
         this.hasDescriptor = this.descriptor.length > 0;
     }
-
-    requiredChanged() {
-        console.log(this.required);
-    }
 }
