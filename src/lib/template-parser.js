@@ -23,7 +23,7 @@ export class TemplateParser {
         this.parseMap.set("tabsheet", this.parseTabSheetHandler);
         this.parseMap.set("groups", this.parseGroupsHandler);
         this.parseMap.set("input", this.parseInputHandler);
-        this.parseMap.set("textarea", this.parseTextAreaHandler);
+        this.parseMap.set("memo", this.parseTextAreaHandler);
         this.parseMap.set("button", this.parseButtonHandler);
         this.parseMap.set("elements", this.parseElementsHandler);
     }
