@@ -67,7 +67,13 @@ class GroupWorker {
 
         const dataCache = this.dataCache.get(id);
         if (dataCache) {
-            dataCache.createPerspective(perspectiveId, fieldsToGroup, aggegateOptions);
+            const perspective = dataCache.createPerspective(perspectiveId, fieldsToGroup, aggegateOptions);
+            postMessage({
+                msg: "createGroupPerspectiveResponse",
+                id: id,
+                perspectiveId: perspectiveId,
+                data: perspective
+            })
         }
     }
 
@@ -136,7 +142,9 @@ class DataCache {
      * @param aggegateOptions
      */
     createPerspective(perspectiveId, fieldsToGroup, aggegateOptions) {
-        this.perspectiveGrouping.set(perspectiveId, this.createPerspectiveGroup(fieldsToGroup, aggegateOptions))
+        const perspective = this.createPerspectiveGroup(fieldsToGroup, aggegateOptions);
+        this.perspectiveGrouping.set(perspectiveId, perspective);
+        return perspective;
     }
 
     /**
@@ -156,7 +164,8 @@ class DataCache {
 
         this.groupRecursive(root, fieldsToGroup, aggegateOptions);
 
-        console.log(JSON.stringify(root, null, 4));
+        return root;
+        // console.log(JSON.stringify(root, null, 4));
     }
 
     /**

@@ -1,3 +1,6 @@
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {inject} from 'aurelia-framework';
+
 export const aggregates = {
     sum: "sum",
     min: "min",
@@ -6,8 +9,11 @@ export const aggregates = {
     count: "count"
 };
 
+@inject(EventAggregator)
 export class GroupWorker {
-    constructor() {
+    constructor(eventAggregator) {
+        this.eventAggregator = eventAggregator;
+
         this.workerMessageHandler = this.workerMessage.bind(this);
 
         this.worker = new Worker('group-worker.js');
@@ -15,7 +21,9 @@ export class GroupWorker {
     }
 
     workerMessage(args) {
-        // process callback here
+        if (this[args.data.msg]) {
+            this[args.data.msg].call(this, args.data);
+        }
     }
 
     /**
@@ -70,5 +78,9 @@ export class GroupWorker {
             msg: "disposeCache",
             id: id
         })
+    }
+
+    createGroupPerspectiveResponse(args) {
+        this.eventAggregator.publish(`${args.id}_${args.perspectiveId}`, args.data);
     }
 }

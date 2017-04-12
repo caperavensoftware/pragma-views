@@ -1,8 +1,14 @@
 <template>
     <div>
         <header>
-            <button click.delegate="clear()">Clear</button>
-            <button click.delegate="toggle()">Close</button>
+            <div class="toolbar" role="toolbar" id="messageToolbar">
+                <button click.delegate="clear()">Clear</button>
+                <button click.delegate="toggle()">Close</button>
+            </div>
+
+            <div class="toolbar" role="toolbar" id="contextToolbar">
+
+            </div>
         </header>
         <ul>
             <li repeat.for="message of messages" data-type="message.type" class="message">${message.text}</li>
