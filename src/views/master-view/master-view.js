@@ -104,41 +104,47 @@ export const viewListItems = [
         name: "Adrian", 
         surname: "Cruz", 
         siteCode: "A21", 
-        sectionCode: "ELEC"
+        sectionCode: "ELEC",
+        id: 4
     },
     {
         code: "MEWS", 
         name: "Connor", 
         surname: "Francis", 
         siteCode: "A12", 
-        sectionCode: "HAND"
+        sectionCode: "HAND",
+        id: 5
     },
     {
         code: "HPPF", 
         name: "Beulah", 
         surname: "Arnold", 
         siteCode: "A11", 
-        sectionCode: "ENG"
+        sectionCode: "ENG",
+        id: 6
     },
     {
         code: "PROD", 
         name: "Seth", 
         surname: "Howard", 
         siteCode: "A21", 
-        sectionCode: "ELEC"
+        sectionCode: "ELEC",
+        id: 7
     },
     {
         code: "ELWS", 
         name: "Francis", 
         surname: "Miller", 
         siteCode: "A31", 
-        sectionCode: "ELEC"
+        sectionCode: "ELEC",
+        id: 8
     },
     {
         code: "PROD", 
         name: "Kevin", 
         surname: "Cunningham", 
         siteCode: "A21", 
-        sectionCode: "ELEC"
+        sectionCode: "ELEC",
+        id: 9
     }
 ];

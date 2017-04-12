@@ -1,18 +1,16 @@
 
 <template>
     <ul selectable="selected-id.two-way: selectedId">
-        <li class="card test" repeat.for="item of items" click.delegate="menuSelected($event)" data-id="${item.id}">
-            <div class="no-mouse">
-                <div>
+        <li class="card li-styling" repeat.for="item of items" data-id="${item.id}">
+                <div class="no-mouse">
                     <div class="stretch">${item.code}</div>
                     <div>${item.siteCode}</div>
                 </div>
-                <div>
+                <div class="no-mouse">
                     <span class="bold">${item.name}</span>
                     <span class="piped">${item.surname}</span>
                 </div>
-                <div class="suppressed">${item.sectionCode}</div>
-            </div>
+                <div class="suppressed no-mouse">${item.sectionCode}</div>
         </li>
     </ul>
 </template>

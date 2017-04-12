@@ -11,19 +11,15 @@ master-list-container ul li {
     position: relative;
 }
 
-.test {
+.li-styling {
     background: whitesmoke;
 }
 
-.test:hover {
+.li-styling:hover {
     background: white;
 }
 
-.test:selection {
-    background: blueviolet;
-}
-
-.test:before {
+.li-styling:before {
     content: "";
     position: absolute;
     display: block;
@@ -32,4 +28,8 @@ master-list-container ul li {
     width: 0.25rem;
     height: 4.25rem;
     background: aquamarine;
+}
+
+.card[aria-selected="true"] {
+    background: white;
 }
