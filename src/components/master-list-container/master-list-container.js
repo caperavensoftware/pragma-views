@@ -13,10 +13,6 @@ export class MasterListContainer {
         this.element = element;
     }
 
-     menuSelected(event) {
-         console.log("TEST");
-    }
-
     selectedIdChanged() {
         console.log(this.selectedId);
     }

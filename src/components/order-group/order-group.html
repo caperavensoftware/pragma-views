@@ -4,7 +4,7 @@
             <li repeat.for="item of items" oa-sortable-item="item.bind: item" >
                 <div>
                     <label class="bold">${item.title}</label>
-                    <input type="checkbox" checked="${item.isOn}" class="switch"/>  
+                    <input type="checkbox" checked.bind="item.isOn" class="switch"/>  
                 </div>
             </li>
         </ul>

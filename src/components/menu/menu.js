@@ -106,6 +106,8 @@ export class Menu {
     }
 
     quickFilterChanged() {
+        console.log("Test");
+
         if (this.quickFilter) {
             this.menuItems = this.quickItems.slice(0);
         }

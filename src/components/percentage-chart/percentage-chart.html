@@ -1,13 +1,13 @@
 
 <template>
-    <ul oa-sortable="items.bind: items">
-            <li class="default-padding-bottom" repeat.for="item of items" oa-sortable-item="item.bind: item" >
-                <div class="container horizontal half-padding-left half-padding-right half-padding-bottom">
+    <ul >
+            <li class="default-padding-bottom" repeat.for="item of items" id="${item.id}"  dblclick.delegate="chartDouble($event)">
+                <div class="container horizontal half-padding-left half-padding-right half-padding-bottom no-mouse">
                     <div class="bold">${item.code}</div>
                     <div class="stretch piped">${item.title}</div>
-                    <div class="bold">${item.total}</div>
+                    <div class="bold">${item.aggregate.value}</div>
                 </div>
-                <div id="myProgress">
+                <div id="myProgress no-mouse">
                         <div id="myBar"></div>
                 </div>
             </li>
