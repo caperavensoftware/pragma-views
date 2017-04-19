@@ -183,6 +183,8 @@ class DataCache {
             return;
         }
 
+        console.log(group.count);
+
         group.groups = this.group(group.items, fieldsToGroup[group.level], group.level + 1);
 
         const keys = group.groups.keys();
@@ -211,6 +213,7 @@ class DataCache {
     group(array, fieldName, level) {
         return array.reduce((groupMap, curr) => {
             const key = curr[fieldName];
+            var groupId = groupMap.size;
 
             if (groupMap.has(key)) {
                 groupMap.get(key).items.push(curr);
@@ -220,6 +223,7 @@ class DataCache {
                     level: level,
                     field: fieldName,
                     title: key,
+                    id: groupId,
                     items: [curr]
                 })
             }
