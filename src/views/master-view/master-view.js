@@ -1,44 +1,136 @@
 import {bindable, customElement, inject} from 'aurelia-framework';
+import {GroupWorker, aggregates} from './../../lib/group-worker';
+import {EventAggregator} from 'aurelia-event-aggregator';
 
+@inject(GroupWorker, EventAggregator, Element)
 export class MasterView {
 
     orderItems;
     chartItems;
     listItems;
+    dataSet;
+    path;
+    filters;
+    @bindable isGroupBox;
 
-    constructor(element) {
+    constructor(groupWorker, eventAggregator, element) {
+        
         this.element = element;
+        this.eventAggregator = eventAggregator;
+        this.groupWorker = groupWorker;
         this.orderItems = orderGroupItems;
-        this.chartItems = percentageChartItems;
         this.listItems = viewListItems;
+        this.path = [];
+        this.filters = [];
+
+        this.newMessageHandler = this.groupAndFilter.bind(this);
+        document.addEventListener("newMessage", this.newMessageHandler, false);
+    }
+
+    attached()
+    {
+        this.handleDefaultAssetsHandler = this.handleDefaultAssets.bind(this);
+        this.assetsDefaultSubscription =  this.eventAggregator.subscribe("staff_default", this.handleDefaultAssetsHandler);
+
+        this.groupWorker.createCache("staff", viewListItems);
+        this.groupWorker.createGroupPerspective("staff", "default", ["isActive", "site", "section", "location"], { aggregate: aggregates.count });
+    
+        this.groupWorker.disposeCache("staff");
+    }
+
+    handleDefaultAssets(args) {
+        this.chartItems = args.items;
+        this.dataSet = args.items;
+    }
+
+    groupAndFilter(args) {
+        this.chartItems = this.chartItems[args.detail.id].items; 
+        this.path.push(args.detail.id);
+        this.filters.push({
+           fieldName: args.detail.fieldName, 
+           value: args.detail.value
+        });
+
+        this.listItems = this.listItems.filter(function(el){
+           return (el[args.detail.fieldName] === args.detail.value); 
+        });
+    }
+
+    back(){
+        var previousItems = this.dataSet;
+        this.filters.pop();
+        var fLen = this.path.length;
+
+        for (var i = 0; i < (fLen - 1); i++) {
+            previousItems = previousItems[this.path[i]].items;
+        }
+
+        this.listItems = viewListItems;
+
+        for(var j = 0; j < this.filters.length; j++){
+            var fieldName = this.filters[j].fieldName;
+            var value = this.filters[j].value;
+
+            this.listItems = this.listItems.filter(function(el){
+                return (el[fieldName] == value);
+            });
+        }
+
+        this.chartItems = previousItems;
+        this.path.pop();
+    }
+
+    isGroupBoxChanged()
+    {
+        if(!this.isGroupBox)
+        {
+            var groupColumns = [];
+
+            for(var i = 0; i < this.orderItems.length; i++)
+            {
+                if(this.orderItems[i].isOn)
+                {
+                    groupColumns.push(this.orderItems[i].value);
+                }
+            }
+
+            this.listItems = viewListItems;
+            this.filters = [];
+            this.path = [];
+
+            this.groupWorker.disposeGroupPerspective("staff", "default");
+
+            this.groupWorker.createCache("staff", viewListItems);
+            this.groupWorker.createGroupPerspective("staff", "default", groupColumns, { aggregate: aggregates.count });
+        
+            this.groupWorker.disposeCache("staff");
+        }
     }
 }
-
 
 const orderGroupItems = [
     {
         id: 1,
-        title: "SITE", 
-        isOn: false
+        title: "IS ACTIVE",
+        value: "isActive", 
+        isOn: true
     },
     {
         id: 2,
-        title: "SECTION", 
-        isOn: false
+        title: "SITE", 
+        value: "site",
+        isOn: true
     },
     {
         id: 3,
-        title: "TRADE", 
+        title: "SECTION",
+        value: "section", 
         isOn: false
     },
     {
         id: 4,
-        title: "CODE", 
-        isOn: false
-    },
-    {
-        id: 5,
-        title: "DESCRIPTION", 
+        title: "LOCATION",
+        value: "location", 
         isOn: false
     }
 ];
@@ -79,72 +171,99 @@ export const viewListItems = [
         code: "ZSMC", 
         name: "Mildred", 
         surname: "Bennett", 
-        siteCode: "A21", 
-        sectionCode: "ENG",
-        id: 1
+        site: "A21", 
+        section: "ENG",
+        location: "capetown",
+        isActive: true,
+        id: 1,
+        cost: 10
     },
     {
         code: "PROD", 
         name: "Owen", 
         surname: "Jacobs", 
-        siteCode: "A31", 
-        sectionCode: "ELEC",
-        id: 2
+        site: "A31", 
+        section: "ELEC",
+        location: "capetown",
+        isActive: false,
+        id: 2,
+        cost: 11
     },
     {
         code: "MEWS", 
         name: "Phillip", 
         surname: "McDonald", 
-        siteCode: "A21", 
-        sectionCode: "OPER",
-        id: 3
+        site: "A21", 
+        section: "OPER",
+        location: "capetown",
+        isActive: true,
+        id: 3,
+        cost: 12
     },
     {
         code: "ELWS", 
         name: "Adrian", 
         surname: "Cruz", 
-        siteCode: "A21", 
-        sectionCode: "ELEC",
-        id: 4
+        site: "A21", 
+        section: "ELEC",
+        location: "capetown",
+        isActive: true,
+        id: 4,
+        cost: 13
     },
     {
         code: "MEWS", 
         name: "Connor", 
         surname: "Francis", 
-        siteCode: "A12", 
-        sectionCode: "HAND",
-        id: 5
+        site: "A12", 
+        section: "HAND",
+        location: "johannesburg",
+        isActive: true,
+        id: 5,
+        cost: 14
     },
     {
         code: "HPPF", 
         name: "Beulah", 
         surname: "Arnold", 
-        siteCode: "A11", 
-        sectionCode: "ENG",
-        id: 6
+        site: "A11", 
+        section: "ENG",
+        location: "capetown",
+        isActive: true,
+        id: 6,
+        cost: 15
     },
     {
         code: "PROD", 
         name: "Seth", 
         surname: "Howard", 
-        siteCode: "A21", 
-        sectionCode: "ELEC",
-        id: 7
+        site: "A21", 
+        section: "ELEC",
+        location: "capetown",
+        isActive: false,
+        id: 7,
+        cost: 16
     },
     {
         code: "ELWS", 
         name: "Francis", 
         surname: "Miller", 
-        siteCode: "A31", 
-        sectionCode: "ELEC",
-        id: 8
+        site: "A31", 
+        section: "ELEC",
+        location: "capetown",
+        isActive: false,
+        id: 8,
+        cost: 17
     },
     {
         code: "PROD", 
         name: "Kevin", 
         surname: "Cunningham", 
-        siteCode: "A21", 
-        sectionCode: "ELEC",
-        id: 9
+        site: "A21", 
+        section: "ELEC",
+        location: "johannesburg",
+        isActive: true,
+        id: 9,
+        cost: 18
     }
 ];
