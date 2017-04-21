@@ -1,15 +1,13 @@
 
 <template>
     <ul >
-            <li class="default-padding-bottom" repeat.for="item of items" id="${item.id}"  dblclick.delegate="chartDouble($event)">
-                <div class="container horizontal half-padding-left half-padding-right half-padding-bottom no-mouse">
-                    <div class="bold">${item.code}</div>
-                    <div class="stretch piped">${item.title}</div>
-                    <div class="bold">${item.aggregate.value}</div>
-                </div>
-                <div id="myProgress no-mouse">
-                        <div id="myBar"></div>
-                </div>
-            </li>
-        </ul>
+        <li class="default-padding-bottom selectable" repeat.for="item of items" id="${item.id}"  dblclick.delegate="chartDouble($event)">
+            <div class="container horizontal half-padding-left half-padding-right half-padding-bottom no-mouse">
+                <div class="bold">${item.code}</div>
+                <div class="stretch piped">${item.title}</div>
+                <div class="bold">${item.aggregate.value}</div>
+            </div>
+            <progress max.bind="maxAggregate" value.bind="item.aggregate.value" class="no-mouse"></progress>
+        </li>
+    </ul>
 </template>
