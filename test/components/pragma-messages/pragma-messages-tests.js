@@ -2,12 +2,15 @@
 import {expect} from 'chai';
 import 'aurelia-polyfills';
 import {PragmaMessages} from './../../../src/components/pragma-messages/pragma-messages';
+import {ElementMockup} from './../../mockups/element-mockup';
 
 describe('PragmaMessages Tests', function() {
     let pragmaMessages;
+    let element;
 
     beforeEach(function() {
-        pragmaMessages = new PragmaMessages ({});
+        element = new ElementMockup();
+        pragmaMessages = new PragmaMessages (element);
     });
     
     it('constructor', function() {
@@ -17,4 +20,4 @@ describe('PragmaMessages Tests', function() {
     it('not constructor', function() {
         expect(() => PragmaMessages()).to.throw("Cannot call a class as a function");
     });    
-})
+});
