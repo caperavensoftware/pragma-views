@@ -21,20 +21,46 @@ export class PercentageChart {
         }
         else {
             let result = 0;
-
+            console.log("sssss");
             for (let item of this.items) {
-                result += item.aggregate.value;
+                
+                if(item.aggregate){
+                    result += item.aggregate.value;
+                }
             }
 
             this.maxAggregate = result;
         }
     }
 
-    chartDouble(event) {
+    click(event){
         if(event.target.nodeName == "LI")
         {
             var cusevent = new CustomEvent(
-                "newMessage",
+                "chartClick",
+                {
+                    detail: {
+                        message: event.target.id,
+                        time: new Date(),
+                        id: event.target.id,
+                        fieldName: this.items[event.target.id].field,
+                        value: this.items[event.target.id].title
+                    },
+
+                    bubbles: true,
+                    cancelable: true
+                }
+            );
+
+            event.target.dispatchEvent(cusevent);
+        }
+    }
+
+    dblClick(event) {
+        if(event.target.nodeName == "LI")
+        {
+            var cusevent = new CustomEvent(
+                "chartDoubleClick",
                 {
                     detail: {
                         message: event.target.id,

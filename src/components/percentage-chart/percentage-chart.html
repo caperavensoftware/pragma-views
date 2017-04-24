@@ -1,7 +1,7 @@
 
 <template>
     <ul >
-        <li class="default-padding-bottom selectable" repeat.for="item of items" id="${item.id}"  dblclick.delegate="chartDouble($event)">
+        <li class="default-padding-bottom selectable" repeat.for="item of items" id="${item.index}" index="${item.index}" click.delegate="click($event)"  dblclick.delegate="dblClick($event)">
             <div class="container horizontal half-padding-left half-padding-right half-padding-bottom no-mouse">
                 <div class="bold">${item.code}</div>
                 <div class="stretch piped">${item.title}</div>

@@ -1,5 +1,15 @@
 
 <template>
+    <div class="toolbar">
+            <button click.delegate="back()" class="button-icon"><icon name=back></icon></button>
+            <span class="stretch">description</span>
+            <button>d</button>
+            <button>s</button>
+            <button>m</button>
+            <input type="checkbox" checked.bind="isGroupBox" />
+        </div>
+        <order-group items.bind="orderItems" if.bind="isGroupBox"></order-group>
+        <percentage-chart items.bind="chartItems" if.bind="!isGroupBox" id="percentage-chart"></percentage-chart>
     <ul selectable="selected-id.two-way: selectedId">
         <li class="card li-styling" repeat.for="item of items" data-id="${item.id}">
                 <div class="no-mouse">
