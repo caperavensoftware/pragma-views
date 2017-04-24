@@ -14,6 +14,10 @@ export const menuItems = [
     {
         text: "Group Tests",
         screen: "group-test"
+    },
+    {
+        text: "Grid Tests",
+        screen: "grid-test"
     }
 ];
 
