@@ -1,13 +1,13 @@
 
 import {expect} from 'chai';
 import 'aurelia-polyfills';
-import {Input} from '../../../src/views/input-tests/input';
+import {InputTests} from '../../../src/views/input-tests/input-tests';
 
 describe('Input Tests', function() {
     let input;
 
     beforeEach(function() {
-        input = new Input ();
+        input = new InputTests ();
     });
     
     it('constructor', function() {
@@ -15,6 +15,6 @@ describe('Input Tests', function() {
     });
     
     it('not constructor', function() {
-        expect(() => Input()).to.throw("Cannot call a class as a function");
+        expect(() => InputTests()).to.throw("Cannot call a class as a function");
     });    
 })

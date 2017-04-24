@@ -159,13 +159,12 @@ class DataCache {
         const root = {
             level: 0,
             title: "root",
-            items: dataCopy
+            items: dataCopy,
+            isGroup: true
         };
 
         this.groupRecursive(root, fieldsToGroup, aggegateOptions);
-
         return root;
-        // console.log(JSON.stringify(root, null, 4));
     }
 
     /**
@@ -182,8 +181,6 @@ class DataCache {
             };
             return;
         }
-
-        console.log(group.count);
 
         group.groups = this.group(group.items, fieldsToGroup[group.level], group.level + 1);
 
@@ -226,7 +223,8 @@ class DataCache {
                     title: key,
                     id: id,
                     items: [curr],
-                    index: groupId
+                    index: groupId,
+                    isGroup: true
                 })
             }
 

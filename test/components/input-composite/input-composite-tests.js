@@ -7,6 +7,8 @@ describe('InputComposite Tests', function() {
     let inputComposite;
     let element;
     let inputElement;
+    let inptSlotChild;
+    let labelControl;
 
     function customQuerySelector(query) {
         const result = new ElementMockup();
@@ -21,9 +23,14 @@ describe('InputComposite Tests', function() {
     beforeEach(function() {
         element = new ElementMockup();
         inputElement = new ElementMockup();
+        inptSlotChild = new ElementMockup();
+        labelControl = new ElementMockup();
 
         element.querySelector = customQuerySelector;
         inputComposite = new InputComposite (element);
+        inputComposite.inputSlot = new ElementMockup();
+        inputComposite.inputSlot.appendChild(inptSlotChild);
+        inputComposite.labelControl = labelControl;
     });
     
     it('constructor', function() {
@@ -37,7 +44,7 @@ describe('InputComposite Tests', function() {
     it('attached', function() {
         // Arrange
         const checkValiditySpy = sinon.spy(inputComposite, "checkValidity");
-        const addEventListenerSpy = sinon.spy(inputElement, "addEventListener");
+        const addEventListenerSpy = sinon.spy(inptSlotChild, "addEventListener");
 
         inputComposite.id = "id";
 
@@ -45,9 +52,9 @@ describe('InputComposite Tests', function() {
         inputComposite.attached();
 
         // Assert
-        expect(inputComposite.input.id).to.equal("id_input", "id should be id_input");
-        expect(inputComposite.input.style.display).to.equal("block", "display style should be block");
-        expect(inputComposite.input.style.width).to.equal("100%", "width style should be 100%");
+        expect(inptSlotChild.id).to.equal("id_input", "id should be id_input");
+        expect(inptSlotChild.style.display).to.equal("block", "display style should be block");
+        expect(inptSlotChild.style.width).to.equal("100%", "width style should be 100%");
 
         assert(checkValiditySpy.calledOnce, "checkValidity should have been called once");
         checkValiditySpy.restore();

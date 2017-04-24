@@ -16,7 +16,8 @@ export function configure(aurelia) {
                 'custom-attributes/selectable',
                 'components/order-group/order-group',
                 'components/percentage-chart/percentage-chart',
-                'components/master-list-container/master-list-container'
+                'components/master-list-container/master-list-container',
+                'components/pragma-grid/pragma-grid'
             )
             .plugin("oribella-aurelia-sortable");
 

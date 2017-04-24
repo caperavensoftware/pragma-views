@@ -5,3 +5,4 @@ app
 coverage
 distribute
 publish
+service-worker.js
