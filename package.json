@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "aurelia-event-aggregator": "^1.0.1",
     "aurelia-pal-nodejs": "^1.0.0-beta.1.0.0",
     "build-utilities": "0.0.127",
     "jspm": "^0.16.53"
