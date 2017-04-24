@@ -138,6 +138,10 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             src: ["sass/**/*.*"],
             dest: "publish/systemjs/scss"
         },
+        {
+            src: ["group-worker.js"],
+            dest: "publish"
+        }
     ]);
 
     publish.setPackage({
