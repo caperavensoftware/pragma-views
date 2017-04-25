@@ -6,6 +6,7 @@ import {GridColumn} from './../../components/pragma-grid/pragma-grid';
 
 @inject(GroupWorker, EventAggregator)
 export class GridTest {
+    @bindable columns;
     gridOptions;
     loading;
     items;

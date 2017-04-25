@@ -1,4 +1,4 @@
-import {customElement, inject, bindable, NewInstance} from 'aurelia-framework';
+import {customElement, inject, bindable, NewInstance, ViewSlot} from 'aurelia-framework';
 import {DynamicViewFactory} from './../../lib/dynamic-view-factory';
 import columnHeaderTemplate from './column.template.html!text';
 import groupTemplate from './group.template.html!text';
@@ -30,6 +30,12 @@ export class PragmaGrid {
     attached() {
         this.dynamicViewFactory.addFactory(true, groupTemplate);
         this.dynamicViewFactory.addFactory("th", columnHeaderTemplate);
+
+        this.headerViewSlot = new ViewSlot(this.headrow, true);
+        this.rowsViewSlot = new ViewSlot(this.body, true);
+
+        this.updateHeader();
+        this.updateRows();
     }
 
     detached() {
@@ -39,18 +45,33 @@ export class PragmaGrid {
     }
 
     updateHeader() {
+        if (!this.rowsViewSlot) {
+            return;
+        }
 
+        for (let column of this.columns) {
+            const view = this.dynamicViewFactory.getViewInstance("th", column);
+            this.headerViewSlot.add(view);
+        }
+
+        this.headerViewSlot.attached();
     }
 
     updateRowCellFactory() {
         const result = [];
         for(let column of this.columns) {
-            // binding expression so can't use ES6 strings because it uses the same binding syntax
-            result.push('<td>${' + column + '}</td>')
+            result.push(`<td>${column.field}</td>`);
         }
 
         const template = `<template>${result.join("")}</template>`;
         this.dynamicViewFactory.addFactory(false, template);
+    }
+
+    updateRows() {
+        for(let row of this.items) {
+            let viewInstance = this.dynamicViewFactory.getViewInstance(row.isGroup, row);
+            this.rowsViewSlot.add(viewInstance);
+        }
     }
 }
 
