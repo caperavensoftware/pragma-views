@@ -7,9 +7,10 @@ import {GridColumn} from './../../components/pragma-grid/pragma-grid';
 @inject(GroupWorker, EventAggregator)
 export class GridTest {
     @bindable columns;
+    @bindable items;
+
     gridOptions;
     loading;
-    items;
     columns;
 
     constructor(groupWorker, eventAggregator) {
@@ -36,7 +37,7 @@ export class GridTest {
 
     handleDefaultAssets(args) {
         this.loading = false;
-        this.items = args.data;
+        this.items = args.items;
     }
 
     detached() {
