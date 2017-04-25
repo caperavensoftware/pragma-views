@@ -1,0 +1,28 @@
+pragma-grid {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  table {
+    display: block;
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
+  thead {
+    background: $grid-header-background;
+    color: $grid-header-color;
+    display: block;
+    width: 100%;
+  }
+
+  grid-grouped {
+    background: $grid-group-background;
+    color: $primary-background;
+  }
+
+  th {
+    text-overflow: ellipsis;
+  }
+}
