@@ -2,17 +2,28 @@ import {bindable, inject} from "aurelia-framework";
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {GroupWorker, aggregates} from './../../lib/group-worker';
 import assets from './../../../../data/assets.json!text';
+import {GridColumn} from './../../components/pragma-grid/pragma-grid';
 
 @inject(GroupWorker, EventAggregator)
 export class GridTest {
+    @bindable columns;
     gridOptions;
     loading;
+    items;
+    columns;
 
     constructor(groupWorker, eventAggregator) {
         this.eventAggregator = eventAggregator;
         this.groupWorker = groupWorker;
         this.loading = false;
-        this.gridOptions = new GridOptions(null, ["parent_asset_id", "development_status"]);
+        this.gridOptions = new GridOptions(null, ["asset_type_id", "last_confirmed_on"]);
+
+        this.columns = [
+            new GridColumn("code", "Code", 100, null),
+            new GridColumn("description", "Description", 200, null),
+            new GridColumn("development_status", "Development Status", 100, null),
+            new GridColumn("last_confirmed_on", "Last Confirmed On", 100, null)
+        ]
     }
 
     attached() {
@@ -24,8 +35,8 @@ export class GridTest {
     }
 
     handleDefaultAssets(args) {
-        console.log(args);
         this.loading = false;
+        this.items = args.data;
     }
 
     detached() {
