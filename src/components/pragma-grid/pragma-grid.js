@@ -68,10 +68,18 @@ export class PragmaGrid {
     }
 
     updateRows() {
+        if (!this.items) {
+            return;
+        }
+
         for(let row of this.items) {
             let viewInstance = this.dynamicViewFactory.getViewInstance(row.isGroup, row);
             this.rowsViewSlot.add(viewInstance);
         }
+    }
+
+    itemsChanged() {
+        this.updateRows();
     }
 }
 
