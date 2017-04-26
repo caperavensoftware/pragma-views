@@ -1,4 +1,8 @@
 <template>
-    <h1>Welcome</h1>
+    <div class="app-toolbar">
+        <h3>${router.title}</h3>
+        <button click.delegate="showAssist()"><icon name="assist"></icon></button>
+    </div>
+
     <button click.delegate="assist()">Assist</button>
 </template>

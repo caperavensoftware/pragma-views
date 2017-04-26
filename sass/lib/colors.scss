@@ -5,6 +5,7 @@
 // this is the primary dark background used in menu and other large volume surfaces.
 $primary-background: #3B4753;
 $primary-background-borders: rgba(59, 71, 83, 0.26);
+$primary-highlight: #FFBF00;
 
 // this is used as darker toolbars and surfaces on the primary color, see On Key Assist design
 $primary-dark: #0A1929;
@@ -31,7 +32,7 @@ $icon-light-foreground: white;
 
 $group-background: #FFF;
 $group-border: #E7E9EA;
-$group-highlight: #50E3AC;
+$group-highlight: $primary-highlight;
 
 /*
   TABS
@@ -44,7 +45,7 @@ $tab-bar-color: rgba(255, 255, 255, 0);
   FOCUSED
  */
 
-$focus-color: #35C184;
+$focus-color: $primary-highlight;
 
 /*
   LISTS
@@ -75,7 +76,7 @@ $select-background: #FFF;
   BUTTONS
  */
 
-$button-action-background: #50E3AC;
+$button-action-background: $primary-highlight;
 
 /*
   SWITCH
@@ -83,7 +84,7 @@ $button-action-background: #50E3AC;
 
 $switch-background: $primary-background;
 $switch-unchecked: #CED1D4;
-$switch-checked: #50E3AC;
+$switch-checked: $primary-highlight;
 
 /*
   MENU
@@ -95,6 +96,7 @@ $main-menu-foreground: #CED1D4;
 $main-menu-inQuickLaunch: cornflowerblue;
 $main-menu-notInQuickLaunch: $main-menu-background;
 $menu-search-bar-background: $primary-background;
+$quick-container-background: #848C94;
 
 /*
   TOOLBAR
