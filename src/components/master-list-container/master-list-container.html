@@ -1,12 +1,13 @@
 
 <template>
     <div class="toolbar">
-            <button click.delegate="back()" class="button-icon"><icon name=back></icon></button>
-            <span class="stretch">description</span>
-            <button>d</button>
-            <button>s</button>
-            <button>m</button>
-            <input type="checkbox" checked.bind="isGroupBox" />
+            <button click.delegate="back()" class="button"><icon name=back class="icon"></icon></button>
+            <select class="stretch" name="browser" value.bind="selectedGroupById">
+                <option model.bind="dropdownItem" repeat.for="dropdownItem of dropdownItems">${dropdownItem.title}</option>
+            </select>
+            <button><icon name=sort class="icon"></button>
+            <button><icon name=search class="icon"></button>
+            <input type="checkbox" checked.bind="isGroupBox" /><icon name=leftarrow class="icon"> </input>
         </div>
         <order-group items.bind="orderItems" if.bind="isGroupBox"></order-group>
         <percentage-chart items.bind="chartItems" if.bind="!isGroupBox" id="percentage-chart"></percentage-chart>

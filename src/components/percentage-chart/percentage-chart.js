@@ -21,7 +21,6 @@ export class PercentageChart {
         }
         else {
             let result = 0;
-            console.log("sssss");
             for (let item of this.items) {
                 
                 if(item.aggregate){

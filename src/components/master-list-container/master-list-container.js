@@ -15,12 +15,15 @@ export class MasterListContainer {
     oldItems;
     @bindable isGroupBox;
     @bindable selectedId;
+    @bindable selectedGroupById;
+    dropdownItems;
 
     constructor(groupWorker, eventAggregator, element) {
         this.element = element;
         this.eventAggregator = eventAggregator;
         this.groupWorker = groupWorker;
         this.orderItems = orderGroupItems;
+        this.dropdownItems = [];
         this.path = [];
         this.filters = [];
     }
@@ -60,6 +63,7 @@ export class MasterListContainer {
     }
 
     filter(args){
+
         this.filters.push({
            fieldName: args.detail.fieldName, 
            value: args.detail.value
@@ -67,18 +71,8 @@ export class MasterListContainer {
 
         this.runFilters();
 
-        //this.items = this.items.filter(function(el){
-          // return (el[args.detail.fieldName] === args.detail.value); 
-        //});
-
         this.filters.pop();
     }
-
-    selectedIdChanged()
-    {
-        console.log(this.selectedId);
-    }
-
 
     groupAndFilter(args) {
         this.chartItems = this.chartItems[args.detail.id].items; 
@@ -87,10 +81,19 @@ export class MasterListContainer {
            fieldName: args.detail.fieldName, 
            value: args.detail.value
         });
+        this.dropdownItems.push({
+            title: args.detail.fieldName,
+            id: args.detail.id
+        });
 
         this.items = this.items.filter(function(el){
            return (el[args.detail.fieldName] === args.detail.value); 
         });
+    }
+
+    selectedGroupByIdChanged()
+    {
+        //console.log(this.selectedGroupById);
     }
 
     isGroupBoxChanged()
@@ -110,6 +113,7 @@ export class MasterListContainer {
             this.items = this.oldItems;
             this.filters = [];
             this.path = [];
+            this.dropdownItems = [];
 
             this.groupWorker.disposeGroupPerspective("staff", "default");
 
@@ -122,8 +126,9 @@ export class MasterListContainer {
 
     runFilters()
     {
-        console.log("run filters");
-
+        var holdSelectedId = this.selectedId;
+        this.selectedId = 0;
+        
         var filterItems = this.oldItems.slice();
 
         for(var j = 0; j < this.filters.length; j++){
@@ -136,6 +141,7 @@ export class MasterListContainer {
         }
 
         this.items = filterItems;
+        this.selectedId = holdSelectedId;
     }
 
     back(){
@@ -147,16 +153,7 @@ export class MasterListContainer {
             previousItems = previousItems[this.path[i]].items;
         }
 
-        this.items = this.oldItems;
-
-        for(var j = 0; j < this.filters.length; j++){
-            var fieldName = this.filters[j].fieldName;
-            var value = this.filters[j].value;
-
-            this.items = this.items.filter(function(el){
-                return (el[fieldName] == value);
-            });
-        }
+        this.runFilters();
 
         this.chartItems = previousItems;
         this.path.pop();
