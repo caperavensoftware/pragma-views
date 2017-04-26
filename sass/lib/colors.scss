@@ -6,6 +6,9 @@
 $primary-background: #3B4753;
 $primary-background-borders: rgba(59, 71, 83, 0.26);
 $primary-highlight: #FFBF00;
+$primary-focus-highlight: #35C184;
+
+$secondary-background: #848C94;
 
 // this is used as darker toolbars and surfaces on the primary color, see On Key Assist design
 $primary-dark: #0A1929;
@@ -45,7 +48,7 @@ $tab-bar-color: rgba(255, 255, 255, 0);
   FOCUSED
  */
 
-$focus-color: $primary-highlight;
+$focus-color: $primary-focus-highlight;
 
 /*
   LISTS
@@ -96,7 +99,7 @@ $main-menu-foreground: #CED1D4;
 $main-menu-inQuickLaunch: cornflowerblue;
 $main-menu-notInQuickLaunch: $main-menu-background;
 $menu-search-bar-background: $primary-background;
-$quick-container-background: #848C94;
+$quick-container-background: $secondary-background;
 
 /*
   TOOLBAR
@@ -119,3 +122,10 @@ $grid-group-background: #F2F2F2;
 $grid-cell-background: #FFFFFF;
 $grid-header-background: #8C8C8C;
 $grid-header-color: #FFFFFF;
+
+/*
+  PERCENTAGE CHART
+ */
+
+$pc-background: #0A1929;
+$pc-color: $primary-highlight;

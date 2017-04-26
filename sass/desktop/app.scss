@@ -3,7 +3,6 @@
 
 router-view {
   @include stretch();
-  overflow: auto;
 }
 
 .application-layout {

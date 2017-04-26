@@ -17,6 +17,10 @@ pragma-grid {
     width: 100%;
   }
 
+  tbody {
+    overflow: auto;
+  }
+
   grid-grouped {
     background: $grid-group-background;
     color: $primary-background;

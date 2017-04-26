@@ -2,14 +2,14 @@
   .icon {
     width: 2rem;
     height: 2rem;
-    fill: $primary-background;
+    fill: $icon-light-foreground;
   }
 }
 
 .assist-toolbar, .assist-search {
   .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: $common-icon-size;
+    height: $common-icon-size;
     fill: $icon-light-foreground;
     opacity: 0.6;
   }
@@ -21,18 +21,25 @@
   }
 
   .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: $common-icon-size;
+    height: $common-icon-size;
     fill: $primary-background;
     opacity: 0.6;
+  }
+}
+
+.toolbar {
+  .icon {
+    width: $toolbar-icon-size;
+    height: $toolbar-icon-size;
   }
 }
 
 .menu-search {
   .icon {
     padding-top: 0.3rem;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: $common-icon-size;
+    height: $common-icon-size;
     fill: $icon-light-foreground;
     opacity: 0.6;
   }
@@ -44,8 +51,8 @@ form-search {
   }
 
   .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: $common-icon-size;
+    height: $common-icon-size;
     fill: $primary-background;
     opacity: 0.6;
   }
@@ -71,7 +78,7 @@ form-search {
   }
 
   icon, .icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: $large-icon-size;
+    height: $large-icon-size;
   }
 }
