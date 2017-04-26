@@ -1,0 +1,6 @@
+.toolbar {
+  @include flex();
+  @include flex-row();
+  padding: $half-padding;
+  align-items: center;
+}
