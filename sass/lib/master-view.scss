@@ -3,6 +3,7 @@
     border-radius: 0.5px;
     border-width: 0.5px;
     border-style: solid;
+    height: 720px;
 }
 
 .toolbar {
@@ -10,3 +11,14 @@
     @include flex-row();
     padding: 5px;
 }
+
+.data-display{
+    content: "";
+    position: absolute;
+    display: block;
+    top: 42px;
+    left: 308px;
+    width: 0.25rem;
+    height: 3.25rem;
+}
+

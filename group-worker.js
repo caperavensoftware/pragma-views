@@ -210,6 +210,7 @@ class DataCache {
     group(array, fieldName, level) {
         return array.reduce((groupMap, curr) => {
             const key = curr[fieldName];
+            const id = curr["id"];
             var groupId = groupMap.size;
 
             if (groupMap.has(key)) {
@@ -220,8 +221,9 @@ class DataCache {
                     level: level,
                     field: fieldName,
                     title: key,
-                    id: groupId,
+                    id: id,
                     items: [curr],
+                    index: groupId,
                     isGroup: true
                 })
             }
