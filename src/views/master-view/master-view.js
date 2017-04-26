@@ -5,107 +5,12 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 @inject(GroupWorker, EventAggregator, Element)
 export class MasterView {
 
-    orderItems;
-    chartItems;
-    listItems;
-    dataSet;
-    path;
-    filters;
-    @bindable isGroupBox;
+    @bindable dataDisplay;
+    @bindable listItems;
 
-    constructor(groupWorker, eventAggregator, element) {
-        
-        this.element = element;
-        this.eventAggregator = eventAggregator;
-        this.groupWorker = groupWorker;
-        this.orderItems = orderGroupItems;
+    constructor(element) {
         this.listItems = viewListItems;
-        this.path = [];
-        this.filters = [];
-
-        this.newMessageHandler = this.groupAndFilter.bind(this);
-        document.addEventListener("newMessage", this.newMessageHandler, false);
-    }
-
-    attached()
-    {
-        this.handleDefaultAssetsHandler = this.handleDefaultAssets.bind(this);
-        this.assetsDefaultSubscription =  this.eventAggregator.subscribe("staff_default", this.handleDefaultAssetsHandler);
-
-        this.groupWorker.createCache("staff", viewListItems);
-        this.groupWorker.createGroupPerspective("staff", "default", ["isActive", "site", "section", "location"], { aggregate: aggregates.count });
-    
-        this.groupWorker.disposeCache("staff");
-    }
-
-    handleDefaultAssets(args) {
-        this.chartItems = args.items;
-        this.dataSet = args.items;
-    }
-
-    groupAndFilter(args) {
-        this.chartItems = this.chartItems[args.detail.id].items; 
-        this.path.push(args.detail.id);
-        this.filters.push({
-           fieldName: args.detail.fieldName, 
-           value: args.detail.value
-        });
-
-        this.listItems = this.listItems.filter(function(el){
-           return (el[args.detail.fieldName] === args.detail.value); 
-        });
-    }
-
-    back(){
-        var previousItems = this.dataSet;
-        this.filters.pop();
-        var fLen = this.path.length;
-
-        for (var i = 0; i < (fLen - 1); i++) {
-            previousItems = previousItems[this.path[i]].items;
-        }
-
-        this.listItems = viewListItems;
-
-        for(var j = 0; j < this.filters.length; j++){
-            var fieldName = this.filters[j].fieldName;
-            var value = this.filters[j].value;
-
-            this.listItems = this.listItems.filter(function(el){
-                return (el[fieldName] == value);
-            });
-        }
-
-        this.chartItems = previousItems;
-        this.path.pop();
-    }
-
-    isGroupBoxChanged()
-    {
-        if(!this.isGroupBox)
-        {
-            var groupColumns = [];
-
-            for(var i = 0; i < this.orderItems.length; i++)
-            {
-                if(this.orderItems[i].isOn)
-                {
-                    groupColumns.push(this.orderItems[i].value);
-                }
-            }
-
-            this.listItems = viewListItems;
-            this.filters = [];
-            this.path = [];
-
-            this.groupWorker.disposeGroupPerspective("staff", "default");
-
-            this.groupWorker.createCache("staff", viewListItems);
-            this.groupWorker.createGroupPerspective("staff", "default", groupColumns, { aggregate: aggregates.count });
-        
-            this.groupWorker.disposeCache("staff");
-        }
-    }
+    }    
 }
 
 const orderGroupItems = [

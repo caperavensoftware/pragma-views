@@ -26,12 +26,21 @@ export class Selectable {
         }
 
         this.selectedId = event.target.dataset.id;
+    }
+
+    selectedIdChanged()
+    {
+        var newSelectedElement = this.element.querySelectorAll('[data-id="' + this.selectedId + '"]')[0];
+        var hold = this.element.querySelectorAll('[data-id="' + this.selectedId + '"]');
 
         if (this.oldSelectedItem) {
             this.oldSelectedItem.setAttribute("aria-selected", false);
         }
 
-        this.oldSelectedItem = event.target;
-        event.target.setAttribute("aria-selected", true);
+        if(newSelectedElement)
+        {
+            this.oldSelectedItem = newSelectedElement;
+            newSelectedElement.setAttribute("aria-selected", true);
+        }
     }
 }

@@ -33,3 +33,19 @@ master-list-container ul li {
 .card[aria-selected="true"] {
     background: white;
 }
+
+.button {
+    width: 1.50rem;
+    height: 2.00rem;
+}
+
+.icon {
+    width: 0.70rem;
+    height: 1.50rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+

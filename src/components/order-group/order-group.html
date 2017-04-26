@@ -1,7 +1,7 @@
 
 <template>
      <ul oa-sortable="items.bind: items">
-            <li repeat.for="item of items" oa-sortable-item="item.bind: item" >
+            <li repeat.for="item of items" oa-sortable-item="item.bind: item" class="group-menu-item" >
                 <div>
                     <label class="bold">${item.title}</label>
                     <input type="checkbox" checked.bind="item.isOn" class="switch"/>  
