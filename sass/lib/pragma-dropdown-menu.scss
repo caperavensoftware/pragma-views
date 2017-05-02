@@ -1,6 +1,10 @@
 pragma-dropdown-menu {
   position: relative;
 
+  label {
+    cursor: pointer;
+  }
+
   input[type="checkbox"] {
     display: none;
   }
@@ -9,8 +13,15 @@ pragma-dropdown-menu {
     position: absolute;
     display: none;
     z-index: 100;
-    background: $primary-background;
-    color: $main-menu-foreground;
+    background: $dropdown-background;
+    color: $primary-background;
+    border-radius: $border-radius;
+  }
+
+  li {
+    position: relative;
+    padding-top: $half-padding;
+    padding-bottom: $half-padding;
   }
 
   input:checked ~ ul {
@@ -18,7 +29,26 @@ pragma-dropdown-menu {
     @include flex-column();
   }
 
-  li:not(:last-child) {
-    margin-bottom: $half-padding;
+  li:hover {
+    background: $primary-highlight;
+  }
+
+  li:hover:before, li:hover:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: $default-padding;
+    height: 100%;
+    background: $primary-highlight;
+  }
+
+  li:hover:before {
+    left: 0;
+    margin-left: -$default-padding;
+  }
+
+  li:hover:after {
+    right: 0;
+    margin-right: -$default-padding;
   }
 }

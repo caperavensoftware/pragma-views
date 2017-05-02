@@ -4,7 +4,7 @@
 pragma-dropdown-menu {
   ul {
     width: $default-dropdown-width;
-    @include box-shadow(0, 0.5rem, 1rem, 0, 0, 0, 0, 0.5);
+    @include box-shadow(0, 0.5rem, 1rem, 0, 10, 25, 41, $default-shadow);
     padding: 1rem;
   }
 }
