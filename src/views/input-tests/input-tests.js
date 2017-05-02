@@ -4,6 +4,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 @inject(EventAggregator, bindable)
 export class InputTests {
     @bindable testMenuItems;
+    @bindable toolbarItems;
 
     constructor(eventAggregator) {
         this.eventAggregator = eventAggregator;
@@ -21,6 +22,21 @@ export class InputTests {
                 title: "dropdown"
             }
         ];
+
+        this.toolbarItems = [
+            {
+                iconName: "search",
+                title: "search"
+            },
+            {
+                iconName: "leftarrow",
+                title: "left arrow"
+            },
+            {
+                iconName: "printer",
+                title: "printer"
+            }
+        ]
     }
 
     attached() {

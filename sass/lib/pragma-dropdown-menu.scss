@@ -9,6 +9,11 @@ pragma-dropdown-menu {
     display: none;
   }
 
+  .header {
+    @include flex();
+    align-items: center;
+  }
+
   ul {
     position: absolute;
     display: none;

@@ -7,9 +7,16 @@ pragma-options-toolbar {
   .options-toolbar {
     @include flex();
     @include flex-row();
+    @include stretch();
 
     div {
       @include stretch();
     }
+  }
+}
+
+pragma-options-toolbar pragma-dropdown-menu {
+  icon, .icon {
+    margin-top: 0.15rem;
   }
 }
