@@ -1,31 +1,33 @@
-order-group ul li div {
-    @include flex();
-    @include flex-row();
-    align-items: center;
-    height: $order-group-height;
-    padding-left: $order-group-padding;
-    padding-right: $order-group-padding;
-    border-bottom-width: 0.05px;
-    border-left-width: 0px;
-    border-right-width: 0px;
-    border-top-width: 0px;
-    border-color: grey;
-    border-style: $order-group-style;
-    font-size: $rem-3;
-}
+order-group {
+    .active {
+        background: $order-group-active;
+    }
 
-order-group ul li div label {
-    @include stretch();
-    font-size: 14;
-}
+    .inactive {
+        background: $order-group-active;
+        opacity: 0.6;
+    }
 
-order-group ul {
-    width: 100%;
-    padding-bottom: $order-group-padding;
-    border-top-width: 0.05px;
-    border-color: grey;
-    border-style: $order-group-style;
-    border-bottom-width: 0px;
-    border-left-width: 0px;
-    border-right-width: 0px;
+    .group-menu-item {
+        margin-bottom: 0.1rem;
+
+        div {
+            @include flex();
+            @include flex-row();
+            align-items: center;
+            height: $order-group-height;
+            padding-left: $order-group-padding;
+            padding-right: $order-group-padding;
+            font-size: $rem-3;
+        }
+
+        label {
+            @include stretch();
+            font-size: $rem-2;
+        }
+    }
+
+    ul {
+        width: 100%;
+    }
 }

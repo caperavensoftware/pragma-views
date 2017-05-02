@@ -1,20 +1,26 @@
 
 <template>
-    <div class="toolbar">
-        <button click.delegate="back()" class="button"><icon name=back class="icon"></icon></button>
-        <select class="stretch" name="browser" value.bind="selectedGroupById">
-            <option model.bind="dropdownItem" repeat.for="dropdownItem of dropdownItems">${dropdownItem.title}</option>
-        </select>
-        <button><icon name=sort class="icon"></icon></button>
-        <button><icon name=search class="icon"></icon></button>
-        <input type="checkbox" checked.bind="isGroupBox" /><icon name=leftarrow class="icon"></icon></input>
-    </div>
+    <div if.bind="!isGroupBox">
+        <div class="toolbar-no-padding">
+            <button click.delegate="back()" class="button"><icon name="back"></icon></button>
 
-    <order-group items.bind="orderItems" if.bind="isGroupBox"></order-group>
-    <percentage-chart items.bind="chartItems" if.bind="!isGroupBox" id="percentage-chart"></percentage-chart>
+            <select class="stretch" name="browser" value.bind="selectedGroupById">
+                <option model.bind="dropdownItem" repeat.for="dropdownItem of dropdownItems">${dropdownItem.title}</option>
+            </select>
 
-    <ul selectable="selected-id.two-way: selectedId">
-        <li class="card li-styling" repeat.for="item of items" data-id="${item.id}">
+            <button><icon name="sort"></icon></button>
+            <button><icon name="search"></icon></button>
+
+            <label class="square-icon-label">
+                <icon name="leftarrow"></icon>
+                <input type="checkbox" checked.bind="isGroupBox" class="hidden"/></input>
+            </label>
+        </div>
+
+        <percentage-chart items.bind="chartItems" id="percentage-chart"></percentage-chart>
+
+        <ul selectable="selected-id.two-way: selectedId">
+            <li class="card li-styling" repeat.for="item of items" data-id="${item.id}">
                 <div class="no-mouse">
                     <div class="stretch">${item.code}</div>
                     <div>${item.siteCode}</div>
@@ -24,6 +30,20 @@
                     <span class="piped">${item.surname}</span>
                 </div>
                 <div class="suppressed no-mouse">${item.sectionCode}</div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div if.bind="isGroupBox" >
+        <div class="toolbar-no-padding">
+            <span class="stretch default-padding-left">Group drill down order</span>
+
+            <label class="square-icon-label">
+                <icon name="close"></icon>
+                <input type="checkbox" checked.bind="isGroupBox" class="hidden"/></input>
+            </label>
+        </div>
+
+        <order-group items.bind="orderItems" if.bind="isGroupBox"></order-group>
+    </div>
 </template>

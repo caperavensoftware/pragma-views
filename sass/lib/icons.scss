@@ -83,7 +83,7 @@ form-search {
   }
 }
 
-pragma-dropdown-menu {
+pragma-dropdown-menu, .toolbar-no-padding, .group-menu-item {
   icon, .icon {
     width: $default-padding;
     height: $default-padding;
