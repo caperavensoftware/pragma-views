@@ -1,10 +1,26 @@
-import {inject} from 'aurelia-framework';
+import {inject, bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
-@inject(EventAggregator)
+@inject(EventAggregator, bindable)
 export class InputTests {
+    @bindable testMenuItems;
+
     constructor(eventAggregator) {
         this.eventAggregator = eventAggregator;
+        this.testMenuItems = [
+            {
+                iconName: "input",
+                title: "input"
+            },
+            {
+                iconName: "back",
+                title: "back"
+            },
+            {
+                iconName: "dropdown",
+                title: "dropdown"
+            }
+        ];
     }
 
     attached() {

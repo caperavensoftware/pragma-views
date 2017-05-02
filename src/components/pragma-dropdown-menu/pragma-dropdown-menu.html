@@ -7,9 +7,10 @@
         <input type="checkbox" class="dropdown-menu" />
         <div class="background"></div>
         <ul>
-            <li><icon name="printer"></icon><span>Print</span></li>
-            <li><icon name="sorting"></icon><span>Sorting</span></li>
-            <li><icon name="sort"></icon><span>Sort</span></li>
+            <li repeat.for="item of items">
+                <icon if.bind="item.iconName" name.bind="item.iconName"></icon>
+                <span>${item.title}</span>
+            </li>
         </ul>
     </label>
 </template>
