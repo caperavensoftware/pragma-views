@@ -82,3 +82,10 @@ form-search {
     height: $large-icon-size;
   }
 }
+
+pragma-dropdown-menu {
+  icon, .icon {
+    width: $default-padding;
+    height: $default-padding;
+  }
+}

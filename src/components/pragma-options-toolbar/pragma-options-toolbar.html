@@ -1,3 +1,9 @@
 <template>
-    <div>Control</div>
+    <div class="options-toolbar">
+        <div>
+            <slot name="items"></slot>
+        </div>
+
+        <pragma-dropdown-menu title="Options" icon-name="options" class="right"></pragma-dropdown-menu>
+    </div>
 </template>

@@ -1,0 +1,24 @@
+pragma-dropdown-menu {
+  position: relative;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  ul {
+    position: absolute;
+    display: none;
+    z-index: 100;
+    background: $primary-background;
+    color: $main-menu-foreground;
+  }
+
+  input:checked ~ ul {
+    @include flex();
+    @include flex-column();
+  }
+
+  li:not(:last-child) {
+    margin-bottom: $half-padding;
+  }
+}
