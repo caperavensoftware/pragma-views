@@ -6,6 +6,8 @@ $app-toolbar-height: 2.5rem;
 $border-radius: 0.4rem;
 $suppressed-opacity: 0.4;
 
+$default-shadow: 0.4;
+
 /*
  FONT SIZES:
  REM = 16px;
@@ -115,3 +117,9 @@ $order-group-style: solid;
 $common-icon-size: 1.5rem;
 $large-icon-size: 2.5rem;
 $toolbar-icon-size: 1rem;
+
+/*
+  DROP DOWN MENU
+ */
+
+$default-dropdown-width: 10rem;

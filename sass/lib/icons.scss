@@ -8,8 +8,8 @@
 
 .assist-toolbar, .assist-search {
   .icon {
-    width: $common-icon-size;
-    height: $common-icon-size;
+    width: $toolbar-icon-size;
+    height: $toolbar-icon-size;
     fill: $icon-light-foreground;
     opacity: 0.6;
   }
@@ -80,5 +80,12 @@ form-search {
   icon, .icon {
     width: $large-icon-size;
     height: $large-icon-size;
+  }
+}
+
+pragma-dropdown-menu, .toolbar-no-padding, .group-menu-item {
+  icon, .icon {
+    width: $default-padding;
+    height: $default-padding;
   }
 }
