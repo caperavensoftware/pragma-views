@@ -1,7 +1,7 @@
 
 import {expect} from 'chai';
 import 'aurelia-polyfills';
-import {InputTests} from '../../../src/views/input-tests/input-tests';
+import {InputTests} from './../../../src/views/input-tests/input-tests';
 
 describe('Input Tests', function() {
     let input;

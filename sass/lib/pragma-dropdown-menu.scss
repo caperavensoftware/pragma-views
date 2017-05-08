@@ -1,0 +1,66 @@
+pragma-dropdown-menu {
+  position: relative;
+
+  label {
+    cursor: pointer;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .header {
+    @include flex();
+    align-items: center;
+  }
+
+  ul {
+    position: absolute;
+    display: none;
+    z-index: 100;
+    background: $dropdown-background;
+    color: $primary-background;
+    border-radius: $border-radius;
+  }
+
+  li {
+    position: relative;
+    padding-top: $half-padding;
+    padding-bottom: $half-padding;
+    @include flex();
+    @include flex-row();
+    align-items: center;
+
+    icon {
+      margin-right: $half-padding;
+    }
+  }
+
+  input:checked ~ ul {
+    @include flex();
+    @include flex-column();
+  }
+
+  li:hover {
+    background: $primary-highlight;
+  }
+
+  li:hover:before, li:hover:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: $default-padding;
+    height: 100%;
+    background: $primary-highlight;
+  }
+
+  li:hover:before {
+    left: 0;
+    margin-left: -$default-padding;
+  }
+
+  li:hover:after {
+    right: 0;
+    margin-right: -$default-padding;
+  }
+}

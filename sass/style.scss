@@ -1,6 +1,6 @@
 // Normalize css so that these styles will work the same on all browsers
 @import './normalize';
-@import './../jspm_packages/npm/pragma-menu@1.0.16/pragma-menu.scss';
+@import './../jspm_packages/npm/pragma-menu@1.0.17/pragma-menu.scss';
 
 // Required utility css
 @import 'lib/variables';
@@ -37,3 +37,7 @@
 @import './lib/master-view';
 @import './lib/piped';
 @import './lib/pragma-messages';
+@import './lib/pragma-grid';
+@import './lib/toolbar';
+@import './lib/pragma-options-toolbar';
+@import './lib/pragma-dropdown-menu';

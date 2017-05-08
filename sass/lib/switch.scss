@@ -33,6 +33,7 @@
 }
 
 .switch:checked:after {
+  content: "";
   background: $switch-checked;
   transform: translateX($switch-width-after);
 }

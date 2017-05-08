@@ -1,15 +1,9 @@
 .master-view{
-    width: 300px;
+    width: 20rem;
     border-radius: 0.5px;
     border-width: 0.5px;
     border-style: solid;
-    height: 720px;
-}
-
-.toolbar {
-    @include flex();
-    @include flex-row();
-    padding: 5px;
+    height: 100%;
 }
 
 .data-display{

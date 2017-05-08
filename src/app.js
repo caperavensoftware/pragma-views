@@ -1,4 +1,5 @@
 import {menuItems, quickItems} from './menu-items';
+import {isMobile} from './lib/device-helper';
 
 export class App {
     router = null;
@@ -19,5 +20,15 @@ export class App {
         ]);
 
         this.router = router;
+    }
+
+    attached() {
+        if (isMobile()) {
+            this.closeAssistant();
+        }
+    }
+
+    closeAssistant() {
+        this.assistant.au["assistant"].viewModel.isOpen = false;
     }
 }

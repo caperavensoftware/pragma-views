@@ -1,10 +1,42 @@
-import {inject} from 'aurelia-framework';
+import {inject, bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
-@inject(EventAggregator)
+@inject(EventAggregator, bindable)
 export class InputTests {
+    @bindable testMenuItems;
+    @bindable toolbarItems;
+
     constructor(eventAggregator) {
         this.eventAggregator = eventAggregator;
+        this.testMenuItems = [
+            {
+                iconName: "input",
+                title: "input"
+            },
+            {
+                iconName: "back",
+                title: "back"
+            },
+            {
+                iconName: "dropdown",
+                title: "dropdown"
+            }
+        ];
+
+        this.toolbarItems = [
+            {
+                iconName: "search",
+                title: "search"
+            },
+            {
+                iconName: "leftarrow",
+                title: "left arrow"
+            },
+            {
+                iconName: "printer",
+                title: "printer"
+            }
+        ]
     }
 
     attached() {

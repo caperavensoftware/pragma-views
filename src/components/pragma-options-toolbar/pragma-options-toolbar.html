@@ -1,0 +1,9 @@
+<template>
+    <div class="options-toolbar">
+        <div>
+            <slot name="items"></slot>
+        </div>
+
+        <pragma-dropdown-menu icon-name="options" class="right" items.bind="dropdownItems"></pragma-dropdown-menu>
+    </div>
+</template>

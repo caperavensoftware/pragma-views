@@ -1,4 +1,4 @@
 <template>
     <div>${loading ? "please wait while loading data" : "data loaded"}</div>
-    <pragma-grid></pragma-grid>
+    <pragma-grid items.bind="items" columns.bind="columns"></pragma-grid>
 </template>

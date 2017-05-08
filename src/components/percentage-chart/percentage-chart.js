@@ -33,6 +33,8 @@ export class PercentageChart {
     }
 
     click(event){
+        console.log(this);
+
         if(event.target.nodeName == "LI")
         {
             var cusevent = new CustomEvent(
@@ -50,6 +52,13 @@ export class PercentageChart {
                     cancelable: true
                 }
             );
+
+            if (this.oldSelectedItem) {
+                this.oldSelectedItem.classList.remove("selected");
+            }
+
+            event.target.classList.add("selected");
+            this.oldSelectedItem = event.target;
 
             event.target.dispatchEvent(cusevent);
         }

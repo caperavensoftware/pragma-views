@@ -1,0 +1,16 @@
+<template>
+    <label>
+        <span class="header">
+            <span>${title}</span>
+            <icon if.bind="iconName.length > 0" name.bind="iconName"></icon>
+        </span>
+        <input type="checkbox" class="dropdown-menu" />
+        <div class="background"></div>
+        <ul>
+            <li repeat.for="item of items">
+                <icon if.bind="item.iconName" name.bind="item.iconName"></icon>
+                <span>${item.title}</span>
+            </li>
+        </ul>
+    </label>
+</template>

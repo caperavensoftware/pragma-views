@@ -1,0 +1,9 @@
+.toolbar, .toolbar-no-padding {
+  @include flex();
+  @include flex-row();
+  align-items: center;
+}
+
+.toolbar {
+  padding: $half-padding;
+}

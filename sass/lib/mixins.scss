@@ -41,9 +41,13 @@
 }
 
 @mixin fullsize {
-  display: block;
   width: 100%;
   height: 100%;
+}
+
+@mixin fullsize-block {
+  display: block;
+  @include fullsize();
 }
 
 @mixin space-around {
