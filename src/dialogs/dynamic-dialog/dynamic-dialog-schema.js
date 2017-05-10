@@ -149,7 +149,7 @@ export class DynamicDialogCollectionItem {
             "__title__": title,
             "__datasource__": this.datasource,
             "__description__": "",
-            "__content__": "${option}"
+            "__content__": "${option.text}"
         });
     }
 }

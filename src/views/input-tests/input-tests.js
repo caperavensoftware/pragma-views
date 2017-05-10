@@ -76,13 +76,28 @@ export class InputTests {
                 birthDate: Date.now(),
                 description: "",
                 duration: "10:11:12",
-                status: "Awaiting Approval",
+                status: 2,
                 statuses: [
-                    "In Progress",
-                    "Approved",
-                    "Awaiting Approval",
-                    "Canceled",
-                    "Closed"
+                    {
+                        id: 0,
+                        text: "In Progress"
+                    },
+                    {
+                        id: 1,
+                        text: "Approved"
+                    },
+                    {
+                        id: 2,
+                        text: "Awaiting Approval"
+                    },
+                    {
+                        id: 3,
+                        text: "Canceled"
+                    },
+                    {
+                        id: 4,
+                        text: "Closed"
+                    }
                 ]
             }
         };
@@ -90,7 +105,7 @@ export class InputTests {
         this.dialogService.open({viewModel: DynamicDialog, model: schema})
             .whenClosed(resposne => {
                 if (!resposne.wasCancelled) {
-
+                    console.log(schema);
                 }
             });
     }
