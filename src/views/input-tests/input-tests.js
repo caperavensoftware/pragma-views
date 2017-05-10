@@ -2,7 +2,7 @@ import {inject, bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import {DynamicDialog} from './../../dialogs/dynamic-dialog/dynamic-dialog';
-import {DynamicDialogSchemaItem, DynamicDialogStaticItemType} from './../../dialogs/dynamic-dialog/dynamic-dialog-schema';
+import {DynamicDialogSchemaItem, DynamicDialogStaticItemType, DynamicDialogCollectionItem} from './../../dialogs/dynamic-dialog/dynamic-dialog-schema';
 
 @inject(EventAggregator, DialogService)
 export class InputTests {
@@ -68,13 +68,22 @@ export class InputTests {
                 new DynamicDialogSchemaItem("Birth Date", "birthDate", new DynamicDialogStaticItemType("date")),
                 new DynamicDialogSchemaItem("Description", "description", new DynamicDialogStaticItemType("string", "500")),
                 new DynamicDialogSchemaItem("Duration", "duration", new DynamicDialogStaticItemType("duration")),
+                new DynamicDialogSchemaItem("Status", "status", new DynamicDialogCollectionItem("statuses")),
             ],
             model: {
                 name: "",
                 age: 0,
                 birthDate: Date.now(),
                 description: "",
-                duration: "10:11:12"
+                duration: "10:11:12",
+                status: "Awaiting Approval",
+                statuses: [
+                    "In Progress",
+                    "Approved",
+                    "Awaiting Approval",
+                    "Canceled",
+                    "Closed"
+                ]
             }
         };
 

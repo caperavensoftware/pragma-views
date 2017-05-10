@@ -31,6 +31,15 @@ export const textareaHtml = `
 </input-composite>
 `;
 
+export const selectHtml = `
+<input-composite id="__field__" label="__title__" descriptor="__description__">
+    <select value.bind="__field__">
+        <option repeat.for="option of __prefix__.__datasource__" value.bind="option">__content__</option>
+    </select>
+</input-composite>
+`;
+
+
 export const containerHtml = `
 <div __classes__ __attribute__>__content__</div>
 `;

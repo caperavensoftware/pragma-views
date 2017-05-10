@@ -1,4 +1,4 @@
-import {populateTemplate, inputHtml, textareaHtml} from './../../lib/template-parser-contstants';
+import {populateTemplate, inputHtml, textareaHtml, selectHtml} from './../../lib/template-parser-contstants';
 
 /**
  * Process array of DynamicDialogSchemaItem and give back html string representing that schema
@@ -124,11 +124,6 @@ export class DynamicDialogStaticItemType {
  */
 export class DynamicDialogCollectionItem {
     /**
-     * What is the field that must be bound to on this collection
-     */
-    field;
-
-    /**
      * What is the property on the model to get the items from?
      */
     datasource;
@@ -138,8 +133,7 @@ export class DynamicDialogCollectionItem {
      * @param field: string
      * @param datasource: string
      */
-    constructor(field, datasource) {
-        this.field = field;
+    constructor(datasource) {
         this.datasource = datasource;
     }
 
@@ -149,6 +143,13 @@ export class DynamicDialogCollectionItem {
      * @param field: string
      */
     toHtml(title, field) {
-        return '<div>TODO: DynamicDialogCollectionItem</div>';
+        return populateTemplate(selectHtml, {
+            "__prefix__": "model",
+            "__field__": field,
+            "__title__": title,
+            "__datasource__": this.datasource,
+            "__description__": "",
+            "__content__": "${option}"
+        });
     }
 }
