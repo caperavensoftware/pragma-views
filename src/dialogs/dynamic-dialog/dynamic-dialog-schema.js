@@ -1,4 +1,4 @@
-import {populateTemplate, inputHtml, textareaHtml, selectHtml} from './../../lib/template-parser-contstants';
+import {populateTemplate, inputHtml, textareaHtml, selectHtml, readOnlyHtml} from './../../lib/template-parser-contstants';
 
 /**
  * Process array of DynamicDialogSchemaItem and give back html string representing that schema
@@ -151,5 +151,24 @@ export class DynamicDialogCollectionItem {
             "__description__": "",
             "__content__": "${option.text}"
         });
+    }
+}
+
+/**
+ * This is used to render readonly field data in a dialog or other UI
+ */
+export class DynamicDialogReadonly {
+    /**
+     * Generate readonly html for given field
+     * @param title: string
+     * @param field: string
+     */
+    toHtml(title, field) {
+        return populateTemplate(readOnlyHtml, {
+            "__field__": field,
+            "__title__": title,
+            "__description__": "",
+            "__content__": "${" + `model.${field}` + "}"
+        })
     }
 }

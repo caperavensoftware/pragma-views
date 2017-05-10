@@ -39,6 +39,11 @@ export const selectHtml = `
 </input-composite>
 `;
 
+export const readOnlyHtml = `
+<input-composite id="__field__" label="__title__" descriptor="__description__">
+    <div>__content__</div>
+</input-composite>
+`;
 
 export const containerHtml = `
 <div __classes__ __attribute__>__content__</div>

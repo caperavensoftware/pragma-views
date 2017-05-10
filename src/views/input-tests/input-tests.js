@@ -2,7 +2,7 @@ import {inject, bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import {DynamicDialog} from './../../dialogs/dynamic-dialog/dynamic-dialog';
-import {DynamicDialogSchemaItem, DynamicDialogStaticItemType, DynamicDialogCollectionItem} from './../../dialogs/dynamic-dialog/dynamic-dialog-schema';
+import {DynamicDialogSchemaItem, DynamicDialogStaticItemType, DynamicDialogCollectionItem, DynamicDialogReadonly} from './../../dialogs/dynamic-dialog/dynamic-dialog-schema';
 
 @inject(EventAggregator, DialogService)
 export class InputTests {
@@ -69,6 +69,7 @@ export class InputTests {
                 new DynamicDialogSchemaItem("Description", "description", new DynamicDialogStaticItemType("string", "500")),
                 new DynamicDialogSchemaItem("Duration", "duration", new DynamicDialogStaticItemType("duration")),
                 new DynamicDialogSchemaItem("Status", "status", new DynamicDialogCollectionItem("statuses")),
+                new DynamicDialogSchemaItem("Status Value", "status", new DynamicDialogReadonly()),
             ],
             model: {
                 name: "",
