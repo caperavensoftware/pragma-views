@@ -1,8 +1,8 @@
-import {populateTemplate, inputHtml, textareaHtml, selectHtml, readOnlyHtml} from './../../lib/template-parser-contstants';
+import {populateTemplate, inputHtml, textareaHtml, selectHtml, readOnlyHtml} from './template-parser-contstants';
 
 /**
- * Process array of DynamicDialogSchemaItem and give back html string representing that schema
- * @param schema: array of DynamicDialogSchemaItem
+ * Process array of DynamicSchemaItem and give back html string representing that schema
+ * @param schema: array of DynamicSchemaItem
  */
 export function schemaToHtml(schema) {
     let html = "";
@@ -16,9 +16,9 @@ export function schemaToHtml(schema) {
 
 /**
  * When using dynamic dialog the UI is generated from the schema
- * Each item in the schema must be of DynamicDialogSchemaItem.
+ * Each item in the schema must be of DynamicSchemaItem.
  */
-export class DynamicDialogSchemaItem {
+export class DynamicSchemaItem {
     /**
      * What is the title of the item being generated
      */
@@ -40,7 +40,7 @@ export class DynamicDialogSchemaItem {
      * @constructor
      * @param title: string
      * @param field: string
-     * @param dataType: DynamicDialogStaticItemType or DynamicDialogCollectionItem
+     * @param dataType: DynamicSchemaFieldItem or DynamicSchemaCollectionItem
      */
     constructor(title, field, dataType) {
         this.title = title;
@@ -61,7 +61,7 @@ export class DynamicDialogSchemaItem {
  * Depending on these properties, different types of controls will used to render this time.
  * See comments on format for string as a example
  */
-export class DynamicDialogStaticItemType {
+export class DynamicSchemaFieldItem {
     /**
      * 1. "string"
      * 2. "number"
@@ -122,7 +122,7 @@ export class DynamicDialogStaticItemType {
  * This is used to render collections on the dialog.
  * The UI will render this as a combobox.
  */
-export class DynamicDialogCollectionItem {
+export class DynamicSchemaCollectionItem {
     /**
      * What is the property on the model to get the items from?
      */
@@ -157,7 +157,7 @@ export class DynamicDialogCollectionItem {
 /**
  * This is used to render readonly field data in a dialog or other UI
  */
-export class DynamicDialogReadonly {
+export class DynamicSchemaReadonlyItem {
     /**
      * Generate readonly html for given field
      * @param title: string

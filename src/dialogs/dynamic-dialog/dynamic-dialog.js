@@ -1,7 +1,7 @@
 import {inject, bindable} from "aurelia-framework";
 import {DialogController} from 'aurelia-dialog';
 import {DynamicViewLoader} from './../../lib/dynamic-view-loader';
-import {schemaToHtml} from './dynamic-dialog-schema';
+import {schemaToHtml} from '../../lib/dynamic-schema';
 
 
 @inject(DialogController, DynamicViewLoader)

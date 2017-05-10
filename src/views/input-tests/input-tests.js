@@ -2,7 +2,7 @@ import {inject, bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import {DynamicDialog} from './../../dialogs/dynamic-dialog/dynamic-dialog';
-import {DynamicDialogSchemaItem, DynamicDialogStaticItemType, DynamicDialogCollectionItem, DynamicDialogReadonly} from './../../dialogs/dynamic-dialog/dynamic-dialog-schema';
+import {DynamicSchemaItem, DynamicSchemaFieldItem, DynamicSchemaCollectionItem, DynamicSchemaReadonlyItem} from '../../lib/dynamic-schema';
 
 @inject(EventAggregator, DialogService)
 export class InputTests {
@@ -63,13 +63,13 @@ export class InputTests {
         const  schema = {
             title: "Test dynamic dialog",
             details: [
-                new DynamicDialogSchemaItem("Name", "name", new DynamicDialogStaticItemType("string", "50")),
-                new DynamicDialogSchemaItem("Age", "age", new DynamicDialogStaticItemType("number", "0-100")),
-                new DynamicDialogSchemaItem("Birth Date", "birthDate", new DynamicDialogStaticItemType("date")),
-                new DynamicDialogSchemaItem("Description", "description", new DynamicDialogStaticItemType("string", "500")),
-                new DynamicDialogSchemaItem("Duration", "duration", new DynamicDialogStaticItemType("duration")),
-                new DynamicDialogSchemaItem("Status", "status", new DynamicDialogCollectionItem("statuses")),
-                new DynamicDialogSchemaItem("Status Value", "status", new DynamicDialogReadonly()),
+                new DynamicSchemaItem("Name", "name", new DynamicSchemaFieldItem("string", "50")),
+                new DynamicSchemaItem("Age", "age", new DynamicSchemaFieldItem("number", "0-100")),
+                new DynamicSchemaItem("Birth Date", "birthDate", new DynamicSchemaFieldItem("date")),
+                new DynamicSchemaItem("Description", "description", new DynamicSchemaFieldItem("string", "500")),
+                new DynamicSchemaItem("Duration", "duration", new DynamicSchemaFieldItem("duration")),
+                new DynamicSchemaItem("Status", "status", new DynamicSchemaCollectionItem("statuses")),
+                new DynamicSchemaItem("Status Value", "status", new DynamicSchemaReadonlyItem()),
             ],
             model: {
                 name: "",
