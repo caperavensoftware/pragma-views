@@ -65,7 +65,7 @@ export class MasterListContainer {
     filter(args){
 
         this.filters.push({
-           fieldName: args.detail.fieldName, 
+           fieldName: args.detail.field,
            value: args.detail.value
         });
 
@@ -78,16 +78,16 @@ export class MasterListContainer {
         this.chartItems = this.chartItems[args.detail.id].items; 
         this.path.push(args.detail.id);
         this.filters.push({
-           fieldName: args.detail.fieldName, 
+           fieldName: args.detail.field,
            value: args.detail.value
         });
         this.dropdownItems.push({
-            title: args.detail.fieldName,
+            title: args.detail.field,
             id: args.detail.id
         });
 
         this.items = this.items.filter(function(el){
-           return (el[args.detail.fieldName] === args.detail.value); 
+           return (el[args.detail.field] === args.detail.value);
         });
     }
 
@@ -132,7 +132,7 @@ export class MasterListContainer {
         var filterItems = this.oldItems.slice();
 
         for(var j = 0; j < this.filters.length; j++){
-            var fieldName = this.filters[j].fieldName;
+            var fieldName = this.filters[j].field;
             var value = this.filters[j].value;
 
             filterItems = filterItems.filter(function(el){
