@@ -5,6 +5,9 @@ This is the main way perform screen generation. Schemas are converted to html pr
 Note that it only produces html, what you do with that is up to you. 
 If your intent is to embed that html in your current screen I reconmend using the dynamic view loader as it will help you manage the data context and bindings.
 
+## What gets generated
+If you want to see what get's generated please look at the template parser constants file.
+
 ## Usage
 `const html = this.templateParser.parse(templateJson)`
 

@@ -33,8 +33,8 @@ System.config({
       "npm:aurelia-logging@1.3.1/aurelia-logging.js",
       "npm:aurelia-metadata@1.0.3.js",
       "npm:aurelia-metadata@1.0.3/aurelia-metadata.js",
-      "npm:aurelia-pal-browser@1.2.0.js",
-      "npm:aurelia-pal-browser@1.2.0/aurelia-pal-browser.js",
+      "npm:aurelia-pal-browser@1.2.1.js",
+      "npm:aurelia-pal-browser@1.2.1/aurelia-pal-browser.js",
       "npm:aurelia-pal@1.3.0.js",
       "npm:aurelia-pal@1.3.0/aurelia-pal.js",
       "npm:aurelia-path@1.1.1.js",
@@ -96,7 +96,7 @@ System.config({
     "aurelia-dialog": "npm:aurelia-dialog@1.0.0-rc.1.0.3",
     "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.1",
     "aurelia-framework": "npm:aurelia-framework@1.1.2",
-    "aurelia-pal-browser": "npm:aurelia-pal-browser@1.2.0",
+    "aurelia-pal-browser": "npm:aurelia-pal-browser@1.2.1",
     "oribella-aurelia-sortable": "npm:oribella-aurelia-sortable@0.11.3",
     "pragma-menu": "npm:pragma-menu@1.0.17",
     "systemjs/plugin-text": "github:systemjs/plugin-text@0.0.9",
@@ -163,9 +163,6 @@ System.config({
       "aurelia-logging": "npm:aurelia-logging@1.3.1"
     },
     "npm:aurelia-metadata@1.0.3": {
-      "aurelia-pal": "npm:aurelia-pal@1.3.0"
-    },
-    "npm:aurelia-pal-browser@1.2.0": {
       "aurelia-pal": "npm:aurelia-pal@1.3.0"
     },
     "npm:aurelia-pal-browser@1.2.1": {

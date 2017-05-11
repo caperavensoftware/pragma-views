@@ -34,6 +34,7 @@
       "aurelia-dialog": "^1.0.0-rc.1.0.3",
       "aurelia-event-aggregator": "^1.0.1",
       "aurelia-framework": "^1.1.0",
+      "aurelia-pal-browser": "^1.2.1",
       "oribella-aurelia-sortable": "^0.11.3",
       "pragma-menu": "^1.0.17",
       "systemjs/plugin-text": "github:systemjs/plugin-text@^0.0.9"
