@@ -232,7 +232,7 @@ describe('TemplateParser Tests', function() {
 
         // Assert
         assert(result.indexOf('id="code"') > 0);
-        assert(result.indexOf('label="Code"') > 0);
+        assert(result.indexOf('title="Code"') > 0);
         assert(result.indexOf('descriptor="max length of 50"') > 0);
         assert(result.indexOf('class="class1 class2"') > 0);
         assert(result.indexOf('type="text"') > 0);
@@ -256,7 +256,7 @@ describe('TemplateParser Tests', function() {
 
         // Assert
         assert(result.indexOf('id="notes"') > 0);
-        assert(result.indexOf('label="Notes"') > 0);
+        assert(result.indexOf('title="Notes"') > 0);
         assert(result.indexOf('descriptor=""') > 0);
         assert(result.indexOf('class="c1"') > 0);
         assert(result.indexOf('test="testing"') > 0);
