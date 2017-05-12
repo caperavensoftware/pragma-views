@@ -6,4 +6,4 @@ coverage
 distribute
 publish
 service-worker.js
-.idea/**/*.*
+.idea
