@@ -12,3 +12,5 @@ service-worker.js
 .idea/misc.xml
 .idea/modules.xml
 .idea/workspace.xml
+service-worker.js
+chromedriver.*
