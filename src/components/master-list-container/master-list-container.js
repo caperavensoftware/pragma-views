@@ -75,7 +75,7 @@ export class MasterListContainer {
 
     chartClick(args){
         this.filters.push({
-           fieldName: args.detail.fieldName, 
+           fieldName: args.detail.field,
            value: args.detail.value
         });
 
@@ -88,7 +88,7 @@ export class MasterListContainer {
         this.chartItems = this.chartItems[args.detail.id].items; 
         this.path.push(args.detail.id);
         this.dropdownItems.push({
-            title: args.detail.fieldName,
+            title: args.detail.field,
             id: args.detail.id
         });
     }
@@ -123,6 +123,8 @@ export class MasterListContainer {
             this.groupWorker.createGroupPerspective("staff", "default", groupColumns, { aggregate: aggregates.count });
         
             //this.groupWorker.disposeCache("staff");
+          
+            this.groupWorker.disposeCache("staff");
         }
     }
 
