@@ -75,7 +75,7 @@ export class MasterListContainer {
 
     chartClick(args){
         this.filters.push({
-           fieldName: args.detail.field,
+           fieldName: args.detail.fieldName,
            value: args.detail.value
         });
 
