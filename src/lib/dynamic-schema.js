@@ -40,7 +40,7 @@ export class DynamicSchemaItem {
      * @constructor
      * @param title: string
      * @param field: string
-     * @param dataType: DynamicSchemaFieldItem or DynamicSchemaCollectionItem
+     * @param dataType: DynamicSchemaFieldItem or DynamicSchemaCollectionItem or DynamicSchemaReadonlyItem
      */
     constructor(title, field, dataType) {
         this.title = title;

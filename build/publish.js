@@ -19,6 +19,7 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             dest: "publish",
             minify: true
         },
+
         {
             src: ["test/mockups/**/*.js"],
             dest: "publish/amd/mockups",
@@ -34,10 +35,12 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             dest: "publish/systemjs/mockups",
             minify: false
         },
+
         {
             src: ["distribute/**/components/**/*.map"],
             dest: "publish"
         },
+
         {
             src: ["app/src/components/icons/*.html"],
             dest: "publish/amd/components/icons"
@@ -47,13 +50,10 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             dest: "publish/commonjs/components/icons"
         },
         {
-            src: ["app/src/components/master-detail/*.html"],
-            dest: "publish/amd/components/master-detail"
+            src: ["app/src/components/icons/*.html"],
+            dest: "publish/systemjs/components/icons"
         },
-        {
-            src: ["app/src/components/master-detail/*.html"],
-            dest: "publish/commonjs/components/master-detail"
-        },
+
         {
             src: ["app/src/components/assistant/*.html"],
             dest: "publish/amd/components/assistant"
@@ -66,6 +66,7 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             src: ["app/src/components/assistant/*.html"],
             dest: "publish/systemjs/components/assistant"
         },
+
         {
             src: ["app/src/components/form-search/*.html"],
             dest: "publish/amd/components/form-search"
@@ -78,6 +79,7 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             src: ["app/src/components/form-search/*.html"],
             dest: "publish/systemjs/components/form-search"
         },
+
         {
             src: ["app/src/components/input-composite/*.html"],
             dest: "publish/amd/components/input-composite"
@@ -90,8 +92,9 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             src: ["app/src/components/input-composite/*.html"],
             dest: "publish/systemjs/components/input-composite"
         },
+
         {
-            src: ["app/src/components/master-detail*.html"],
+            src: ["app/src/components/master-detail/*.html"],
             dest: "publish/amd/components/master-detail"
         },
         {
@@ -102,6 +105,7 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             src: ["app/src/components/master-detail/*.html"],
             dest: "publish/systemjs/components/master-detail"
         },
+
         {
             src: ["app/src/components/menu/*.html"],
             dest: "publish/amd/components/menu"
@@ -114,6 +118,7 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             src: ["app/src/components/menu/*.html"],
             dest: "publish/systemjs/components/menu"
         },
+
         {
             src: ["distribute/amd/index.js"],
             dest: "publish/amd"
@@ -126,6 +131,7 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             src: ["distribute/systemjs/index.js"],
             dest: "publish/systemjs"
         },
+
         {
             src: ["sass/**/*.*"],
             dest: "publish/amd/scss"
@@ -138,10 +144,51 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             src: ["sass/**/*.*"],
             dest: "publish/systemjs/scss"
         },
+
         {
             src: ["group-worker.js"],
             dest: "publish"
-        }
+        },
+        {
+            src: ["distribute/amd/dialogs/**/*.js"],
+            dest: "publish/amd/dialogs"
+        },
+        {
+            src: ["distribute/commonjs/dialogs/**/*.js"],
+            dest: "publish/commonjs/dialogs"
+        },
+        {
+            src: ["distribute/systemjs/dialogs/**/*.js"],
+            dest: "publish/systemjs/dialogs"
+        },
+        {
+            src: ["app/src/dialogs/**/*.html"],
+            dest: "publish/amd/dialogs"
+        },
+        {
+            src: ["app/src/dialogs/**/*.html"],
+            dest: "publish/commonjs/dialogs"
+        },
+        {
+            src: ["app/src/dialogs/**/*.html"],
+            dest: "publish/systemjs/dialogs"
+        },
+
+        {
+            src: ["app/src/dialogs/**/*.map"],
+            dest: "publish/amd/dialogs"
+        },
+        {
+            src: ["app/src/dialogs/**/*.map"],
+            dest: "publish/commonjs/dialogs"
+        },
+        {
+            src: ["app/src/dialogs/**/*.map"],
+            dest: "publish/systemjs/dialogs"
+        },
+
+
+
     ]);
 
     publish.setPackage({

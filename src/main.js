@@ -21,8 +21,7 @@ export function configure(aurelia) {
                 'components/pragma-options-toolbar/pragma-options-toolbar',
                 'components/pragma-dropdown-menu/pragma-dropdown-menu'
             )
-            .plugin("aurelia-dialog")
-            .plugin("oribella-aurelia-sortable");
+            .plugin("aurelia-dialog");
 
         aurelia.start().then(() => {
             aurelia.setRoot();
