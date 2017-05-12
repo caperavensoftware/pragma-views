@@ -6,4 +6,11 @@ coverage
 distribute
 publish
 service-worker.js
-.idea
+.idea/build-utilities.iml
+.idea/inspectionProfiles/
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+service-worker.js
+chromedriver.*
