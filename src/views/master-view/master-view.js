@@ -9,6 +9,25 @@ export class MasterView {
     @bindable listItems;
 
     constructor(element) {
+
+        for(var j = 0; j < 10; j++)
+        {
+            for(var i = 0; i < 1; i++)
+            {
+                var objectItem = {id: (viewListItems.length + i),
+                                    code: viewListItems[j].code, 
+                                    name: viewListItems[j].name,
+                                    surname: viewListItems[j].surname,
+                                    site: viewListItems[j].site,
+                                    section: viewListItems[j].section,
+                                    location: viewListItems[j].location,
+                                    isActive: viewListItems[j].isActive,
+                                    cost: viewListItems[j].cost};
+
+                viewListItems.push(objectItem);
+            }
+        }
+
         this.listItems = viewListItems;
     }    
 }
@@ -71,7 +90,7 @@ const percentageChartItems = [
     }
 ];
 
-export const viewListItems = [
+export var viewListItems = [
     {
         code: "ZSMC", 
         name: "Mildred", 
