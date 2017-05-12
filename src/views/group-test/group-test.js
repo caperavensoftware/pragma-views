@@ -15,6 +15,10 @@ export class GroupTest {
     attached() {
         this.handleDefaultAssetsHandler = this.handleDefaultAssets.bind(this);
         this.assetsDefaultSubscription =  this.eventAggregator.subscribe("assets_default", this.handleDefaultAssetsHandler);
+        this.getDefaultAssetsHandler = this.getDefaultAssets.bind(this);
+        this.getAssetsDefaultSubscription =  this.eventAggregator.subscribe("get_assets_default", this.getDefaultAssetsHandler);
+        this.getRecordsForHandler = this.getRecordsFor.bind(this);
+        this.getRecordsForSubscription =  this.eventAggregator.subscribe("records_assets", this.getRecordsForHandler);
 
         this.groupWorker.createCache("assets", this.collection);
         this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
@@ -22,6 +26,21 @@ export class GroupTest {
         this.groupWorker.createGroupPerspective("assets", "isActive-cost-ave", ["isActive"], { aggregate: aggregates.min, field: "cost" });
         this.groupWorker.createGroupPerspective("assets", "isActive-cost-max", ["isActive"], { aggregate: aggregates.max, field: "cost" });
         this.groupWorker.createGroupPerspective("assets", "site-cost", ["site"], { aggregate: aggregates.ave, field: "cost" });
+        
+        this.groupWorker.getGroupPerspective("assets", "default");
+        
+        var filters = [];
+        filters.push({
+           fieldName: "isActive", 
+           value: true
+        });
+        filters.push({
+           fieldName: "location", 
+           value: "capetown"
+        });
+
+        this.groupWorker.getRecordsFor("assets", "default", filters);
+        this.groupWorker.createGroupPerspective("assets", "default", ["isActive", "location", "site"], { aggregate: aggregates.count });
 
         this.groupWorker.disposeGroupPerspective("assets", "site-cost");
         this.groupWorker.disposeGroupPerspective("assets", "isActive-cost-max");
@@ -37,7 +56,15 @@ export class GroupTest {
     }
 
     handleDefaultAssets(args) {
-        console.log(args);
+        //console.log(args);
+    }
+
+    getDefaultAssets(args){
+        //console.log(args)
+    }
+
+    getRecordsFor(args){
+        console.log(args)
     }
 
     updateCollection() {

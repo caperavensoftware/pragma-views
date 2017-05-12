@@ -33,6 +33,8 @@ export class MasterListContainer {
         this.oldItems = this.items.slice();
         this.handleDefaultAssetsHandler = this.handleDefaultAssets.bind(this);
         this.assetsDefaultSubscription =  this.eventAggregator.subscribe("staff_default", this.handleDefaultAssetsHandler);
+        this.getRecordsForHandler = this.getRecordsFor.bind(this);
+        this.getRecordsForSubscription =  this.eventAggregator.subscribe("records_staff", this.getRecordsForHandler);
 
         var groupColumns = [];
 
@@ -46,14 +48,19 @@ export class MasterListContainer {
 
         this.groupWorker.createCache("staff", this.oldItems);
         this.groupWorker.createGroupPerspective("staff", "default", groupColumns, { aggregate: aggregates.count });
-    
-        this.groupWorker.disposeCache("staff");
 
-        this.chartDoubleClickHandler = this.groupAndFilter.bind(this);
+        this.chartDoubleClickHandler = this.chartDoubleClick.bind(this);
         document.addEventListener("chartDoubleClick", this.chartDoubleClickHandler, false);
 
-        this.chartClickHandler = this.filter.bind(this);
+        this.chartClickHandler = this.chartClick.bind(this);
         document.addEventListener("chartClick", this.chartClickHandler, false);
+    }
+    
+    detached() {
+        this.groupWorker.disposeCache("staff");
+        this.groupWorker.disposeGroupPerspective("staff", "default");
+        this.assetsDefaultSubscription.dispose();
+        this.getRecordsForSubscription.dispose();
     }
 
     handleDefaultAssets(args) {
@@ -62,32 +69,27 @@ export class MasterListContainer {
         this.dataDisplay = JSON.stringify(args);
     }
 
-    filter(args){
+    getRecordsFor(args){
+        this.items = args;
+    }
 
+    chartClick(args){
         this.filters.push({
            fieldName: args.detail.fieldName, 
            value: args.detail.value
         });
 
-        this.runFilters();
-
+        this.groupWorker.getRecordsFor("staff", "default", this.filters);
+ 
         this.filters.pop();
     }
 
-    groupAndFilter(args) {
+    chartDoubleClick(args) {
         this.chartItems = this.chartItems[args.detail.id].items; 
         this.path.push(args.detail.id);
-        this.filters.push({
-           fieldName: args.detail.fieldName, 
-           value: args.detail.value
-        });
         this.dropdownItems.push({
             title: args.detail.fieldName,
             id: args.detail.id
-        });
-
-        this.items = this.items.filter(function(el){
-           return (el[args.detail.fieldName] === args.detail.value); 
         });
     }
 
@@ -117,31 +119,11 @@ export class MasterListContainer {
 
             this.groupWorker.disposeGroupPerspective("staff", "default");
 
-            this.groupWorker.createCache("staff", this.oldItems);
+            //this.groupWorker.createCache("staff", this.oldItems);
             this.groupWorker.createGroupPerspective("staff", "default", groupColumns, { aggregate: aggregates.count });
         
-            this.groupWorker.disposeCache("staff");
+            //this.groupWorker.disposeCache("staff");
         }
-    }
-
-    runFilters()
-    {
-        var holdSelectedId = this.selectedId;
-        this.selectedId = 0;
-        
-        var filterItems = this.oldItems.slice();
-
-        for(var j = 0; j < this.filters.length; j++){
-            var fieldName = this.filters[j].fieldName;
-            var value = this.filters[j].value;
-
-            filterItems = filterItems.filter(function(el){
-                return (el[fieldName] == value);
-            });
-        }
-
-        this.items = filterItems;
-        this.selectedId = holdSelectedId;
     }
 
     back(){
@@ -153,7 +135,7 @@ export class MasterListContainer {
             previousItems = previousItems[this.path[i]].items;
         }
 
-        this.runFilters();
+        this.groupWorker.getRecordsFor("staff", "default", this.filters);
 
         this.chartItems = previousItems;
         this.path.pop();

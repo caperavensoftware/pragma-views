@@ -1,4 +1,5 @@
 import {customElement, inject, bindable} from 'aurelia-framework';
+import {selectable} from './../../custom-attributes/selectable';
 
 @customElement('pragma-dropdown-menu')
 @inject(Element)
