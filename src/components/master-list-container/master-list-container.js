@@ -91,6 +91,11 @@ export class MasterListContainer {
             title: args.detail.field,
             id: args.detail.id
         });
+
+        this.filters.push({
+            fieldName: args.detail.fieldName,
+            value: args.detail.value
+        });
     }
 
     selectedGroupByIdChanged()
