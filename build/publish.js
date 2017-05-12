@@ -219,8 +219,17 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
 
         {
             src: ["group-worker.js"],
-            dest: "publish"
+            dest: "publish/amd"
         },
+        {
+            src: ["group-worker.js"],
+            dest: "publish/commonjs"
+        },
+        {
+            src: ["group-worker.js"],
+            dest: "publish/systemjs"
+        },
+
         {
             src: ["distribute/amd/dialogs/**/*.js"],
             dest: "publish/amd/dialogs"
