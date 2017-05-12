@@ -21,6 +21,8 @@ export class Selectable {
     }
 
     click(event) {
+
+        console.log("click changed");
         if (event.target.tagName === "UL") {
             return false;
         }
@@ -30,6 +32,9 @@ export class Selectable {
 
     selectedIdChanged()
     {
+
+        console.log("custom changed");
+
         var newSelectedElement = this.element.querySelectorAll('[data-id="' + this.selectedId + '"]')[0];
         var hold = this.element.querySelectorAll('[data-id="' + this.selectedId + '"]');
 
