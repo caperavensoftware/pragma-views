@@ -57,6 +57,24 @@ export const dynamicHtml = `
 <__tagname__ __classes__ __attributes__>__content__</__tagname__>
 `;
 
+export const listTemplate1 = `
+<template>
+    <div class="no-mouse">
+        <div class="stretch">__field1__</div>
+        <div>__field2__</div>
+    </div>
+    
+    <div class="no-mouse">
+        <span class="bold">__field3__</span>
+        <span class="piped">__field4__</span>
+    </div>
+    
+    <div class="suppressed no-mouse">__field5__</div>
+    
+    <div>__field1__ = __field5__</div>
+</template>
+`;
+
 export function populateTemplate(template, map) {
     let result = template;
     const keys = Object.keys(map);

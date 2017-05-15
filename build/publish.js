@@ -120,6 +120,90 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
         },
 
         {
+            src: ["app/src/components/master-list-container/*.html"],
+            dest: "publish/amd/components/master-list-container"
+        },
+        {
+            src: ["app/src/components/master-list-container/*.html"],
+            dest: "publish/commonjs/components/master-list-container"
+        },
+        {
+            src: ["app/src/components/master-list-container/*.html"],
+            dest: "publish/systemjs/components/master-list-container"
+        },
+        {
+            src: ["app/src/components/order-group/*.html"],
+            dest: "publish/amd/components/order-group"
+        },
+        {
+            src: ["app/src/components/order-group/*.html"],
+            dest: "publish/commonjs/components/order-group"
+        },
+        {
+            src: ["app/src/components/order-group/*.html"],
+            dest: "publish/systemjs/components/order-group"
+        },
+        {
+            src: ["app/src/components/percentage-chart/*.html"],
+            dest: "publish/amd/components/percentage-chart"
+        },
+        {
+            src: ["app/src/components/percentage-chart/*.html"],
+            dest: "publish/commonjs/components/percentage-chart"
+        },
+        {
+            src: ["app/src/components/percentage-chart/*.html"],
+            dest: "publish/systemjs/components/percentage-chart"
+        },
+        {
+            src: ["app/src/components/pragma-dropdown-menu/*.html"],
+            dest: "publish/amd/components/pragma-dropdown-menu"
+        },
+        {
+            src: ["app/src/components/pragma-dropdown-menu/*.html"],
+            dest: "publish/commonjs/components/pragma-dropdown-menu"
+        },
+        {
+            src: ["app/src/components/pragma-dropdown-menu/*.html"],
+            dest: "publish/systemjs/components/pragma-dropdown-menu"
+        },
+        {
+            src: ["app/src/components/pragma-messages/*.html"],
+            dest: "publish/amd/components/pragma-messages"
+        },
+        {
+            src: ["app/src/components/pragma-messages/*.html"],
+            dest: "publish/commonjs/components/pragma-messages"
+        },
+        {
+            src: ["app/src/components/pragma-messages/*.html"],
+            dest: "publish/systemjs/components/pragma-messages"
+        },
+        {
+            src: ["app/src/components/pragma-options-toolbar/*.html"],
+            dest: "publish/amd/components/pragma-options-toolbar"
+        },
+        {
+            src: ["app/src/components/pragma-options-toolbar/*.html"],
+            dest: "publish/commonjs/components/pragma-options-toolbar"
+        },
+        {
+            src: ["app/src/components/pragma-options-toolbar/*.html"],
+            dest: "publish/systemjs/components/pragma-options-toolbar"
+        },
+        {
+            src: ["app/src/components/pragma-template/*.html"],
+            dest: "publish/amd/components/pragma-template"
+        },
+        {
+            src: ["app/src/components/pragma-template/*.html"],
+            dest: "publish/commonjs/components/pragma-template"
+        },
+        {
+            src: ["app/src/components/pragma-template/*.html"],
+            dest: "publish/systemjs/components/pragma-template"
+        },
+        {
             src: ["distribute/amd/index.js"],
             dest: "publish/amd"
         },
@@ -147,8 +231,17 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
 
         {
             src: ["group-worker.js"],
-            dest: "publish"
+            dest: "publish/amd"
         },
+        {
+            src: ["group-worker.js"],
+            dest: "publish/commonjs"
+        },
+        {
+            src: ["group-worker.js"],
+            dest: "publish/systemjs"
+        },
+
         {
             src: ["distribute/amd/dialogs/**/*.js"],
             dest: "publish/amd/dialogs"
@@ -185,10 +278,7 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
         {
             src: ["app/src/dialogs/**/*.map"],
             dest: "publish/systemjs/dialogs"
-        },
-
-
-
+        }
     ]);
 
     publish.setPackage({
