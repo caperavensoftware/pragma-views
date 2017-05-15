@@ -41,7 +41,7 @@ export class PercentageChart {
         this.groupWorker = groupWorker;
         this.eventAggregator = eventAggregator;
         this.maxAggregate = 0;
-        this.drilldownItems = new Set();
+        this.drilldownItems = [];
     }
 
     /**
@@ -52,6 +52,9 @@ export class PercentageChart {
 
         this.onGetDataHandler = this.onGetData.bind(this);
         this.onGetDataEvent = this.eventAggregator.subscribe(`${this.cacheId}_${this.perspectiveId}`, this.onGetDataHandler);
+
+        this.backHandler = this.back.bind(this);
+        this.onBackEvent = this.eventAggregator.subscribe(`${this.cacheId}_${this.perspectiveId}_back`, this.backHandler);
     }
 
     /**
@@ -61,6 +64,9 @@ export class PercentageChart {
     {
         this.onGetDataEvent.dispose();
         this.onGetDataHandler = null;
+
+        this.onBackEvent.dispose();
+        this.backHandler = null;
 
         this.groupWorker.disposeGroupPerspective(this.cacheId, this.perspectiveId);
     }
@@ -104,12 +110,20 @@ export class PercentageChart {
 
     drilldown(item) {
         if (!item.lowestGroup) {
-            this.drilldownItems.add(item);
+            this.drilldownItems.push(item);
             this.items = item.items;
         }
     }
 
     select(item) {
         console.log(item);
+    }
+
+    back() {
+        if (this.drilldownItems.length > 0) {
+            this.drilldownItems.splice(this.drilldownItems.length -1, 1);
+        }
+
+        this.items = this.drilldownItems.length > 0 ? this.drilldownItems[this.drilldownItems.length - 1].items : this.currentPerspective.items;
     }
 }

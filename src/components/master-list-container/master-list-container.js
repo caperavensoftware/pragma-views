@@ -118,4 +118,8 @@ export class MasterListContainer {
     recordsRetrieved(args) {
         this.items = args;
     }
+
+    back() {
+        this.eventAggregator.publish(`${this.cacheId}_${this.perspectiveId}_back`);
+    }
 }
