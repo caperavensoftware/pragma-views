@@ -7,8 +7,11 @@ export class MasterView {
 
     @bindable dataDisplay;
     @bindable listItems;
+    @bindable groupingItems;
 
     constructor(element) {
+
+        this.groupingItems = orderGroupItems;
 
         for(var j = 0; j < 10; j++)
         {
