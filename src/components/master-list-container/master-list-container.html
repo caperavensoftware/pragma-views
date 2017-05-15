@@ -15,7 +15,7 @@
             </label>
         </div>
 
-        <percentage-chart cache-id.bind="cacheId" perspective-id.bind="perspectiveId" grouped-items.bind="groupedItems" id="percentage-chart"></percentage-chart>
+        <percentage-chart if.bind="groupedItems.length > 0" cache-id.bind="cacheId" perspective-id.bind="perspectiveId" grouped-items.bind="groupedItems" id="percentage-chart"></percentage-chart>
 
         <ul selectable="selected-id.two-way: selectedId" id="master-list">
             <li class="card li-styling" repeat.for="item of visibleItems" data-id="${item.id}">

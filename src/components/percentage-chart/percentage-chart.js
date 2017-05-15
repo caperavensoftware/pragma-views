@@ -9,7 +9,6 @@ export class PercentageChart {
     element;
     groupWorker;
     maxAggregate;
-    tapedTwice;
 
     /**
      * These properties define all the information required to work with the group cache
@@ -42,6 +41,7 @@ export class PercentageChart {
         this.groupWorker = groupWorker;
         this.eventAggregator = eventAggregator;
         this.maxAggregate = 0;
+        this.drilldownItems = new Set();
     }
 
     /**
@@ -74,6 +74,9 @@ export class PercentageChart {
         if (this.groupedItems && this.groupedItems.length > 0) {
             this.groupWorker.createGroupPerspective(this.cacheId, this.perspectiveId, this.groupedItems, { aggregate: aggregates.count });
         }
+        else {
+            this.items = null;
+        }
     }
 
     /**
@@ -92,7 +95,21 @@ export class PercentageChart {
         this.items = args.items;
     }
 
+    /**
+     * Items has changed, react to the new set of items
+     */
     itemsChanged() {
         this.maxAggregate = this.items ? this.items.reduce((acc, item) => acc + item.aggregate.value, 0) : 0;
+    }
+
+    drilldown(item) {
+        if (!item.lowestGroup) {
+            this.drilldownItems.add(item);
+            this.items = item.items;
+        }
+    }
+
+    select(item) {
+        console.log(item);
     }
 }

@@ -275,6 +275,8 @@ class DataCache {
                 aggregate: aggegateOptions.aggregate,
                 value: aggregator[aggegateOptions.aggregate](group.items, aggegateOptions.field)
             };
+
+            group.lowestGroup = true;
             return;
         }
 
@@ -307,7 +309,7 @@ class DataCache {
         return array.reduce((groupMap, curr) => {
             const key = curr[fieldName];
             const id = curr["id"];
-            var groupId = groupMap.size;
+            const groupId = groupMap.size;
 
             if (groupMap.has(key)) {
                 groupMap.get(key).items.push(curr);
