@@ -29,8 +29,8 @@ master-list-container {
         top: 0;
         left: 0;
         width: 0.25rem;
-        height: 3.25rem;
-        background: $primary-background;
+        height: 100%;
+        background: $list-border;
     }
 
     .card[aria-selected="true"] {
