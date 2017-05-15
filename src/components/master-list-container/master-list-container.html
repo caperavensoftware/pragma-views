@@ -19,15 +19,7 @@
 
         <ul selectable="selected-id.two-way: selectedId">
             <li class="card li-styling" repeat.for="item of items" data-id="${item.id}">
-                <div class="no-mouse">
-                    <div class="stretch">${item.code}</div>
-                    <div>${item.siteCode}</div>
-                </div>
-                <div class="no-mouse">
-                    <span class="bold">${item.name}</span>
-                    <span class="piped">${item.surname}</span>
-                </div>
-                <div class="suppressed no-mouse">${item.sectionCode}</div>
+                <pragma-template html.bind="listTemplate" data-item.bind="item"></pragma-template>
             </li>
         </ul>
     </div>

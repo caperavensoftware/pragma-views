@@ -13,6 +13,7 @@ To two mechanisms that deal with view generation are:
 1. Template parser
 1. Dynamic schema objects
 1. Dynamic view factory
+1. Pragma templates
 
 For more details on how these items are used please see the individual documentation per mechanism.
 The section below will focus on what these mechanisms are and when to use them.
@@ -41,3 +42,7 @@ This mechanism stores templated html with a key. It then allows you to retrieve 
 When you want to work with a particular view that repeats and you want to manually insert and delete content in a viewslot, this is the mechanism for you.
 
 When you use this, please keep in mind that you should understand how to use aurelia viewslots.
+
+## Pragma tempaltes
+Pragma templates is a custom view you can use in your markup to render dynamic content.
+This is very usefull when you want to bind against a string value representing a template and define what the view mode should be.

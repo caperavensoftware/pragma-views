@@ -192,6 +192,18 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             dest: "publish/systemjs/components/pragma-options-toolbar"
         },
         {
+            src: ["app/src/components/pragma-template/*.html"],
+            dest: "publish/amd/components/pragma-template"
+        },
+        {
+            src: ["app/src/components/pragma-template/*.html"],
+            dest: "publish/commonjs/components/pragma-template"
+        },
+        {
+            src: ["app/src/components/pragma-template/*.html"],
+            dest: "publish/systemjs/components/pragma-template"
+        },
+        {
             src: ["distribute/amd/index.js"],
             dest: "publish/amd"
         },

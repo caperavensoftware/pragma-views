@@ -42,6 +42,11 @@ export class MasterListContainer {
      */
     @bindable selectedGroupById;
 
+    /**
+     * This represents the html structure that will be used as the template for the items
+     */
+    @bindable listTemplate;
+
     constructor(groupWorker, eventAggregator, element) {
         this.element = element;
         this.eventAggregator = eventAggregator;
