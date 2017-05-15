@@ -6,6 +6,7 @@ master-list-container ul li div {
 }
 
 master-list-container {
+    position: relative;
     background: $list-view-container-background;
     display: block;
     width: 100%;
@@ -57,5 +58,19 @@ master-list-container {
         icon, .icon {
             margin-left: 0.1rem;
         }
+    }
+
+    .master-grouping {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: $list-view-container-background;
+        z-index: 2;
+    }
+
+    pragma-dropdown-menu {
+        @include stretch()
     }
 }

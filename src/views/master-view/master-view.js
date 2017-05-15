@@ -1,17 +1,18 @@
 import {bindable, inject} from 'aurelia-framework';
 import {GroupWorker} from './../../lib/group-worker';
-import {EventAggregator} from 'aurelia-event-aggregator';
 import {listTemplate1, populateTemplate} from './../../lib/template-parser-contstants';
 
-@inject(GroupWorker, EventAggregator, Element)
+@inject(Element, GroupWorker)
 export class MasterView {
     @bindable dataDisplay;
-    @bindable listItems;
     @bindable groupingItems;
     @bindable listTemplate;
+    @bindable cacheId;
 
-    constructor(element) {
+    constructor(element, groupWorker) {
         this.groupingItems = orderGroupItems;
+        this.groupWorker = groupWorker;
+        this.cacheId = "test-cache";
 
         this.listTemplate = populateTemplate(listTemplate1, {
             "__field1__": "${code}",
@@ -20,10 +21,15 @@ export class MasterView {
             "__field4__": "${surname}",
             "__field5__": "${section}"
         });
-
-        this.listItems = viewListItems;
     }
 
+    attached() {
+        this.groupWorker.createCache(this.cacheId, viewListItems);
+    }
+
+    detached() {
+        this.groupWorker.disposeCache(this.cacheId);
+    }
 }
 
 const orderGroupItems = [
@@ -31,13 +37,13 @@ const orderGroupItems = [
         id: 1,
         title: "IS ACTIVE",
         value: "isActive", 
-        isOn: true
+        isOn: false
     },
     {
         id: 2,
         title: "SITE", 
         value: "site",
-        isOn: true
+        isOn: false
     },
     {
         id: 3,

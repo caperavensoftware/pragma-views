@@ -102,7 +102,7 @@ export class GroupWorker {
     }
 
     getGroupPerspectiveResponse(args) {
-        this.eventAggregator.publish(`get_${args.id}_${args.perspectiveId}`, args.data);
+        this.eventAggregator.publish(`${args.id}_${args.perspectiveId}`, args.data);
     }
 
     getRecordsForResponse(args){

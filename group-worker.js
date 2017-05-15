@@ -203,24 +203,13 @@ class DataCache {
      */
     getRecordsFor(items, filters)
     {
-        //var first = Math.floor(Date.now());
-        var items2 = items.slice(0);
-        /*var items3 = items.slice(0);
-
-        for(var j = 0; j < filters.length; j++){
-            var fieldName = filters[j].fieldName;
-            var value = filters[j].value;
-
-            items3 = items3.filter(function(el){
-                return (el[fieldName] == value);
-            });
+        if (!filters) {
+            return items;
         }
 
-        var second = Math.floor(Date.now());
-        //console.log("first" + (second - first));
-        */
+        let result = items.slice(0);
 
-        items2 = items2.filter(function(el) {
+        result = result.filter(function(el) {
             for(var j = 0; j < filters.length; j++){
                 var fieldName = filters[j].fieldName;
                 var value = filters[j].value;
@@ -232,10 +221,7 @@ class DataCache {
             return true;
         });
 
-        //var third = Math.floor(Date.now());
-        //console.log("second" + (third - second));
-
-        return items2;
+        return result;
     }
 
     /**
