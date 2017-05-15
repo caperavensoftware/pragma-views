@@ -21,20 +21,30 @@ export class Selectable {
     }
 
     click(event) {
-
-        console.log("click changed");
         if (event.target.tagName === "UL") {
             return false;
         }
 
-        this.selectedId = event.target.dataset.id;
+        this.selectedId = this.getId(event.target);
+    }
+
+    getId(target) {
+        if (!target) {
+            return null;
+        }
+
+        const id = target.dataset.id;
+
+        if (id) {
+            return id;
+        }
+        else {
+            return this.getId(target.parentElement);
+        }
     }
 
     selectedIdChanged()
     {
-
-        console.log("custom changed");
-
         var newSelectedElement = this.element.querySelectorAll('[data-id="' + this.selectedId + '"]')[0];
         var hold = this.element.querySelectorAll('[data-id="' + this.selectedId + '"]');
 

@@ -16,6 +16,10 @@ master-list-container {
         padding: 10px;
         position: relative;
         background: whitesmoke;
+
+        pragma-template {
+            @include no-mouse();
+        }
     }
 
     .li-styling:hover {
@@ -33,8 +37,13 @@ master-list-container {
         background: $list-border;
     }
 
+    .li-styling[aria-selected="true"]:before {
+        background: $list-selected;
+    }
+
     .card[aria-selected="true"] {
         background: white;
+        z-index: 1;
     }
 
     .square-icon-label {

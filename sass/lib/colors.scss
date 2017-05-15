@@ -9,6 +9,7 @@ $primary-highlight: #FFBF00;
 $primary-focus-highlight: #35C184;
 
 $secondary-background: #848C94;
+$selected-color: #1788EA;
 
 // this is used as darker toolbars and surfaces on the primary color, see On Key Assist design
 $primary-dark: #0A1929;
@@ -56,6 +57,7 @@ $focus-color: $primary-focus-highlight;
 
 $list-background: #E7E9EA;
 $list-border: #CED1D4;
+$list-selected: $selected-color;
 
 /*
   CARDS
