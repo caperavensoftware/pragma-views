@@ -4,8 +4,10 @@
         <div class="toolbar-no-padding">
             <button click.delegate="back()" class="button"><icon name="back"></icon></button>
 
+            <span class="suppressed default-padding-right">GROUPED BY</span>
+
             <pragma-dropdown-menu
-                    title.bind="drilldownId ? drilldownId : 'Not drilled down'"
+                    title.bind="drilldownId ? drilldownId : 'None'"
                     aria-disabled.bind="!drilldownId"
                     icon-name="dropdown"
                     selected-id.two-way="drilldownId"
@@ -13,9 +15,6 @@
                     items.bind="drilldownItems"
                     id="dropdownMenu">
             </pragma-dropdown-menu>
-
-            <button><icon name="sort"></icon></button>
-            <button><icon name="search"></icon></button>
 
             <label class="square-icon-label">
                 <icon name="leftarrow"></icon>
