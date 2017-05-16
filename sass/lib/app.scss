@@ -35,3 +35,8 @@
 label {
   cursor: pointer;
 }
+
+[aria-disabled="true"] {
+  opacity: 0.5;
+  @include no-mouse();
+}
