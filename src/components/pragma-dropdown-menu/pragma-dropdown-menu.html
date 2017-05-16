@@ -6,8 +6,8 @@
         </span>
         <input type="checkbox" class="dropdown-menu" />
         <div class="background"></div>
-        <ul>
-            <li repeat.for="item of items" selectable>
+        <ul selectable="selected-id.two-way: selectedId">
+            <li repeat.for="item of items" data-id="${item.id}">
                 <icon if.bind="item.iconName" name.bind="item.iconName"></icon>
                 <span>${item.title}</span>
             </li>

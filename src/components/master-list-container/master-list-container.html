@@ -4,7 +4,7 @@
         <div class="toolbar-no-padding">
             <button click.delegate="back()" class="button"><icon name="back"></icon></button>
 
-            <pragma-dropdown-menu title="Selected Group" icon-name="dropdown" class="left" items.bind="dropdownItems" id="dropdownMenu"></pragma-dropdown-menu>
+            <pragma-dropdown-menu title="Selected Group" icon-name="dropdown" selected-id.two-way="drilldownId" class="left" items.bind="drilldownItems" id="dropdownMenu"></pragma-dropdown-menu>
 
             <button><icon name="sort"></icon></button>
             <button><icon name="search"></icon></button>
@@ -15,7 +15,14 @@
             </label>
         </div>
 
-        <percentage-chart if.bind="groupedItems.length > 0" cache-id.bind="cacheId" perspective-id.bind="perspectiveId" grouped-items.bind="groupedItems" id="percentage-chart"></percentage-chart>
+        <percentage-chart
+                id="percentage-chart"
+                if.bind="groupedItems.length > 0"
+                cache-id.bind="cacheId"
+                perspective-id.bind="perspectiveId"
+                grouped-items.bind="groupedItems"
+                drilldown-id.bind="drilldownId"
+                drilldown-items.two-way="drilldownItems"></percentage-chart>
 
         <ul selectable="selected-id.two-way: selectedId" id="master-list">
             <li class="card li-styling" repeat.for="item of visibleItems" data-id="${item.id}">

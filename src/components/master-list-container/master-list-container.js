@@ -53,6 +53,11 @@ export class MasterListContainer {
     @bindable cacheId;
 
     /**
+     * This is a property that allows drilldown items to flow between child controls
+     */
+    @bindable drilldownItems;
+
+    /**
      * The masterlist defines the perspective for it's own consumption and those of it's children.
      * NOTE: each child must handle how it interacts with the cache.
      * @returns {string}
@@ -119,6 +124,9 @@ export class MasterListContainer {
         this.items = args;
     }
 
+    /**
+     * Notify child items that the user has requested back tracking the current drilldown
+     */
     back() {
         this.eventAggregator.publish(`${this.cacheId}_${this.perspectiveId}_back`);
     }
