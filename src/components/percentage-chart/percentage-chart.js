@@ -108,22 +108,64 @@ export class PercentageChart {
         this.maxAggregate = this.items ? this.items.reduce((acc, item) => acc + item.aggregate.value, 0) : 0;
     }
 
-    drilldown(item) {
+    /**
+     * Perform drilldown action navigating down the stack
+     * @param item
+     */
+    drilldown(item, event) {
         if (!item.lowestGroup) {
             this.drilldownItems.push(item);
             this.items = item.items;
+
+            if (this.selectedDom) {
+                this.selectedDom.removeAttribute("aria-selected");
+            }
+        }
+
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
         }
     }
 
-    select(item) {
-        console.log(item);
+    /**
+     * Event hook for selecting item from DOM
+     * @param item
+     * @param event
+     */
+    selectDom(item, event) {
+        const branchItems = this.groupWorker.getAllRecordsInBranch(item);
+        this.eventAggregator.publish(`records_${this.cacheId}`, branchItems);
+
+        if (this.selectedDom) {
+            this.selectedDom.removeAttribute("aria-selected");
+        }
+
+        if (event) {
+            this.selectedDom = this.parentLi(event.target);
+            this.selectedDom.setAttribute("aria-selected", true);
+        }
     }
 
+    parentLi(target) {
+        if (target.tagName == "LI") {
+            return target;
+        }
+
+        return this.parentLi(target.parentElement);
+    }
+
+    /**
+     * Reverse of drilldown, move up the stack
+     */
     back() {
         if (this.drilldownItems.length > 0) {
             this.drilldownItems.splice(this.drilldownItems.length -1, 1);
         }
 
-        this.items = this.drilldownItems.length > 0 ? this.drilldownItems[this.drilldownItems.length - 1].items : this.currentPerspective.items;
+        const lastIndex = this.drilldownItems.length - 1;
+        const lastItem = lastIndex > -1 ? this.drilldownItems[lastIndex] : this.currentPerspective;
+        this.items = lastItem.items;
+        this.selectDom(lastItem, null);
     }
 }

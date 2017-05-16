@@ -34,7 +34,7 @@ percentage-chart ul li {
     }
 }
 
-percentage-chart ul li.selected {
+percentage-chart ul li[aria-selected=true] {
     font-weight: bold;
     color: white;
 
