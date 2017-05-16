@@ -70,8 +70,6 @@ export const listTemplate1 = `
     </div>
     
     <div class="suppressed no-mouse">__field5__</div>
-    
-    <div>__field1__ = __field5__</div>
 </template>
 `;
 
