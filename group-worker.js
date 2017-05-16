@@ -254,7 +254,7 @@ class DataCache {
 
         const root = {
             level: 0,
-            title: "root",
+            title: "Home",
             items: dataCopy,
             isGroup: true
         };
@@ -308,7 +308,7 @@ class DataCache {
     group(array, fieldName, level) {
         return array.reduce((groupMap, curr) => {
             const key = curr[fieldName];
-            const id = curr["id"];
+            const id = curr[fieldName];
             const groupId = groupMap.size;
 
             if (groupMap.has(key)) {
@@ -318,7 +318,7 @@ class DataCache {
                 groupMap.set(key, {
                     level: level,
                     field: fieldName,
-                    title: key,
+                    title: key.toString(),
                     id: id,
                     items: [curr],
                     index: groupId,

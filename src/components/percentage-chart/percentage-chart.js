@@ -31,6 +31,16 @@ export class PercentageChart {
     @bindable items;
 
     /**
+     * Expose the current drilldown items so that you can use it in other controls
+     */
+    @bindable drilldownItems;
+
+    /**
+     * External property to affect back operations
+     */
+    @bindable drilldownId;
+
+    /**
      * constructor
      * @param element: DOMElement
      * @param groupWorker: GroupWorker
@@ -41,7 +51,6 @@ export class PercentageChart {
         this.groupWorker = groupWorker;
         this.eventAggregator = eventAggregator;
         this.maxAggregate = 0;
-        this.drilldownItems = [];
     }
 
     /**
@@ -99,6 +108,8 @@ export class PercentageChart {
     onGetData(args) {
         this.currentPerspective = args;
         this.items = args.items;
+
+        this.resetDrilldownItems();
     }
 
     /**
@@ -109,22 +120,51 @@ export class PercentageChart {
     }
 
     /**
+     * Reset the drilldown items to a empty list
+     */
+    resetDrilldownItems() {
+        this.drilldownItems = [this.currentPerspective];
+    }
+
+    /**
      * Perform drilldown action navigating down the stack
      * @param item
      */
     drilldown(item, event) {
         if (!item.lowestGroup) {
+            if (!this.drilldownItems) {
+                this.resetDrilldownItems();
+            }
+
             this.drilldownItems.push(item);
             this.items = item.items;
 
-            if (this.selectedDom) {
-                this.selectedDom.removeAttribute("aria-selected");
-            }
+            this.selectDom(item);
         }
 
         if (event) {
             event.preventDefault();
             event.stopPropagation();
+        }
+    }
+
+    /**
+     * Reverse of drilldown, move up the stack
+     */
+    back(index) {
+        if (!!this.drilldownItems && this.drilldownItems.length > 0) {
+            const indexToUse = index == 0 || !!index ? index : this.drilldownItems.length -1;
+            const amount = this.drilldownItems.length - indexToUse;
+            this.drilldownItems.splice(indexToUse, amount);
+        }
+
+        const lastIndex = this.drilldownItems.length - 1;
+        const lastItem = lastIndex > -1 ? this.drilldownItems[lastIndex] : this.currentPerspective;
+        this.items = lastItem.items;
+        this.selectDom(lastItem, null);
+
+        if (lastIndex == -1) {
+            this.resetDrilldownItems();
         }
     }
 
@@ -147,6 +187,11 @@ export class PercentageChart {
         }
     }
 
+    /**
+     * Traverse up the tree and find the LI element
+     * @param target
+     * @return {*}
+     */
     parentLi(target) {
         if (target.tagName == "LI") {
             return target;
@@ -156,16 +201,13 @@ export class PercentageChart {
     }
 
     /**
-     * Reverse of drilldown, move up the stack
+     * drilldownId changed, now drill back up to that item
      */
-    back() {
-        if (this.drilldownItems.length > 0) {
-            this.drilldownItems.splice(this.drilldownItems.length -1, 1);
+    drilldownIdChanged() {
+        if (this.drilldownItems) {
+            const targetItem = this.drilldownItems.find(item => !!item && item.title == this.drilldownId);
+            const index = this.drilldownItems.indexOf(targetItem) + 1;
+            this.back(index);
         }
-
-        const lastIndex = this.drilldownItems.length - 1;
-        const lastItem = lastIndex > -1 ? this.drilldownItems[lastIndex] : this.currentPerspective;
-        this.items = lastItem.items;
-        this.selectDom(lastItem, null);
     }
 }
