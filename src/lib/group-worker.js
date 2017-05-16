@@ -108,4 +108,17 @@ export class GroupWorker {
     getRecordsForResponse(args){
         this.eventAggregator.publish(`records_${args.id}`, args.data);
     }
+
+    getAllRecordsInBranch(branch) {
+        if (branch.lowestGroup) {
+            return branch.items;
+        }
+
+        let result = [];
+        for (let item of branch.items) {
+            result = result.concat(this.getAllRecordsInBranch(item));
+        }
+
+        return result;
+    }
 }
