@@ -140,6 +140,10 @@ export class PercentageChart {
             this.items = item.items;
 
             this.selectDom(item);
+
+            this.ignoreDrilldownIdChanges = true;
+            this.drilldownId = item.title;
+            this.ignoreDrilldownIdChanges = false;
         }
 
         if (event) {
@@ -204,6 +208,11 @@ export class PercentageChart {
      * drilldownId changed, now drill back up to that item
      */
     drilldownIdChanged() {
+        if (this.ignoreDrilldownIdChanges) {
+            this.ignoreDrilldownIdChanges = false;
+            return;
+        }
+
         if (this.drilldownItems) {
             const targetItem = this.drilldownItems.find(item => !!item && item.title == this.drilldownId);
             const index = this.drilldownItems.indexOf(targetItem) + 1;

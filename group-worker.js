@@ -254,7 +254,7 @@ class DataCache {
 
         const root = {
             level: 0,
-            title: "Home",
+            title: "None",
             items: dataCopy,
             isGroup: true
         };

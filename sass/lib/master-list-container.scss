@@ -50,7 +50,6 @@ master-list-container {
     .square-icon-label {
         width: 3rem;
         height: 3rem;
-        background: $group-close-background;
         @include flex();
         align-items: center;
         justify-content: center;

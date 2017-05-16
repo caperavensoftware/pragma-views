@@ -4,10 +4,17 @@
         <div class="toolbar-no-padding">
             <button click.delegate="back()" class="button"><icon name="back"></icon></button>
 
-            <pragma-dropdown-menu title="Selected Group" icon-name="dropdown" selected-id.two-way="drilldownId" class="left" items.bind="drilldownItems" id="dropdownMenu"></pragma-dropdown-menu>
+            <span class="suppressed default-padding-right">GROUPED BY</span>
 
-            <button><icon name="sort"></icon></button>
-            <button><icon name="search"></icon></button>
+            <pragma-dropdown-menu
+                    title.bind="drilldownId ? drilldownId : 'None'"
+                    aria-disabled.bind="!drilldownId"
+                    icon-name="dropdown"
+                    selected-id.two-way="drilldownId"
+                    class="left"
+                    items.bind="drilldownItems"
+                    id="dropdownMenu">
+            </pragma-dropdown-menu>
 
             <label class="square-icon-label">
                 <icon name="leftarrow"></icon>
@@ -21,7 +28,7 @@
                 cache-id.bind="cacheId"
                 perspective-id.bind="perspectiveId"
                 grouped-items.bind="groupedItems"
-                drilldown-id.bind="drilldownId"
+                drilldown-id.two-way="drilldownId"
                 drilldown-items.two-way="drilldownItems"></percentage-chart>
 
         <ul selectable="selected-id.two-way: selectedId" id="master-list">

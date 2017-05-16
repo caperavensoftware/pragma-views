@@ -3,6 +3,7 @@
         <div slot="items">
             <button>Item 1</button>
             <button>Item 2</button>
+            <button click.delegate="showDialog()">Show Dynamic Dialog</button>
         </div>
     </pragma-options-toolbar>
 
@@ -24,7 +25,7 @@
 
         <pragma-dropdown-menu title="Options" icon-name="options" class="left" items.bind="testMenuItems"></pragma-dropdown-menu>
 
-        <button click.delegate="showDialog()">Show Dynamic Dialog</button>
+
     </div>
 
     <pragma-messages></pragma-messages>

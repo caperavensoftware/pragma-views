@@ -43,6 +43,11 @@ body {
   @include flex-row();
 }
 
+.horizontal-centered  {
+  @extend .horizontal;
+  align-items: center;
+}
+
 .space-around {
   @include space-around();
 }

@@ -6,9 +6,11 @@
                 <div class="stretch">${item.title}</div>
                 <div class="bold">${item.aggregate.value}</div>
             </div>
-            <div class="container horizontal">
+            <div class="container horizontal-centered">
                 <progress max.bind="maxAggregate" value.bind="item.aggregate.value" class="no-mouse stretch"></progress>
-                <button if.bind="!item.lowestGroup" click.delegate="drilldown(item, $event)">D</button>
+                <button if.bind="!item.lowestGroup" click.delegate="drilldown(item, $event)" class="icon-button icon-light">
+                    <icon name="leftarrow"></icon>
+                </button>
             </div>
         </li>
     </ul>

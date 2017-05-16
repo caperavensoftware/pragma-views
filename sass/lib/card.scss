@@ -14,7 +14,7 @@
 }
 
 .card[aria-selected="true"] {
-  @include box-shadow(0, 0.5rem, 1rem, 0, 0, 0, 0, 0.5);
+  @include box-shadow(0, 0.5rem, 1rem, 0, 0, 0, 0, 0.2);
   border-color: $card-selected-highlight;
   z-index: 0;
 }
