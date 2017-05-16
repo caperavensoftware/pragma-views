@@ -7,12 +7,16 @@ class GroupWorker {
         this.createGroupPerspectiveHandler = this.createGroupPerspective.bind(this);
         this.disposeGroupPerspectiveHandler = this.disposeGroupPerspective.bind(this);
         this.disposeCacheHandler = this.disposeCache.bind(this);
+        this.getGroupPerspectiveHandler = this.getGroupPerspective.bind(this);
+        this.getRecordsForHandler = this.getRecordsFor.bind(this);
 
         this.functionMap = new Map();
         this.functionMap.set("createCache", this.createCacheHandler);
         this.functionMap.set("createGroupPerspective", this.createGroupPerspectiveHandler);
         this.functionMap.set("disposeGroupPerspective", this.disposeGroupPerspectiveHandler);
         this.functionMap.set("disposeCache", this.disposeCacheHandler);
+        this.functionMap.set("getGroupPerspective", this.getGroupPerspectiveHandler);
+        this.functionMap.set("getRecordsFor", this.getRecordsForHandler);
 
         this.dataCache = new Map();
     }
@@ -25,6 +29,8 @@ class GroupWorker {
         this.createGroupPerspectiveHandler = null;
         this.disposeGroupPerspectiveHandler = null;
         this.disposeCacheHandler = null;
+        this.getGroupPerspectiveHandler = null;
+        this.getRecordsForHandler = null;
 
         this.functionMap.clear();
         this.functionMap = null;
@@ -105,6 +111,49 @@ class GroupWorker {
             this.dataCache.delete(id);
         }
     }
+
+    /**
+     * Return existing perspective
+     * @param args 
+     */
+    getGroupPerspective(args){
+        const id = args.id;
+        const perspectiveId = args.perspectiveId;
+
+        if (this.dataCache.has(id)) {
+            const cache = this.dataCache.get(id);
+            const perspective = cache.getPerspective(perspectiveId);
+
+            postMessage({
+                msg: "getGroupPerspectiveResponse",
+                id: id,
+                perspectiveId: perspectiveId,
+                data: perspective
+            })
+        }
+    }
+
+    /**
+    * Filter records based on args argument
+    * @params args 
+    */
+    getRecordsFor(args){
+        const id = args.id;
+        const perspectiveId = args.perspectiveId;
+        const filters = args.filters;
+
+        if (this.dataCache.has(id)) {
+            const cache = this.dataCache.get(id);
+            const items = cache.getRecordsFor(cache.data, filters);
+
+            postMessage({
+                msg: "getRecordsForResponse",
+                id: id,
+                data: items
+            })
+        }
+    }
+    
 }
 
 class DataCache {
@@ -136,15 +185,62 @@ class DataCache {
     }
 
     /**
+     * Return an existing perspective
+     * @param perspectiveId 
+     */
+    getPerspective(perspectiveId){
+        if (this.perspectiveGrouping.has(perspectiveId)) {
+            return this.perspectiveGrouping.get(perspectiveId);
+        }
+
+        return null;
+    }
+
+    /**
+     * Filter records based on filter array argument
+     * @param items 
+     * @param filters 
+     */
+    getRecordsFor(items, filters)
+    {
+        if (!filters) {
+            return items;
+        }
+
+        let result = items.slice(0);
+
+        result = result.filter(function(el) {
+            for(var j = 0; j < filters.length; j++){
+                var fieldName = filters[j].fieldName;
+                var value = filters[j].value;
+                
+                if(el[fieldName] != value){
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        return result;
+    }
+
+    /**
      * Create a perspective and group
      * @param perspectiveId
      * @param fieldsToGroup
      * @param aggegateOptions
      */
     createPerspective(perspectiveId, fieldsToGroup, aggegateOptions) {
-        const perspective = this.createPerspectiveGroup(fieldsToGroup, aggegateOptions);
-        this.perspectiveGrouping.set(perspectiveId, perspective);
-        return perspective;
+        const existingPerspective = this.getPerspective(perspectiveId);
+        
+        if(!existingPerspective)
+        {
+            const newPerspective = this.createPerspectiveGroup(fieldsToGroup, aggegateOptions);
+            this.perspectiveGrouping.set(perspectiveId, newPerspective);
+            return newPerspective;
+        }
+
+        return existingPerspective;
     }
 
     /**
@@ -179,6 +275,8 @@ class DataCache {
                 aggregate: aggegateOptions.aggregate,
                 value: aggregator[aggegateOptions.aggregate](group.items, aggegateOptions.field)
             };
+
+            group.lowestGroup = true;
             return;
         }
 
@@ -211,7 +309,7 @@ class DataCache {
         return array.reduce((groupMap, curr) => {
             const key = curr[fieldName];
             const id = curr["id"];
-            var groupId = groupMap.size;
+            const groupId = groupMap.size;
 
             if (groupMap.has(key)) {
                 groupMap.get(key).items.push(curr);

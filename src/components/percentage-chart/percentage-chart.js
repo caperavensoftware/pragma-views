@@ -1,89 +1,129 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
+import {GroupWorker, aggregates} from './../../lib/group-worker';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {isMobile} from './../../lib/device-helper';
 
 @customElement('percentage-chart')
-@inject(Element)
+@inject(Element, GroupWorker, EventAggregator)
 export class PercentageChart {
-    element = null;
+    element;
+    groupWorker;
+    maxAggregate;
+
+    /**
+     * These properties define all the information required to work with the group cache
+     */
+    @bindable cacheId;
+
+    /**
+     * What perspective should be used when quering the group cache
+     */
+    @bindable perspectiveId;
+
+    /**
+     * Array of strings defining the grouping order
+     */
+    @bindable groupedItems;
+
+    /**
+     * Internal use for displaying chart items
+     */
     @bindable items;
-    @bindable maxAggregate;
 
-    constructor(element) {
+    /**
+     * constructor
+     * @param element: DOMElement
+     * @param groupWorker: GroupWorker
+     * @param eventAggregator: EventAggregator
+     */
+    constructor(element, groupWorker, eventAggregator) {
         this.element = element;
+        this.groupWorker = groupWorker;
+        this.eventAggregator = eventAggregator;
         this.maxAggregate = 0;
+        this.drilldownItems = [];
     }
 
+    /**
+     * Aurelia lifecycle event
+     */
     attached() {
+        this.updatePerspective();
+
+        this.onGetDataHandler = this.onGetData.bind(this);
+        this.onGetDataEvent = this.eventAggregator.subscribe(`${this.cacheId}_${this.perspectiveId}`, this.onGetDataHandler);
+
+        this.backHandler = this.back.bind(this);
+        this.onBackEvent = this.eventAggregator.subscribe(`${this.cacheId}_${this.perspectiveId}_back`, this.backHandler);
     }
 
-    itemsChanged() {
-        if (!this.items) {
-            this.maxAggregate = 0
+    /**
+     * Aurelia lifecycle event
+     */
+    detached()
+    {
+        this.onGetDataEvent.dispose();
+        this.onGetDataHandler = null;
+
+        this.onBackEvent.dispose();
+        this.backHandler = null;
+
+        this.groupWorker.disposeGroupPerspective(this.cacheId, this.perspectiveId);
+    }
+
+    /**
+     * Parameters have changed, update the perspective to match the new parameters
+     */
+    updatePerspective() {
+        this.groupWorker.disposeGroupPerspective(this.cacheId, this.perspectiveId);
+
+        if (this.groupedItems && this.groupedItems.length > 0) {
+            this.groupWorker.createGroupPerspective(this.cacheId, this.perspectiveId, this.groupedItems, { aggregate: aggregates.count });
         }
         else {
-            let result = 0;
-            for (let item of this.items) {
-                
-                if(item.aggregate){
-                    result += item.aggregate.value;
-                }
-            }
-
-            this.maxAggregate = result;
+            this.items = null;
         }
     }
 
-    click(event){
-        console.log(this);
+    /**
+     * The groupedItems property changes, update yourself
+     */
+    groupedItemsChanged() {
+        this.updatePerspective();
+    }
 
-        if(event.target.nodeName == "LI")
-        {
-            var cusevent = new CustomEvent(
-                "chartClick",
-                {
-                    detail: {
-                        message: event.target.id,
-                        time: new Date(),
-                        id: event.target.id,
-                        fieldName: this.items[event.target.id].field,
-                        value: this.items[event.target.id].title
-                    },
+    /**
+     * perspective data was returned, update the display items
+     * @param args
+     */
+    onGetData(args) {
+        this.currentPerspective = args;
+        this.items = args.items;
+    }
 
-                    bubbles: true,
-                    cancelable: true
-                }
-            );
+    /**
+     * Items has changed, react to the new set of items
+     */
+    itemsChanged() {
+        this.maxAggregate = this.items ? this.items.reduce((acc, item) => acc + item.aggregate.value, 0) : 0;
+    }
 
-            if (this.oldSelectedItem) {
-                this.oldSelectedItem.classList.remove("selected");
-            }
-
-            event.target.classList.add("selected");
-            this.oldSelectedItem = event.target;
-
-            event.target.dispatchEvent(cusevent);
+    drilldown(item) {
+        if (!item.lowestGroup) {
+            this.drilldownItems.push(item);
+            this.items = item.items;
         }
     }
 
-    dblClick(event) {
-        if(event.target.nodeName == "LI")
-        {
-            var cusevent = new CustomEvent(
-                "chartDoubleClick",
-                {
-                    detail: {
-                        message: event.target.id,
-                        time: new Date(),
-                        id: event.target.id,
-                        fieldName: this.items[event.target.id].field,
-                        value: this.items[event.target.id].title
-                    },
+    select(item) {
+        console.log(item);
+    }
 
-                    bubbles: true,
-                    cancelable: true
-                }
-            );
-
-            event.target.dispatchEvent(cusevent);
+    back() {
+        if (this.drilldownItems.length > 0) {
+            this.drilldownItems.splice(this.drilldownItems.length -1, 1);
         }
+
+        this.items = this.drilldownItems.length > 0 ? this.drilldownItems[this.drilldownItems.length - 1].items : this.currentPerspective.items;
     }
 }

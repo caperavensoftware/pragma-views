@@ -6,6 +6,7 @@ master-list-container ul li div {
 }
 
 master-list-container {
+    position: relative;
     background: $list-view-container-background;
     display: block;
     width: 100%;
@@ -16,6 +17,10 @@ master-list-container {
         padding: 10px;
         position: relative;
         background: whitesmoke;
+
+        pragma-template {
+            @include no-mouse();
+        }
     }
 
     .li-styling:hover {
@@ -29,12 +34,17 @@ master-list-container {
         top: 0;
         left: 0;
         width: 0.25rem;
-        height: 3.25rem;
-        background: $primary-background;
+        height: 100%;
+        background: $list-border;
+    }
+
+    .li-styling[aria-selected="true"]:before {
+        background: $list-selected;
     }
 
     .card[aria-selected="true"] {
         background: white;
+        z-index: 1;
     }
 
     .square-icon-label {
@@ -48,5 +58,19 @@ master-list-container {
         icon, .icon {
             margin-left: 0.1rem;
         }
+    }
+
+    .master-grouping {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: $list-view-container-background;
+        z-index: 2;
+    }
+
+    pragma-dropdown-menu {
+        @include stretch()
     }
 }

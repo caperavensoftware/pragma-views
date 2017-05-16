@@ -69,6 +69,23 @@ export class GroupWorker {
         })
     }
 
+    getGroupPerspective(id, perspectiveId) {
+        this.worker.postMessage({
+            msg: "getGroupPerspective",
+            id: id,
+            perspectiveId: perspectiveId
+        })
+    }
+
+    getRecordsFor(id, perspectiveId, filters) {
+        this.worker.postMessage({
+            msg: "getRecordsFor",
+            id: id,
+            perspectiveId: perspectiveId,
+            filters: filters
+        })
+    }
+
     /**
      * remove the cache and all it's perspectives
      * @param id
@@ -82,5 +99,13 @@ export class GroupWorker {
 
     createGroupPerspectiveResponse(args) {
         this.eventAggregator.publish(`${args.id}_${args.perspectiveId}`, args.data);
+    }
+
+    getGroupPerspectiveResponse(args) {
+        this.eventAggregator.publish(`${args.id}_${args.perspectiveId}`, args.data);
+    }
+
+    getRecordsForResponse(args){
+        this.eventAggregator.publish(`records_${args.id}`, args.data);
     }
 }

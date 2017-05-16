@@ -6,7 +6,7 @@ assistant {
   color: $assistant-foreground;
   will-change: transform, margin-right;
   transition: all 0.2s;
-  z-index: 999;
+  z-index: 900;
 
   button {
     @include ignore-device-rendering();

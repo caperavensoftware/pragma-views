@@ -82,3 +82,7 @@
   -webkit-transform: translateX($x);
   transform: translateX($x)
 }
+
+@mixin no-mouse() {
+  pointer-events: none;
+}

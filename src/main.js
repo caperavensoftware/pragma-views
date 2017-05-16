@@ -19,10 +19,10 @@ export function configure(aurelia) {
                 'components/master-list-container/master-list-container',
                 'components/pragma-grid/pragma-grid',
                 'components/pragma-options-toolbar/pragma-options-toolbar',
-                'components/pragma-dropdown-menu/pragma-dropdown-menu'
+                'components/pragma-dropdown-menu/pragma-dropdown-menu',
+                'components/pragma-template/pragma-template'
             )
-            .plugin("aurelia-dialog")
-            .plugin("oribella-aurelia-sortable");
+            .plugin("aurelia-dialog");
 
         aurelia.start().then(() => {
             aurelia.setRoot();

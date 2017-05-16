@@ -25,7 +25,22 @@ export class Selectable {
             return false;
         }
 
-        this.selectedId = event.target.dataset.id;
+        this.selectedId = this.getId(event.target);
+    }
+
+    getId(target) {
+        if (!target) {
+            return null;
+        }
+
+        const id = target.dataset.id;
+
+        if (id) {
+            return id;
+        }
+        else {
+            return this.getId(target.parentElement);
+        }
     }
 
     selectedIdChanged()
