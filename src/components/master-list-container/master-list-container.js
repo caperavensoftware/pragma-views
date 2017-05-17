@@ -74,19 +74,26 @@ export class MasterListContainer {
     }
 
     attached() {
-        if (!this.cacheId) {
-            throw new Error("You must define a cacheId for the master list container to work with");
-        }
-
-        this.recordsRetrievedHandler = this.recordsRetrieved.bind(this);
-        this.recordsRetrievedEvent = this.eventAggregator.subscribe(`records_${this.cacheId}`, this.recordsRetrievedHandler);
-
-        this.groupWorker.getRecordsFor(this.cacheId, null, null);
     }
 
     detached() {
         this.recordsRetrievedEvent.dispose();
         this.recordsRetrievedHandler = null;
+    }
+
+    cacheIdChanged() {
+        if (this.cacheId) {
+            if (this.recordsRetrievedEvent) {
+                this.recordsRetrievedEvent.dispose();
+            }
+
+            if (!this.recordsRetrievedHandler) {
+                this.recordsRetrievedHandler = this.recordsRetrieved.bind(this);
+            }
+
+            this.recordsRetrievedEvent = this.eventAggregator.subscribe(`records_${this.cacheId}`, this.recordsRetrievedHandler);
+            this.groupWorker.getRecordsFor(this.cacheId, null, null);
+        }
     }
 
     /**
