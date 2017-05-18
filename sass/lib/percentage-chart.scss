@@ -4,6 +4,9 @@ percentage-chart {
     color: #E2E2E2;
     padding-top: $half-padding;
     padding-bottom: $half-padding;
+    height: 20rem;
+    overflow-y: auto;
+    @include overflow-scroll();
 }
 
 percentage-chart ul li {
