@@ -59,6 +59,13 @@ class GroupWorker {
         else {
             this.dataCache.set(args.id, new DataCache(args.data));
         }
+
+        postMessage({
+            msg: "getRecordsForResponse",
+            id: args.id,
+            data: args.data
+        })
+
     }
 
     /**
@@ -318,7 +325,7 @@ class DataCache {
                 groupMap.set(key, {
                     level: level,
                     field: fieldName,
-                    title: key.toString(),
+                    title: key ? key.toString() : "none",
                     id: id,
                     items: [curr],
                     index: groupId,
