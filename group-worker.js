@@ -52,7 +52,7 @@ class GroupWorker {
      */
     createCache(args) {
         if (this.dataCache.has(args.id)) {
-            const dataCache = ths.dataCache.get(id);
+            const dataCache = this.dataCache.get(args.id);
             dataCache.data = args.data;
             dataCache.updateAllPerspectives();
         }

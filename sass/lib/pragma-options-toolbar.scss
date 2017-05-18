@@ -2,7 +2,7 @@ pragma-options-toolbar {
   display: flex;
   align-items: center;
   width: 100%;
-  height: 2rem;
+  height: $options-toolbar-height;
 
   .options-toolbar {
     @include flex();

@@ -1,3 +1,7 @@
+body {
+  @include absolute-fullscreen();
+}
+
 .app-toolbar {
   height: $app-toolbar-height;
   background: $group-background;
@@ -23,9 +27,7 @@
 }
 
 .application-body {
-  @include flex();
-  @include flex-column();
-  @include fullsize();
+  @include stretch();
 }
 
 .prevent-mouse {
