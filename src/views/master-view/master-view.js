@@ -9,6 +9,7 @@ export class MasterView {
     @bindable cacheId;
 
     @bindable isMasterVisible;
+    @bindable selectedId;
 
     constructor(element, groupWorker) {
         this.groupingItems = orderGroupItems;
@@ -32,6 +33,10 @@ export class MasterView {
 
     detached() {
         this.groupWorker.disposeCache(this.cacheId);
+    }
+
+    selectedIdChanged() {
+        console.log(this.selectedId);
     }
 }
 
