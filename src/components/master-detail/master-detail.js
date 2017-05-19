@@ -30,10 +30,10 @@ export class MasterDetail {
     updateMasterVisiblity() {
         if (this.masterElement) {
             if (this.isMasterVisible) {
-                this.masterElement.classList.remove("closed")
+                this.element.classList.remove("master-closed")
             }
             else {
-                this.masterElement.classList.add("closed")
+                this.element.classList.add("master-closed")
             }
         }
     }

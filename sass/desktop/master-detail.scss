@@ -1,7 +1,19 @@
 @import './../lib/variables';
+@import './../lib/mixins';
 
 master-detail {
   .master {
     max-width: $master-max-width;
   }
+
+  .detail {
+    left: $master-max-width;
+  }
 }
+
+master-detail.master-closed {
+  .detail {
+    left: 0;
+  }
+}
+
