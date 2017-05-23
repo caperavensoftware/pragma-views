@@ -7,6 +7,7 @@ $primary-background: #3B4753;
 $primary-background-borders: rgba(59, 71, 83, 0.26);
 $primary-highlight: #FFBF00;
 $primary-focus-highlight: #35C184;
+$common-background: #e6e8e9;
 
 $secondary-background: #848C94;
 $selected-color: #1788EA;
@@ -43,7 +44,7 @@ $group-highlight: $primary-highlight;
  */
 
 $tab-selected-highlight: #4C5760;
-$tab-bar-color: rgba(255, 255, 255, 0);
+$tab-bar-color: $common-background;
 
 /*
   FOCUSED
