@@ -20,7 +20,7 @@ export const groupHtml = `
 `;
 
 export const inputHtml = `
-<input-composite id="__field__" label="__title__" descriptor="__description__">
+<input-composite id="__field__" label="__title__" descriptor="__description__" required.bind="__required__">
     <input value.bind="__prefix__.__field__" __classes__ __attributes__></input>
 </input-composite>
 `;
@@ -39,9 +39,9 @@ export const textareaHtml = `
 `;
 
 export const selectHtml = `
-<input-composite id="__field__" label="__title__" descriptor="__description__">
+<input-composite id="__field__" label="__title__" descriptor="__description__" required="__required__">
     <select value.bind="__prefix__.__field__">
-        <option repeat.for="option of __prefix__.__datasource__" model.bind="option.id">__content__</option>
+        <option repeat.for="option of __datasource__" model.bind="option.id">__content__</option>
     </select>
 </input-composite>
 `;

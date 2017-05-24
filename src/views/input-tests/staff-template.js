@@ -184,10 +184,12 @@ export const staffTemplate =
                         }
                     },
                     {
+                        "element": "select",
                         "title": "Site",
-                        "field": "siteCode",
-                        "description": "${siteDescription}",
-                        "element": "input",
+                        "field": "siteId",
+                        "datasource": "../sites",
+                        "optionField": "code",
+                        "required": true,
                         "attributes": {
                             "type": "text"
                         }
@@ -215,6 +217,7 @@ export const staffTemplate =
                     {
                         "title": "First name",
                         "field": "firstName",
+                        "required": true,
                         "element": "input",
                         "attributes": {
                             "type": "text"
@@ -223,6 +226,7 @@ export const staffTemplate =
                     {
                         "title": "Last name",
                         "field": "lastName",
+                        "required": true,
                         "element": "input",
                         "attributes": {
                             "type": "text"
