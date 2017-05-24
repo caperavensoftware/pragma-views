@@ -156,8 +156,14 @@ export const staffTemplate =
         },
     ],
     "body": {
-        "groups": [
+        "elements": [
             {
+                "element": "h1",
+                "content": "Header",
+                "styles": ["group-header"]
+            },
+            {
+                "element": "group",
                 "id": "headerGroup",
                 "title": "Header Information",
                 "elements": [
@@ -189,6 +195,12 @@ export const staffTemplate =
                 ]
             },
             {
+                "element": "h1",
+                "content": "Personal Info",
+                "styles": ["group-header"]
+            },
+            {
+                "element": "group",
                 "id": "personalGroup",
                 "title": "Personal Information",
                 "elements": [
@@ -243,6 +255,7 @@ export const staffTemplate =
                 ]
             },
             {
+                "element": "group",
                 "id": "contactGroup",
                 "title": "Contact Information",
                 "elements": [
@@ -297,6 +310,12 @@ export const staffTemplate =
                 ]
             },
             {
+                "element": "h1",
+                "content": "Maintenance Manager",
+                "styles": ["group-header"]
+            },
+            {
+                "element": "group",
                 "id": "maintenanceGroup",
                 "title": "Maintenance",
                 "elements": [
@@ -339,6 +358,7 @@ export const staffTemplate =
                 ]
             },
             {
+                "element": "group",
                 "id": "ratesGroup",
                 "title": "Rates per hour",
                 "elements": [
@@ -386,6 +406,7 @@ export const staffTemplate =
                 ]
             },
             {
+                "element": "group",
                 "id": "notificationsGroup",
                 "title": "Notifications",
                 "elements": [

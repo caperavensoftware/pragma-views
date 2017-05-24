@@ -14,6 +14,7 @@ export class TemplateParser {
 
         this.parseTabSheetHandler = this.parseTabSheet.bind(this);
         this.parseGroupsHandler = this.parseGroups.bind(this);
+        this.parseGroupHandler = this.parseGroup.bind(this);
         this.parseInputHandler = this.parseInput.bind(this);
         this.parseTextAreaHandler = this.parseTextArea.bind(this);
         this.parseButtonHandler = this.parseButton.bind(this);
@@ -23,6 +24,7 @@ export class TemplateParser {
         this.parseMap = new Map();
         this.parseMap.set("tabsheet", this.parseTabSheetHandler);
         this.parseMap.set("groups", this.parseGroupsHandler);
+        this.parseMap.set("group", this.parseGroupHandler);
         this.parseMap.set("input", this.parseInputHandler);
         this.parseMap.set("memo", this.parseTextAreaHandler);
         this.parseMap.set("button", this.parseButtonHandler);
@@ -44,6 +46,7 @@ export class TemplateParser {
 
         this.parseTabSheetHandler = null;
         this.parseGroupsHandler = null;
+        this.parseGroupHandler = null;
         this.parseInputHandler = null;
         this.parseTextAreaHandler = null;
         this.parseDivHandler = null;
@@ -182,14 +185,23 @@ export class TemplateParser {
     parseGroups(groups) {
         const result = [];
         for (let group of groups) {
-            const fieldsHtml = this.parseElements(group.elements);
-            result.push(populateTemplate(groupHtml, {
-                "__id__": group.id,
-                "__title__": group.title,
-                "__content__": fieldsHtml
-            }))
+            result.push(this.parseGroup(group));
         }
         return result.join("");
+    }
+
+    /**
+     * Parse a single group and it's content
+     * @param element
+     * @returns {*}
+     */
+    parseGroup(element) {
+        const fieldsHtml = this.parseElements(element.elements);
+        return populateTemplate(groupHtml, {
+            "__id__": element.id,
+            "__title__": element.title,
+            "__content__": fieldsHtml
+        });
     }
 
     /**
