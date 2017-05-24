@@ -3,15 +3,23 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import {DynamicDialog} from './../../dialogs/dynamic-dialog/dynamic-dialog';
 import {DynamicSchemaItem, DynamicSchemaFieldItem, DynamicSchemaCollectionItem, DynamicSchemaReadonlyItem} from '../../lib/dynamic-schema';
+import {staffTemplate} from './staff-template';
+import {staffMember} from './staff-member';
+import {DynamicViewLoader} from './../../lib/dynamic-view-loader';
+import {TemplateParser} from './../../lib/template-parser';
 
-@inject(EventAggregator, DialogService)
+@inject(EventAggregator, DialogService, DynamicViewLoader)
 export class InputTests {
     @bindable testMenuItems;
     @bindable toolbarItems;
+    @bindable model;
 
-    constructor(eventAggregator, dialogService) {
+    constructor(eventAggregator, dialogService, dynamicViewLoader) {
         this.eventAggregator = eventAggregator;
         this.dialogService = dialogService;
+        this.dynamicViewLoader = dynamicViewLoader;
+        this.template = new TemplateParser("model");
+        this.model = staffMember;
 
         this.testMenuItems = [
             {
@@ -48,7 +56,17 @@ export class InputTests {
         this.eventAggregator.publish("messages-setContextView", {
             view: '<button click.delegate="save()">Save</button>',
             viewModel: this
-        })
+        });
+
+        this.template.parse(staffTemplate).then(result => {
+            this.dynamicViewLoader.load(result, this.detailsElement, this);
+        });
+    }
+
+    detached() {
+        this.template.dispose();
+        this.template = null;
+        this.model = null;
     }
 
     save() {

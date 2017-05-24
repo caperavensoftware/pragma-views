@@ -4,10 +4,12 @@ import {listTemplate1, populateTemplate} from './../../lib/template-parser-conts
 
 @inject(Element, GroupWorker)
 export class MasterView {
-    @bindable dataDisplay;
     @bindable groupingItems;
     @bindable listTemplate;
     @bindable cacheId;
+
+    @bindable isMasterVisible;
+    @bindable selectedId;
 
     constructor(element, groupWorker) {
         this.groupingItems = orderGroupItems;
@@ -21,6 +23,8 @@ export class MasterView {
             "__field4__": "${surname}",
             "__field5__": "${section}"
         });
+
+        this.isMasterVisible = true;
     }
 
     attached() {
@@ -29,6 +33,10 @@ export class MasterView {
 
     detached() {
         this.groupWorker.disposeCache(this.cacheId);
+    }
+
+    selectedIdChanged() {
+        console.log(this.selectedId);
     }
 }
 

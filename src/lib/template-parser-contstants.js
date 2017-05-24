@@ -25,6 +25,13 @@ export const inputHtml = `
 </input-composite>
 `;
 
+export const checkboxHtml = `
+    <div class="checkbox-composite">
+        <input id="__field__" type="checkbox" checked.bind="__prefix__.__field__" __classes__ __attributes__/>
+        <label for="__field__">__title__</label>
+    </div>
+`;
+
 export const textareaHtml = `
 <input-composite id="__field__" label="__title__" descriptor="__description__">
     <textarea value.bind="__prefix__.__field__" __classes__ __attributes__></textarea>
