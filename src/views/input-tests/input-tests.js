@@ -13,6 +13,7 @@ export class InputTests {
     @bindable testMenuItems;
     @bindable toolbarItems;
     @bindable model;
+    @bindable sites;
 
     constructor(eventAggregator, dialogService, dynamicViewLoader) {
         this.eventAggregator = eventAggregator;
@@ -20,6 +21,21 @@ export class InputTests {
         this.dynamicViewLoader = dynamicViewLoader;
         this.template = new TemplateParser("model");
         this.model = staffMember;
+
+        this.sites = [
+            {
+                id: 0,
+                code: "A Site"
+            },
+            {
+                id: 1,
+                code: "A Site 2"
+            },
+            {
+                id: 2,
+                code: "A Site 3"
+            }
+        ];
 
         this.testMenuItems = [
             {
