@@ -6,34 +6,28 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
     publish.publish([
         {
             src: ["distribute/**/components/**/*.js"],
-            dest: "publish",
-            minify: true
+            dest: "publish"
         },
         {
             src: ["distribute/**/custom-attributes/**/*.js"],
-            dest: "publish",
-            minify: true
+            dest: "publish"
         },
         {
             src: ["distribute/**/lib/**/*.js"],
-            dest: "publish",
-            minify: true
+            dest: "publish"
         },
 
         {
             src: ["test/mockups/**/*.js"],
-            dest: "publish/amd/mockups",
-            minify: false
+            dest: "publish/amd/mockups"
         },
         {
             src: ["test/mockups/**/*.js"],
-            dest: "publish/commonjs/mockups",
-            minify: false
+            dest: "publish/commonjs/mockups"
         },
         {
             src: ["test/mockups/**/*.js"],
-            dest: "publish/systemjs/mockups",
-            minify: false
+            dest: "publish/systemjs/mockups"
         },
 
         {

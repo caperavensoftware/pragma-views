@@ -11,6 +11,9 @@ export class MasterView {
     @bindable isMasterVisible;
     @bindable selectedId;
 
+    @bindable toolbarSelectedId;
+    @bindable toolbarItems;
+
     constructor(element, groupWorker) {
         this.groupingItems = orderGroupItems;
         this.groupWorker = groupWorker;
@@ -25,6 +28,14 @@ export class MasterView {
         });
 
         this.isMasterVisible = true;
+
+        this.toolbarItems = [
+            {
+                id: 1,
+                title: "Do Something",
+                iconName: null
+            }
+        ]
     }
 
     attached() {
@@ -37,6 +48,10 @@ export class MasterView {
 
     selectedIdChanged() {
         console.log(this.selectedId);
+    }
+
+    toolbarSelectedIdChanged() {
+        console.log(this.toolbarSelectedId);
     }
 }
 
