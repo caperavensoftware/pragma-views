@@ -205,7 +205,6 @@ export class TemplateParser {
             "__content__": "${option." + optionField + "}",
         });
 
-        console.log(result);
         return result;
     }
 
@@ -238,7 +237,6 @@ export class TemplateParser {
         else
         {
             const result = this.propertyPrefixStack.splice(0, prefixStack - backCount).join(".");
-            console.log(result);
             return result;
         }
     }
@@ -267,7 +265,6 @@ export class TemplateParser {
     parseGroup(element) {
         const fieldsHtml = this.parseElements(element.elements);
         return populateTemplate(groupHtml, {
-            "__id__": element.id,
             "__title__": element.title,
             "__content__": fieldsHtml
         });

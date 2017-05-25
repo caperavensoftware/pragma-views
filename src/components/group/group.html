@@ -1,0 +1,12 @@
+<template>
+    <div class="group" role="group" class.bind="expanded ? '' : 'closed' ">
+        <header>
+            <h3>${title}</h3>
+            <input type="checkbox" class="switch" checked.bind="expanded" />
+        </header>
+
+        <div aria-hidden.bind="!expanded" class="group-body">
+            <slot></slot>
+        </div>
+    </div>
+</template>
