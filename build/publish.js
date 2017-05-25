@@ -60,6 +60,18 @@ gulp.task("build:publish", ["build:all", "build:dist"], function() {
             src: ["app/src/components/assistant/*.html"],
             dest: "publish/systemjs/components/assistant"
         },
+        {
+            src: ["app/src/components/group/*.html"],
+            dest: "publish/amd/components/group"
+        },
+        {
+            src: ["app/src/components/group/*.html"],
+            dest: "publish/commonjs/components/group"
+        },
+        {
+            src: ["app/src/components/group/*.html"],
+            dest: "publish/systemjs/components/group"
+        },
 
         {
             src: ["app/src/components/form-search/*.html"],

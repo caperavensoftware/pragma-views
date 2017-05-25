@@ -8,16 +8,7 @@ export const tabHtml = `
 <div id="__id__" data-tab="__title__">__content__</div>
 `;
 
-export const groupHtml = `
-<div class="group" role="group" class.bind="groupVisiblity.__id__Checked ? '' : 'closed' ">
-    <header>
-        <h3>__title__</h3>
-        <input type="checkbox" class="switch" checked.bind="groupVisiblity.__id__Checked" />
-    </header>
-    
-    <div aria-hidden.bind="!groupVisiblity.__id__Checked" class="group-body">__content__</div>
-</div>
-`;
+export const groupHtml = `<group title="__title__">__content__</group>`;
 
 export const inputHtml = `
 <input-composite id="__field__" label="__title__" descriptor="__description__" required.bind="__required__">

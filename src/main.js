@@ -20,7 +20,8 @@ export function configure(aurelia) {
                 'components/pragma-grid/pragma-grid',
                 'components/pragma-options-toolbar/pragma-options-toolbar',
                 'components/pragma-dropdown-menu/pragma-dropdown-menu',
-                'components/pragma-template/pragma-template'
+                'components/pragma-template/pragma-template',
+                'components/group/group'
             )
             .plugin("aurelia-dialog");
 
