@@ -2,7 +2,9 @@
     <master-detail is-master-visible.bind="isMasterVisible">
         <div slot="master">
             <div class="fullsize">
-                <pragma-options-toolbar dropdown-items.bind="toolbarItems"></pragma-options-toolbar>
+                <pragma-options-toolbar dropdown-items.bind="toolbarItems" selected-id.two-way="toolbarSelectedId">
+
+                </pragma-options-toolbar>
                 <master-list-container selected-id.two-way="selectedId" grouping-items.bind="groupingItems" list-template.bind="listTemplate" cache-id.bind="cacheId"></master-list-container>
             </div>
         </div>
