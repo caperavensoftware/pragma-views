@@ -97,7 +97,6 @@ System.config({
     "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.1",
     "aurelia-framework": "npm:aurelia-framework@1.1.2",
     "aurelia-pal-browser": "npm:aurelia-pal-browser@1.2.1",
-    "oribella-aurelia-sortable": "npm:oribella-aurelia-sortable@0.11.3",
     "pragma-menu": "npm:pragma-menu@1.0.17",
     "pragma-tabsheet": "npm:pragma-tabsheet@1.0.23",
     "systemjs/plugin-text": "github:systemjs/plugin-text@0.0.9",
@@ -237,22 +236,6 @@ System.config({
       "aurelia-pal": "npm:aurelia-pal@1.3.0",
       "aurelia-path": "npm:aurelia-path@1.1.1",
       "aurelia-task-queue": "npm:aurelia-task-queue@1.2.0"
-    },
-    "npm:oribella-aurelia-sortable@0.11.3": {
-      "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.3.1",
-      "aurelia-pal": "npm:aurelia-pal@1.3.0",
-      "aurelia-templating": "npm:aurelia-templating@1.4.2",
-      "aurelia-templating-resources": "npm:aurelia-templating-resources@1.4.0",
-      "oribella": "npm:oribella@0.8.2",
-      "oribella-framework": "npm:oribella-framework@0.10.2",
-      "tslib": "npm:tslib@1.6.0"
-    },
-    "npm:oribella-framework@0.10.2": {
-      "tslib": "npm:tslib@1.6.0"
-    },
-    "npm:oribella@0.8.2": {
-      "oribella-framework": "npm:oribella-framework@0.10.2",
-      "tslib": "npm:tslib@1.6.0"
     },
     "npm:pragma-menu@1.0.17": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@2.1.1",

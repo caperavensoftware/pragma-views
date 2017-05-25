@@ -1,7 +1,7 @@
 
 <template>
 <ul>
-    <li repeat.for="item of items" oa-sortable-item="item.bind: item" class="group-menu-item" >
+    <li repeat.for="item of items" class="group-menu-item" >
         <div class.bind="item.isOn ? 'active' : 'inactive'">
             <icon name="sorting"></icon>
             <label class="bold default-padding-left">${item.title}</label>
