@@ -105,6 +105,24 @@ The groups container allows you to define 1 to N group objects.
 ]
 ```
 
+Using groups like this means that you can only have groups as children.
+If you don't want only group children but mix it in with headers you have to use the "elements" objects and set the element type to group
+
+```
+"elements":[
+    {
+        "element": "h2",
+        "content": "Hello World"
+    },
+    {
+        "element": "group",
+        "id": "detailGroup",
+        "title": "detail",
+        "elements": [
+            ... elements go here
+        ]
+]
+```
 Each group item has to define:
 1. id - a unique identifier for this group on the view
 1. title - what caption should the group should have
