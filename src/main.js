@@ -14,6 +14,7 @@ export function configure(aurelia) {
                 'components/icons/icon.html',
                 'components/pragma-messages/pragma-messages',
                 'custom-attributes/selectable',
+                'custom-attributes/sortable',
                 'components/order-group/order-group',
                 'components/percentage-chart/percentage-chart',
                 'components/master-list-container/master-list-container',

@@ -18,6 +18,10 @@ export const menuItems = [
     {
         text: "Grid Tests",
         screen: "grid-test"
+    },
+    {
+        text: "Sortable",
+        screen: "sortable"
     }
 ];
 
