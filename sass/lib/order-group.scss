@@ -23,7 +23,16 @@ order-group {
 
         label {
             @include stretch();
+            @include no-mouse();
             font-size: $rem-2;
+        }
+
+        icon {
+            cursor: pointer;
+        }
+
+        icon[aria-grabbed="true"] {
+            cursor: move;
         }
     }
 

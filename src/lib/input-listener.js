@@ -35,12 +35,15 @@ export class InputListener {
      */
     constructor() {
         this.eventMap = new Map();
-        this.isMobile = isMobile();
         this.eventTypeMap = new Map([
-            [inputEventType.click, ["click", "touchstart"]]
+            [inputEventType.click, ["click", "touchstart"]],
+            [inputEventType.drag, ["mousedown", "touchstart"]],
+            [inputEventType.drop, ["mouseup", "touchend"]],
+            [inputEventType.move, ["mousemove", "touchmove"]]
         ]);
 
-        this.eventOptions = [null, {passive: true}]
+        this.isMobile = isMobile();
+        this.eventOptions = [null, {passive: true}];
     }
 
     /**
@@ -49,6 +52,9 @@ export class InputListener {
     dispose() {
         this.eventMap.clear();
         this.eventMap = null;
+
+        this.eventTypeMap.clear();
+        this.eventTypeMap = null;
     }
 
     /**
@@ -63,9 +69,10 @@ export class InputListener {
         }
 
         const key = `${element.id}.${eventType}`;
-        this.eventMap.set(key, callback);
+        const fn = event => this.postProcessEvent(event, eventType, element, callback);
+        this.eventMap.set(key, fn);
         const eventName = this.eventTypeMap.get(eventType)[+ this.isMobile];
-        element.addEventListener(eventName, callback, this.eventOptions[+ this.isMobile]);
+        element.addEventListener(eventName, fn, this.eventOptions[+ this.isMobile]);
     }
 
     /**
@@ -83,5 +90,60 @@ export class InputListener {
         }
 
         this.eventMap.delete(key);
+    }
+
+    /**
+     * Pre process for callback and determine if callback is allowed or not
+     * If no pre process is found callback will be allowed
+     * @param event: event sent from input
+     * @param eventType: event type that the event is registered on
+     * @returns: boolean: true if you may continue, false to exit process
+     */
+    preProcess(event, eventType) {
+        const fn = this[`pre${eventType}`];
+
+        if (!fn) {
+            return true;
+        }
+
+        return fn.call(this, event.target);
+    }
+
+    /**
+     * perform a post process operation for a given event if there is one defined
+     * @param event: event sent back from input
+     * @param eventType: event type that the event is registered on
+     * @param element: what element is the event bound to (not the target, but the registered element)
+     * @param callback: what callback must be performed
+     */
+    postProcessEvent(event, eventType, element, callback) {
+        if (!this.preProcess(event, eventType)) {
+            return;
+        }
+
+        const mayContinue = callback(event);
+
+        if (mayContinue === false) {
+            return;
+        }
+
+        const fn = this[`post${eventType}`];
+        if (fn) {
+            fn.call(this, event.target);
+        }
+    }
+
+    postDrag(element) {
+        this.currentDraggedElement = element;
+        this.currentDraggedElement.setAttribute('aria-grabbed', true);
+    }
+
+    preDrop(element) {
+        return this.currentDraggedElement != null;
+    }
+
+    postDrop(element) {
+        this.currentDraggedElement.setAttribute('aria-grabbed', false);
+        this.currentDraggedElement = null;
     }
 }

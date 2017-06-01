@@ -57,10 +57,17 @@ export class Sortable {
         }
 
         this.childCollection = Array.from(this.element.childNodes);
+        for(let child of this.childCollection) {
+            if (child.setAttribute) {
+                child.setAttribute("aria-grabbed", "false");
+            }
+        }
 
+        this.dragHandler = this.drag.bind(this);
+        this.dropHandler = this.drop.bind(this);
 
-        this.clickHandler = this.click.bind(this);
-        this.inputListener.addEvent(this.element, inputEventType.click, this.clickHandler);
+        this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
+        this.inputListener.addEvent(this.element, inputEventType.drop, this.dropHandler);
     }
 
     /**
@@ -70,20 +77,25 @@ export class Sortable {
         this.childCollection = null;
         this.animationLayer = null;
 
-        // don't null inputListener as it is attached through injection
-        this.inputListener.removeEvent(this.element, inputEventType.click);
+        this.inputListener.removeEvent(this.element, inputEventType.drag);
+        this.inputListener.removeEvent(this.element, inputEventType.drop);
+
+        this.dragHandler = null;
+        this.dropHandler = null;
     }
 
-    /**
-     * Test click function
-     * @param event
-     */
-    click(event) {
-        if (event.target.matches(this.query)) {
-            alert("yes");
-        }
-        else {
-            alert("No");
-        }
+    drag(event) {
+        return event.target.matches(this.query);
+    }
+
+    drop(event) {
+        const dropTarget = event.target;
+        const dropSource = this.inputListener.currentDraggedElement;
+
+        console.log("dropSource");
+        console.log(dropSource);
+
+        console.log("dropTarget");
+        console.log(dropTarget);
     }
 }
