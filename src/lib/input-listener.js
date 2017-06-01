@@ -133,15 +133,34 @@ export class InputListener {
         }
     }
 
+    /**
+     * Perform action on element after the drag event has fired
+     * @param element
+     */
     postDrag(element) {
         this.currentDraggedElement = element;
         this.currentDraggedElement.setAttribute('aria-grabbed', true);
     }
 
+    /**
+     * Perform this action before drop is executed to ensure that it is even relevant
+     * @param element
+     * @returns {boolean}
+     */
     preDrop(element) {
         return this.currentDraggedElement != null;
     }
 
+    /**
+     * Perform action after the drop action has taken place.
+     * this.currentDragElement is imporant in this case so that you don't have to keep track of who is being gragged.
+     * When the drop event fires, the event.target indicates on what element the drop is taking place, ie: drop target.
+     *
+     * const dropTarget = event.target;
+     * const dropSource = this.inputListener.currentDraggedElement;
+     * see sortable.js on how this can be used
+     * @param element
+     */
     postDrop(element) {
         this.currentDraggedElement.setAttribute('aria-grabbed', false);
         this.currentDraggedElement = null;
