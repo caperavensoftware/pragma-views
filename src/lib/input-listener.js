@@ -36,7 +36,10 @@ export class InputListener {
     constructor() {
         this.eventMap = new Map();
         this.isMobile = isMobile();
-        this.clickEvents = ["click", "touchstart"];
+        this.eventTypeMap = new Map([
+            [inputEventType.click, ["click", "touchstart"]]
+        ]);
+
         this.eventOptions = [null, {passive: true}]
     }
 
@@ -60,9 +63,9 @@ export class InputListener {
         }
 
         const key = `${element.id}.${eventType}`;
-        const fnName = `register${eventType}`;
-        this[fnName](element, callback);
         this.eventMap.set(key, callback);
+        const eventName = this.eventTypeMap.get(eventType)[+ this.isMobile];
+        element.addEventListener(eventName, callback, this.eventOptions[+ this.isMobile]);
     }
 
     /**
@@ -73,21 +76,12 @@ export class InputListener {
     removeEvent(element, eventType) {
         const key = `${element.id}.${eventType}`;
 
-        const fnName = `unregister${eventType}`;
-        this[fnName](element);
-        this.eventMap.delete(key);
-    }
-
-    registerClick(element, callback) {
-        element.addEventListener(this.clickEvents[+ this.isMobile], callback, this.eventOptions[+ this.isMobile]);
-    }
-
-    unregisterClick(element) {
-        const key = `${element.id}.${inputEventType.click}`;
-
         if (this.eventMap.has(key)) {
             const callback = this.eventMap.get(key);
-            element.removeEventListener(this.clickEvents[+ this.isMobile], callback);
+            const eventName = this.eventTypeMap.get(eventType)[+ this.isMobile];
+            element.removeEventListener(eventName, callback);
         }
+
+        this.eventMap.delete(key);
     }
 }
