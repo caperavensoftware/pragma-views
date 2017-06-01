@@ -6,9 +6,11 @@ import {bindable, customElement, inject} from 'aurelia-framework';
 export class OrderGroup {
     element;
     @bindable items;
+    @bindable sortableQuery;
 
     constructor(element) {
         this.element = element;
+        this.sortableQuery = 'icon[name="sorting"]'
     }
     
     attached() {
