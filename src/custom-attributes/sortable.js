@@ -65,9 +65,11 @@ export class Sortable {
 
         this.dragHandler = this.drag.bind(this);
         this.dropHandler = this.drop.bind(this);
+        this.moveHandler = this.move.bind(this);
 
         this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
         this.inputListener.addEvent(this.element, inputEventType.drop, this.dropHandler);
+        this.inputListener.addEvent(this.element, inputEventType.move, this.moveHandler);
     }
 
     /**
@@ -79,6 +81,7 @@ export class Sortable {
 
         this.inputListener.removeEvent(this.element, inputEventType.drag);
         this.inputListener.removeEvent(this.element, inputEventType.drop);
+        this.inputListener.removeEvent(this.element, inputEventType.move);
 
         this.dragHandler = null;
         this.dropHandler = null;
@@ -97,5 +100,9 @@ export class Sortable {
 
         console.log("dropTarget");
         console.log(dropTarget);
+    }
+
+    move(event) {
+        console.log(`${event.clientX} ${event.clientY}`);
     }
 }

@@ -165,4 +165,13 @@ export class InputListener {
         this.currentDraggedElement.setAttribute('aria-grabbed', false);
         this.currentDraggedElement = null;
     }
+
+    /**
+     * Perform this action before moving so that the move event only fires during dragging operations
+     * @param element
+     * @returns {boolean}
+     */
+    preMove(element) {
+        return this.currentDraggedElement != null;
+    }
 }
