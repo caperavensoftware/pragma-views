@@ -33,6 +33,7 @@ Recognised shorthands for screen generation are:
 1. tabsheet
 1. groups
 1. input
+1. checkbox
 1. memo
 1. button
 1. elements
@@ -131,25 +132,40 @@ Each group item has to define:
 The input schema is a 1:1 match for the html element "input". Input items are rendered in a input composite that manages layout and other features.
 
 ```json
-"input": {
+{
+  "element": "input",
   "title": "Site Code",
   "field": "site_code",
-  "description": "code for site",
-  "styles": ["css-class-1", "css-class-2"],
-  "attributes": {
+  "description": "code for site",           // optional - can use aurelia binding expression here ${siteCode}
+  "styles": ["css-class-1", "css-class-2"], // optional
+  "attributes": {                           // optional
     "pattern": "[Aa-Zz]"
   }
 }
 ```
 
-if you define a element as "input" it will parse it as the above.
+## Checkbox
+The checkbox schea creates a input of type checkbox. It uses a particular composite layout as defined by the pragma standard layout.
+
+```json
+{
+  "element": "checkbox",
+  "title": "Is Active",
+  "field": "is_active",
+  "styles": ["switch"], // optional
+  "attributes": {                           // optional
+    "pattern": "[Aa-Zz]"
+  }
+}
+```
 
 ## Memo
 The memo schema translates to a html textarea control. This is also wrapped in a input composite.
 If you want to use a textarea without the input composite rather use the "element" schema and define it as a textarea.
 
 ```json
-"memo": {
+{
+  "element": "memo",
   "title": "Site Code",
   "field": "site_code",
   "description": "code for site",
@@ -164,7 +180,8 @@ If you want to use a textarea without the input composite rather use the "elemen
 The button schema translates to a html button element.
 
 ```json
-"button": {
+{
+  "element": "button",
   "title": "Click Me",
   "action": "myFunction",
   "styles": ["css-class-1", "css-class-2"],
