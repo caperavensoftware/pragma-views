@@ -39,6 +39,19 @@ Recognised shorthands for screen generation are:
 1. elements
 1. element
 
+## Fields section
+The fields section in the schema is required and serves as a name map between the field name you use in the schema vs the binding expression used on the actual model.
+
+A field map is defined as
+```json
+{
+    "field": "id",
+    "map": "workOrderId"
+},
+```
+where field is the name you use in the schema and map defines the property on the model you are binding to.  
+This allows you to have a simple name in the schema that refers to a complex name on the model.
+
 ## General properties
 You will often see the following properties for schemas in the examples below:
 1. styles
