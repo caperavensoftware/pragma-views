@@ -165,7 +165,7 @@ The checkbox schea creates a input of type checkbox. It uses a particular compos
   "element": "checkbox",
   "title": "Is Active",
   "field": "is_active",
-  "styles": ["switch"], // optional
+  "styles": ["switch"],                     // optional
   "attributes": {                           // optional
     "pattern": "[Aa-Zz]"
   }
