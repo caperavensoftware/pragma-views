@@ -5,6 +5,8 @@
   right: 0;
   bottom: 0;
   z-index: 99999999;
+
+  @include no-mouse();
 }
 
 .drag-item {
@@ -21,6 +23,8 @@
   background: $sortable-background;
   @include box-shadow(0, 0.5rem, 1rem, 0, 10, 25, 41, $default-shadow);
   list-style-type: none;
+
+  @include no-mouse();
 }
 
 .place-holder {

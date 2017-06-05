@@ -43,7 +43,7 @@ export class InputListener {
         ]);
 
         this.isMobile = isMobile();
-        this.eventOptions = [{capture: true}, {passive: true}];
+        this.eventOptions = [null, {passive: true}];
     }
 
     /**

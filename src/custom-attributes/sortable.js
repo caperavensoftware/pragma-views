@@ -31,15 +31,6 @@ export class Sortable {
      */
     lastTarget;
 
-    get isValidDragTarget() {
-        return this._validDragTarget;
-    };
-
-    set isValidDragTarget(value) {
-        this._validDragTarget = value;
-        this.validDragTargetChanged();
-    }
-
     /**
      * @constructor
      * @param element
@@ -95,9 +86,8 @@ export class Sortable {
         this.dropHandler = this.drop.bind(this);
         this.moveHandler = this.move.bind(this);
 
-        this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
-
         document.id = "document";
+        this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
         this.inputListener.addEvent(document, inputEventType.move, this.moveHandler);
         this.inputListener.addEvent(document, inputEventType.drop, this.dropHandler);
     }
@@ -133,7 +123,6 @@ export class Sortable {
             const dimentions = li.getBoundingClientRect();
             this.dragManager.startDrag(li, dimentions);
             this.addPlaceholder(li);
-            this.isValidDragTarget = true;
             this.lastTarget = event.target;
         }
 
@@ -149,18 +138,16 @@ export class Sortable {
         const y = event.clientY ? event.clientY : event.touches ? event.touches[0].clientY : 0;
 
         this.dragManager.move(x, y);
+
+        this.processTarget(event.target);
     }
 
-    validDragTargetChanged() {
-        if(this.isValidDragTarget == null || this.isValidDragTarget == true) {
-            if (document.body.classList.contains("invalid-target")) {
-                document.body.classList.remove("invalid-target");
-            }
-        }
-        else {
-            if (!document.body.classList.contains("invalid-target")) {
-                document.body.classList.add("invalid-target");
-            }
+    processTarget(target) {
+        const li = this.findParentLi(target);
+
+        if (li !== this.lastTarget) {
+            this.lastTarget = li;
+            console.log(li);
         }
     }
 
@@ -169,14 +156,9 @@ export class Sortable {
      * @param event
      */
     drop(event) {
-        this.isValidDragTarget = null;
-
         this.dragManager.drop();
         this.removePlaceholder();
-
-        if (this.isValidDragTarget) {
-            this.lastTarget = null;
-        }
+        this.lastTarget = null;
     }
 
     /**
