@@ -5,17 +5,33 @@ master-list-container ul li div {
     display: flex; 
 }
 
-master-list-container {
-    background: $list-view-container-background;
-    display: block;
+master-list-container > div {
     width: 100%;
     height: 100%;
+
+    @include flex();
+    @include flex-column();
+}
+
+master-list-container {
+    background: $list-view-container-background;
+
+    #master-list {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
 
     .li-styling {
         margin: 3px;
         padding: 10px;
         position: relative;
         background: whitesmoke;
+
+        pragma-template {
+            @include no-mouse();
+        }
     }
 
     .li-styling:hover {
@@ -29,18 +45,22 @@ master-list-container {
         top: 0;
         left: 0;
         width: 0.25rem;
-        height: 3.25rem;
-        background: $primary-background;
+        height: 100%;
+        background: $list-border;
+    }
+
+    .li-styling[aria-selected="true"]:before {
+        background: $list-selected;
     }
 
     .card[aria-selected="true"] {
         background: white;
+        z-index: 1;
     }
 
     .square-icon-label {
         width: 3rem;
         height: 3rem;
-        background: $group-close-background;
         @include flex();
         align-items: center;
         justify-content: center;
@@ -48,5 +68,19 @@ master-list-container {
         icon, .icon {
             margin-left: 0.1rem;
         }
+    }
+
+    .master-grouping {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: $list-view-container-background;
+        z-index: 2;
+    }
+
+    pragma-dropdown-menu {
+        @include stretch()
     }
 }

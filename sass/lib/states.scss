@@ -7,7 +7,7 @@
 }
 
 .no-mouse {
-  pointer-events: none;
+  @include no-mouse();
 }
 
 .selectable {

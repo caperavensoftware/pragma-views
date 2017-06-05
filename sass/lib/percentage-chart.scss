@@ -4,6 +4,9 @@ percentage-chart {
     color: #E2E2E2;
     padding-top: $half-padding;
     padding-bottom: $half-padding;
+    height: 20rem;
+    overflow-y: auto;
+    @include overflow-scroll();
 }
 
 percentage-chart ul li {
@@ -29,17 +32,18 @@ percentage-chart ul li {
         background-color: $pc-color;
         border-radius: 10px;
 
-        will-change: box-shadow;
-        transition: box-shadow 0.3s cubic-bezier(0.26, -0.04, 0.24, 2.34);
+        will-change: box-shadow, background-color;
+        transition: all 0.3s cubic-bezier(0.26, -0.04, 0.24, 2.34);
     }
 }
 
-percentage-chart ul li.selected {
+percentage-chart ul li[aria-selected=true] {
     font-weight: bold;
     color: white;
 
     progress[value]::-webkit-progress-value {
-        box-shadow: 0px 0px 0px 1px $primary-highlight;
+        background-color: $selected-color;
+        box-shadow: 0px 0px 0px 1px $selected-color;
     }
 }
 

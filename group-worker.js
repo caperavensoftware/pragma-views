@@ -52,13 +52,20 @@ class GroupWorker {
      */
     createCache(args) {
         if (this.dataCache.has(args.id)) {
-            const dataCache = ths.dataCache.get(id);
+            const dataCache = this.dataCache.get(args.id);
             dataCache.data = args.data;
             dataCache.updateAllPerspectives();
         }
         else {
             this.dataCache.set(args.id, new DataCache(args.data));
         }
+
+        postMessage({
+            msg: "getRecordsForResponse",
+            id: args.id,
+            data: args.data
+        })
+
     }
 
     /**
@@ -203,24 +210,13 @@ class DataCache {
      */
     getRecordsFor(items, filters)
     {
-        //var first = Math.floor(Date.now());
-        var items2 = items.slice(0);
-        /*var items3 = items.slice(0);
-
-        for(var j = 0; j < filters.length; j++){
-            var fieldName = filters[j].fieldName;
-            var value = filters[j].value;
-
-            items3 = items3.filter(function(el){
-                return (el[fieldName] == value);
-            });
+        if (!filters) {
+            return items;
         }
 
-        var second = Math.floor(Date.now());
-        //console.log("first" + (second - first));
-        */
+        let result = items.slice(0);
 
-        items2 = items2.filter(function(el) {
+        result = result.filter(function(el) {
             for(var j = 0; j < filters.length; j++){
                 var fieldName = filters[j].fieldName;
                 var value = filters[j].value;
@@ -232,10 +228,7 @@ class DataCache {
             return true;
         });
 
-        //var third = Math.floor(Date.now());
-        //console.log("second" + (third - second));
-
-        return items2;
+        return result;
     }
 
     /**
@@ -268,7 +261,7 @@ class DataCache {
 
         const root = {
             level: 0,
-            title: "root",
+            title: "None",
             items: dataCopy,
             isGroup: true
         };
@@ -289,6 +282,8 @@ class DataCache {
                 aggregate: aggegateOptions.aggregate,
                 value: aggregator[aggegateOptions.aggregate](group.items, aggegateOptions.field)
             };
+
+            group.lowestGroup = true;
             return;
         }
 
@@ -320,8 +315,8 @@ class DataCache {
     group(array, fieldName, level) {
         return array.reduce((groupMap, curr) => {
             const key = curr[fieldName];
-            const id = curr["id"];
-            var groupId = groupMap.size;
+            const id = curr[fieldName];
+            const groupId = groupMap.size;
 
             if (groupMap.has(key)) {
                 groupMap.get(key).items.push(curr);
@@ -330,7 +325,7 @@ class DataCache {
                 groupMap.set(key, {
                     level: level,
                     field: fieldName,
-                    title: key,
+                    title: key ? key.toString() : "none",
                     id: id,
                     items: [curr],
                     index: groupId,

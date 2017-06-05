@@ -1,4 +1,4 @@
-import {populateTemplate, tabsheetHtml, tabHtml, groupHtml, inputHtml, textareaHtml, containerHtml, buttonHtml, dynamicHtml} from "./template-parser-contstants";
+import {populateTemplate, tabsheetHtml, tabHtml, groupHtml, inputHtml, textareaHtml, containerHtml, buttonHtml, dynamicHtml, checkboxHtml, selectHtml} from "./template-parser-contstants";
 
 export class TemplateParser {
     fieldMap;
@@ -11,21 +11,28 @@ export class TemplateParser {
      */
     constructor(propertyPrefix) {
         this.propertyPrefix = propertyPrefix;
+        this.propertyPrefixStack = this.propertyPrefix.split(".");
 
         this.parseTabSheetHandler = this.parseTabSheet.bind(this);
         this.parseGroupsHandler = this.parseGroups.bind(this);
+        this.parseGroupHandler = this.parseGroup.bind(this);
         this.parseInputHandler = this.parseInput.bind(this);
         this.parseTextAreaHandler = this.parseTextArea.bind(this);
         this.parseButtonHandler = this.parseButton.bind(this);
         this.parseElementsHandler = this.parseElements.bind(this);
+        this.parseCheckboxHandler = this.parseCheckbox.bind(this);
+        this.parseSelectHandler = this.parseSelect.bind(this);
 
         this.parseMap = new Map();
         this.parseMap.set("tabsheet", this.parseTabSheetHandler);
         this.parseMap.set("groups", this.parseGroupsHandler);
+        this.parseMap.set("group", this.parseGroupHandler);
         this.parseMap.set("input", this.parseInputHandler);
         this.parseMap.set("memo", this.parseTextAreaHandler);
         this.parseMap.set("button", this.parseButtonHandler);
         this.parseMap.set("elements", this.parseElementsHandler);
+        this.parseMap.set("checkbox", this.parseCheckboxHandler);
+        this.parseMap.set("select", this.parseSelectHandler);
     }
 
     /**
@@ -42,6 +49,7 @@ export class TemplateParser {
 
         this.parseTabSheetHandler = null;
         this.parseGroupsHandler = null;
+        this.parseGroupHandler = null;
         this.parseInputHandler = null;
         this.parseTextAreaHandler = null;
         this.parseDivHandler = null;
@@ -170,6 +178,70 @@ export class TemplateParser {
     }
 
     /**
+     * Parse object as a select element
+     * Required fields are:
+     * 1. field: what field is bound to the select
+     * 2. title: what title should be shown int the label
+     * 3. datasource: what is the property name on the prefix path that contains the items to show
+     * 4. optionField: what is the field in the datasource object to display as the option text.
+     * NOTE: the option must have a "id" property
+     * @param select
+     */
+    parseSelect(select) {
+        const field = select.field;
+        const title = select.title;
+        const description = select.description || "";
+        const required = select.required || false;
+        const optionField = select.optionField;
+        const datasource = this.getPrefix(select.datasource) + this.cleanRelative(select.datasource);
+
+        const result = populateTemplate(selectHtml, {
+            "__prefix__": this.propertyPrefix,
+            "__field__": field,
+            "__title__": title,
+            "__description__": description,
+            "__required__": required,
+            "__datasource__": datasource,
+            "__content__": "${option." + optionField + "}",
+        });
+
+        return result;
+    }
+
+    /**
+     * Remove all relative path markup from string
+     * @param path
+     * @returns {string}
+     */
+    cleanRelative(path) {
+        return path.split("../").join("");
+    }
+
+    /**
+     * determine the prefix based on relative path on field defined as definition
+     * @param definition
+     * @returns {*}
+     */
+    getPrefix(definition) {
+        if (!definition || definition.indexOf("../") == -1) {
+            return this.propertyPrefix;
+        }
+
+        const backCount = definition.split("../").length - 1;
+        const prefixStack = this.propertyPrefixStack.length;
+        const offset = prefixStack - backCount;
+
+        if (offset < 0) {
+            return ""
+        }
+        else
+        {
+            const result = this.propertyPrefixStack.splice(0, prefixStack - backCount).join(".");
+            return result;
+        }
+    }
+
+    /**
      * Parse a object as a group.
      * The object is expected to be an array of groups.
      * Each group must have the following fields:
@@ -180,14 +252,22 @@ export class TemplateParser {
     parseGroups(groups) {
         const result = [];
         for (let group of groups) {
-            const fieldsHtml = this.parseElements(group.elements);
-            result.push(populateTemplate(groupHtml, {
-                "__id__": group.id,
-                "__title__": group.title,
-                "__content__": fieldsHtml
-            }))
+            result.push(this.parseGroup(group));
         }
         return result.join("");
+    }
+
+    /**
+     * Parse a single group and it's content
+     * @param element
+     * @returns {*}
+     */
+    parseGroup(element) {
+        const fieldsHtml = this.parseElements(element.elements);
+        return populateTemplate(groupHtml, {
+            "__title__": element.title,
+            "__content__": fieldsHtml
+        });
     }
 
     /**
@@ -208,6 +288,29 @@ export class TemplateParser {
         }
 
         return result.join("");
+    }
+
+    /**
+     * Parse checkbox
+     * @param element
+     * @returns {*}
+     */
+    parseCheckbox(element) {
+        const title = element.title;
+        const field = element.field;
+        const description = element.description || "";
+        const classes = this.processClasses(element);
+        const attributes = this.processAttributes(element);
+
+        return populateTemplate(checkboxHtml, {
+            "__prefix__": this.getPrefix(field),
+            "__field__": field,
+            "__title__": title,
+            "__description__": description,
+            "__classes__": classes,
+            "__attributes__": attributes
+        });
+
     }
 
     /**
@@ -297,16 +400,18 @@ export class TemplateParser {
         const title = input.title;
         const field = input.field;
         const description = input.description || "";
+        const required = input.required | false;
         const classes = this.processClasses(input);
         const attributes = this.processAttributes(input);
 
         return populateTemplate(inputHtml, {
-            "__prefix__": this.propertyPrefix,
+            "__prefix__": this.getPrefix(field),
             "__field__": field,
             "__title__": title,
             "__description__": description,
             "__classes__": classes,
-            "__attributes__": attributes
+            "__attributes__": attributes,
+            "__required__": required
         });
     }
 
@@ -327,16 +432,18 @@ export class TemplateParser {
         const title = memo.title;
         const field = memo.field;
         const description = memo.descriptor || "";
+        const required = input.required | false;
         const classes = this.processClasses(memo);
         const attributes = this.processAttributes(memo);
 
         return populateTemplate(textareaHtml, {
-            "__prefix__": this.propertyPrefix,
+            "__prefix__": this.getPrefix(field),
             "__field__": field,
             "__title__": title,
             "__description__": description,
             "__classes__": classes,
-            "__attributes__": attributes
+            "__attributes__": attributes,
+            "__required__": required
         });
     }
 

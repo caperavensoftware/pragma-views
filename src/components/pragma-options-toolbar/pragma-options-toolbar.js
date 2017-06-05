@@ -4,19 +4,9 @@ import {customElement, inject, bindable} from 'aurelia-framework';
 @inject(Element)
 export class PragmaOptionsToolbar {
     @bindable dropdownItems;
+    @bindable selectedId;
 
     constructor(element) {
         this.element = element;
-
-        // define handlers
-        // this.actionHandler = this.action.bind(this);
-    }
-
-    attached() {
-        // initialize
-    }
-
-    detached() {
-        // dispose
     }
 }

@@ -73,6 +73,14 @@
   appearance: none;
 }
 
+@mixin absolute-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 @mixin overflow-scroll {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -81,4 +89,8 @@
 @mixin translateX($x) {
   -webkit-transform: translateX($x);
   transform: translateX($x)
+}
+
+@mixin no-mouse() {
+  pointer-events: none;
 }

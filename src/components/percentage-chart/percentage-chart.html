@@ -1,12 +1,17 @@
 
 <template>
     <ul id="chartList">
-        <li class="selectable" repeat.for="item of items" id="${item.index}" index="${item.index}">
+        <li class="selectable" repeat.for="item of items" id="${item.index}" index="${item.index}" click.delegate="selectDom(item, $event)">
             <div class="container horizontal half-padding-right half-padding-bottom no-mouse">
                 <div class="stretch">${item.title}</div>
                 <div class="bold">${item.aggregate.value}</div>
             </div>
-            <progress max.bind="maxAggregate" value.bind="item.aggregate.value" class="no-mouse"></progress>
+            <div class="container horizontal-centered">
+                <progress max.bind="maxAggregate" value.bind="item.aggregate.value" class="no-mouse stretch"></progress>
+                <button if.bind="!item.lowestGroup" click.delegate="drilldown(item, $event)" class="icon-button icon-light">
+                    <icon name="leftarrow"></icon>
+                </button>
+            </div>
         </li>
     </ul>
 </template>

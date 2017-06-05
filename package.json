@@ -1,6 +1,6 @@
 {
   "name": "pragma-views",
-  "version": "0.0.21",
+  "version": "0.0.36",
   "description": "Package that provides all required parts for pragma visuals",
   "main": "commonjs/index.js",
   "scripts": {
@@ -30,7 +30,8 @@
       "dist": "amd"
     },
     "dependencies": {
-      "pragma-menu": "^1.0.17"
+      "pragma-menu": "^1.0.17",
+      "pragma-tabsheet": "^1.0.23"
     },
     "devDependencies": {
       "aurelia-bootstrapper": "^2.1.1",

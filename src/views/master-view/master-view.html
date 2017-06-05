@@ -1,6 +1,22 @@
 <template>
-    <div class="master-view">
-        <master-list-container items.bind="listItems"></master-list-container>
-    </div>
-    <div class="data-display">${dataDisplay}</div>
+    <master-detail is-master-visible.bind="isMasterVisible">
+        <div slot="master">
+            <div class="fullsize">
+                <pragma-options-toolbar dropdown-items.bind="toolbarItems" selected-id.two-way="toolbarSelectedId">
+
+                </pragma-options-toolbar>
+                <master-list-container selected-id.two-way="selectedId" grouping-items.bind="groupingItems" list-template.bind="listTemplate" cache-id.bind="cacheId"></master-list-container>
+            </div>
+        </div>
+
+        <div slot="detail">
+            <div class="fullsize">
+                <pragma-options-toolbar dropdown-items.bind="toolbarItems">
+                    <div slot="items">
+                        <input type="checkbox" checked.bind="isMasterVisible"/>
+                    </div>
+                </pragma-options-toolbar>
+            </div>
+        </div>
+    </master-detail>
 </template>

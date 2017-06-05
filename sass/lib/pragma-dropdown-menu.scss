@@ -12,6 +12,10 @@ pragma-dropdown-menu {
   .header {
     @include flex();
     align-items: center;
+
+    span {
+      @include stretch();
+    }
   }
 
   ul {

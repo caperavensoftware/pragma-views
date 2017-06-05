@@ -1,35 +1,58 @@
-import {bindable, customElement, inject} from 'aurelia-framework';
-import {GroupWorker, aggregates} from './../../lib/group-worker';
-import {EventAggregator} from 'aurelia-event-aggregator';
+import {bindable, inject} from 'aurelia-framework';
+import {GroupWorker} from './../../lib/group-worker';
+import {listTemplate1, populateTemplate} from './../../lib/template-parser-contstants';
 
-@inject(GroupWorker, EventAggregator, Element)
+@inject(Element, GroupWorker)
 export class MasterView {
+    @bindable groupingItems;
+    @bindable listTemplate;
+    @bindable cacheId;
 
-    @bindable dataDisplay;
-    @bindable listItems;
+    @bindable isMasterVisible;
+    @bindable selectedId;
 
-    constructor(element) {
+    @bindable toolbarSelectedId;
+    @bindable toolbarItems;
 
-        for(var j = 0; j < 10; j++)
-        {
-            for(var i = 0; i < 1; i++)
+    constructor(element, groupWorker) {
+        this.groupingItems = orderGroupItems;
+        this.groupWorker = groupWorker;
+        this.cacheId = "test-cache";
+
+        this.listTemplate = populateTemplate(listTemplate1, {
+            "__field1__": "${code}",
+            "__field2__": "${site}",
+            "__field3__": "${name}",
+            "__field4__": "${surname}",
+            "__field5__": "${section}"
+        });
+
+        this.isMasterVisible = true;
+
+        this.toolbarItems = [
             {
-                var objectItem = {id: (viewListItems.length + i),
-                                    code: viewListItems[j].code, 
-                                    name: viewListItems[j].name,
-                                    surname: viewListItems[j].surname,
-                                    site: viewListItems[j].site,
-                                    section: viewListItems[j].section,
-                                    location: viewListItems[j].location,
-                                    isActive: viewListItems[j].isActive,
-                                    cost: viewListItems[j].cost};
-
-                viewListItems.push(objectItem);
+                id: 1,
+                title: "Do Something",
+                iconName: null
             }
-        }
+        ]
+    }
 
-        this.listItems = viewListItems;
-    }    
+    attached() {
+        this.groupWorker.createCache(this.cacheId, viewListItems);
+    }
+
+    detached() {
+        this.groupWorker.disposeCache(this.cacheId);
+    }
+
+    selectedIdChanged() {
+        console.log(this.selectedId);
+    }
+
+    toolbarSelectedIdChanged() {
+        console.log(this.toolbarSelectedId);
+    }
 }
 
 const orderGroupItems = [
@@ -37,13 +60,13 @@ const orderGroupItems = [
         id: 1,
         title: "IS ACTIVE",
         value: "isActive", 
-        isOn: true
+        isOn: false
     },
     {
         id: 2,
         title: "SITE", 
         value: "site",
-        isOn: true
+        isOn: false
     },
     {
         id: 3,
@@ -56,37 +79,6 @@ const orderGroupItems = [
         title: "LOCATION",
         value: "location", 
         isOn: false
-    }
-];
-
-const percentageChartItems = [
-    {
-        id: 1,
-        code: "A11",
-        title: "ABC Manufactoring CPT", 
-        total: 12,
-        max: 30
-    },
-    {
-        id: 2,
-        code: "A22",
-        title: "ABC Manufactoring DBN", 
-        total: 8,
-        max: 30
-    },
-    {
-        id: 3,
-        code: "A31",
-        title: "ABC Manufactoring JHB", 
-        total: 4,
-        max: 30
-    },
-    {
-        id: 4,
-        code: "A12",
-        title: "ABC Manufactoring PE", 
-        total: 6,
-        max: 30
     }
 ];
 

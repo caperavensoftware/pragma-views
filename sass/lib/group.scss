@@ -6,7 +6,7 @@
   padding: $default-padding;
   border-radius: $group-border-radius;
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: $half-padding;
   transition: all 0.4s;
 }
 
@@ -32,4 +32,11 @@
 
 .group header h3 {
   @include stretch();
+}
+
+.group-header {
+  font-size: 1.2rem;
+  opacity: 0.5;
+  text-transform: uppercase;
+  margin-bottom: $half-padding;
 }

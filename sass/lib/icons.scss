@@ -1,3 +1,7 @@
+.icon-light svg {
+  fill: white;
+}
+
 [role="menubar"] {
   .icon {
     width: 2rem;
@@ -84,6 +88,13 @@ form-search {
 }
 
 pragma-dropdown-menu, .toolbar-no-padding, .group-menu-item {
+  icon, .icon {
+    width: $default-padding;
+    height: $default-padding;
+  }
+}
+
+.icon-button {
   icon, .icon {
     width: $default-padding;
     height: $default-padding;

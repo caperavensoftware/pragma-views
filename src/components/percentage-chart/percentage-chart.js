@@ -1,125 +1,222 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
+import {GroupWorker, aggregates} from './../../lib/group-worker';
+import {EventAggregator} from 'aurelia-event-aggregator';
 import {isMobile} from './../../lib/device-helper';
 
 @customElement('percentage-chart')
-@inject(Element)
+@inject(Element, GroupWorker, EventAggregator)
 export class PercentageChart {
-    element = null;
-    @bindable items;
-    @bindable maxAggregate;
-    tapedTwice;
+    element;
+    groupWorker;
+    maxAggregate;
 
-    constructor(element) {
-        this.tapedTwice = false;
+    /**
+     * These properties define all the information required to work with the group cache
+     */
+    @bindable cacheId;
+
+    /**
+     * What perspective should be used when quering the group cache
+     */
+    @bindable perspectiveId;
+
+    /**
+     * Array of strings defining the grouping order
+     */
+    @bindable groupedItems;
+
+    /**
+     * Internal use for displaying chart items
+     */
+    @bindable items;
+
+    /**
+     * Expose the current drilldown items so that you can use it in other controls
+     */
+    @bindable drilldownItems;
+
+    /**
+     * External property to affect back operations
+     */
+    @bindable drilldownId;
+
+    /**
+     * constructor
+     * @param element: DOMElement
+     * @param groupWorker: GroupWorker
+     * @param eventAggregator: EventAggregator
+     */
+    constructor(element, groupWorker, eventAggregator) {
         this.element = element;
+        this.groupWorker = groupWorker;
+        this.eventAggregator = eventAggregator;
         this.maxAggregate = 0;
     }
 
+    /**
+     * Aurelia lifecycle event
+     */
     attached() {
-        this.ul = this.element.getElementsByTagName("ul")[0];
-        
-        if(!isMobile()) {
-            this.ul.addEventListener("click", this.click.bind(this));
-            this.ul.addEventListener("dblclick", this.dblClick.bind(this));
-        }
-        else {
-            this.ul.addEventListener("touchstart", this.dblTapList.bind(this));
-        }
+        this.updatePerspective();
+
+        this.onGetDataHandler = this.onGetData.bind(this);
+        this.onGetDataEvent = this.eventAggregator.subscribe(`${this.cacheId}_${this.perspectiveId}`, this.onGetDataHandler);
+
+        this.backHandler = this.back.bind(this);
+        this.onBackEvent = this.eventAggregator.subscribe(`${this.cacheId}_${this.perspectiveId}_back`, this.backHandler);
     }
 
+    /**
+     * Aurelia lifecycle event
+     */
     detached()
     {
-        this.ul.removeEventListener("click", this.click.bind(this));
-        this.ul.removeEventListener("dblclick", this.dblClick.bind(this));
-        this.ul.removeEventListener("touchstart", this.dblTapList.bind(this));
+        this.onGetDataEvent.dispose();
+        this.onGetDataHandler = null;
+
+        this.onBackEvent.dispose();
+        this.backHandler = null;
+
+        this.groupWorker.disposeGroupPerspective(this.cacheId, this.perspectiveId);
     }
 
-    dblTapList(event) {
+    /**
+     * Parameters have changed, update the perspective to match the new parameters
+     */
+    updatePerspective() {
+        this.groupWorker.disposeGroupPerspective(this.cacheId, this.perspectiveId);
 
-        if (!this.tapedTwice) {
-            this.tapedTwice = true;
-            setTimeout(() => {
-                this.tapedTwice = false;
-            }, 300);
-
-            this.click(event);
-
-            return false;
-        }
-
-        event.preventDefault();
-        this.dblClick(event);
-        return true;
-    }
-
-    itemsChanged() {
-        if (!this.items) {
-            this.maxAggregate = 0
+        if (this.groupedItems && this.groupedItems.length > 0) {
+            this.groupWorker.createGroupPerspective(this.cacheId, this.perspectiveId, this.groupedItems, { aggregate: aggregates.count });
         }
         else {
-            let result = 0;
-            for (let item of this.items) {
-                
-                if(item.aggregate){
-                    result += item.aggregate.value;
-                }
-            }
-
-            this.maxAggregate = result;
+            this.items = null;
         }
     }
 
-    click(event){
+    /**
+     * The groupedItems property changes, update yourself
+     */
+    groupedItemsChanged() {
+        this.updatePerspective();
+    }
 
-        if(event.target.nodeName == "LI")
-        {
-            var cusevent = new CustomEvent(
-                "chartClick",
-                {
-                    detail: {
-                        message: event.target.id,
-                        time: new Date(),
-                        id: event.target.id,
-                        fieldName: this.items[event.target.id].field,
-                        value: this.items[event.target.id].title
-                    },
+    /**
+     * perspective data was returned, update the display items
+     * @param args
+     */
+    onGetData(args) {
+        this.currentPerspective = args;
+        this.items = args.items;
 
-                    bubbles: true,
-                    cancelable: true
-                }
-            );
+        this.resetDrilldownItems();
+    }
 
-            if (this.oldSelectedItem) {
-                this.oldSelectedItem.classList.remove("selected");
+    /**
+     * Items has changed, react to the new set of items
+     */
+    itemsChanged() {
+        this.maxAggregate = this.items ? this.items.reduce((acc, item) => acc + item.aggregate.value, 0) : 0;
+    }
+
+    /**
+     * Reset the drilldown items to a empty list
+     */
+    resetDrilldownItems() {
+        this.drilldownItems = [this.currentPerspective];
+    }
+
+    /**
+     * Perform drilldown action navigating down the stack
+     * @param item
+     */
+    drilldown(item, event) {
+        if (!item.lowestGroup) {
+            if (!this.drilldownItems) {
+                this.resetDrilldownItems();
             }
 
-            event.target.classList.add("selected");
-            this.oldSelectedItem = event.target;
+            this.drilldownItems.push(item);
+            this.items = item.items;
 
-            event.target.dispatchEvent(cusevent);
+            this.selectDom(item);
+
+            this.ignoreDrilldownIdChanges = true;
+            this.drilldownId = item.title;
+            this.ignoreDrilldownIdChanges = false;
+        }
+
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
         }
     }
 
-    dblClick(event) {
-        if(event.target.nodeName == "LI")
-        {
-            var cusevent = new CustomEvent(
-                "chartDoubleClick",
-                {
-                    detail: {
-                        message: event.target.id,
-                        time: new Date(),
-                        id: event.target.id,
-                        fieldName: this.items[event.target.id].field,
-                        value: this.items[event.target.id].title
-                    },
+    /**
+     * Reverse of drilldown, move up the stack
+     */
+    back(index) {
+        if (!!this.drilldownItems && this.drilldownItems.length > 0) {
+            const indexToUse = index == 0 || !!index ? index : this.drilldownItems.length -1;
+            const amount = this.drilldownItems.length - indexToUse;
+            this.drilldownItems.splice(indexToUse, amount);
+        }
 
-                    bubbles: true,
-                    cancelable: true
-                }
-            );
+        const lastIndex = this.drilldownItems.length - 1;
+        const lastItem = lastIndex > -1 ? this.drilldownItems[lastIndex] : this.currentPerspective;
+        this.items = lastItem.items;
+        this.selectDom(lastItem, null);
 
-            event.target.dispatchEvent(cusevent);
+        if (lastIndex == -1) {
+            this.resetDrilldownItems();
+        }
+    }
+
+    /**
+     * Event hook for selecting item from DOM
+     * @param item
+     * @param event
+     */
+    selectDom(item, event) {
+        const branchItems = this.groupWorker.getAllRecordsInBranch(item);
+        this.eventAggregator.publish(`records_${this.cacheId}`, branchItems);
+
+        if (this.selectedDom) {
+            this.selectedDom.removeAttribute("aria-selected");
+        }
+
+        if (event) {
+            this.selectedDom = this.parentLi(event.target);
+            this.selectedDom.setAttribute("aria-selected", true);
+        }
+    }
+
+    /**
+     * Traverse up the tree and find the LI element
+     * @param target
+     * @return {*}
+     */
+    parentLi(target) {
+        if (target.tagName == "LI") {
+            return target;
+        }
+
+        return this.parentLi(target.parentElement);
+    }
+
+    /**
+     * drilldownId changed, now drill back up to that item
+     */
+    drilldownIdChanged() {
+        if (this.ignoreDrilldownIdChanges) {
+            this.ignoreDrilldownIdChanges = false;
+            return;
+        }
+
+        if (this.drilldownItems) {
+            const targetItem = this.drilldownItems.find(item => !!item && item.title == this.drilldownId);
+            const index = this.drilldownItems.indexOf(targetItem) + 1;
+            this.back(index);
         }
     }
 }

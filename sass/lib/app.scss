@@ -1,3 +1,7 @@
+body {
+  @include absolute-fullscreen();
+}
+
 .app-toolbar {
   height: $app-toolbar-height;
   background: $group-background;
@@ -23,9 +27,10 @@
 }
 
 .application-body {
-  @include flex();
-  @include flex-column();
-  @include fullsize();
+  position: relative;
+  width: 100%;
+  height: 100%;
+  @include stretch();
 }
 
 .prevent-mouse {
@@ -34,4 +39,17 @@
 
 label {
   cursor: pointer;
+}
+
+[aria-disabled="true"] {
+  opacity: 0.5;
+  @include no-mouse();
+}
+
+router-view {
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
 }

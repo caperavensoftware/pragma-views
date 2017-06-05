@@ -1,47 +1,53 @@
 
 <template>
-    <div if.bind="!isGroupBox">
+    <div>
         <div class="toolbar-no-padding">
             <button click.delegate="back()" class="button"><icon name="back"></icon></button>
 
-            <pragma-dropdown-menu title="Selected Group" icon-name="dropdown" class="left" items.bind="dropdownItems" id="dropdownMenu"></pragma-dropdown-menu>
+            <span class="suppressed default-padding-right">GROUPED BY</span>
 
-            <button><icon name="sort"></icon></button>
-            <button><icon name="search"></icon></button>
+            <pragma-dropdown-menu
+                    title.bind="drilldownId ? drilldownId : 'None'"
+                    aria-disabled.bind="!drilldownId"
+                    icon-name="dropdown"
+                    selected-id.two-way="drilldownId"
+                    class="left"
+                    items.bind="drilldownItems"
+                    id="dropdownMenu">
+            </pragma-dropdown-menu>
 
             <label class="square-icon-label">
                 <icon name="leftarrow"></icon>
-                <input type="checkbox" checked.bind="isGroupBox" class="hidden"/></input>
+                <input type="checkbox" checked.bind="showGroupings" class="hidden"/></input>
             </label>
         </div>
 
-        <percentage-chart items.bind="chartItems" id="percentage-chart"></percentage-chart>
+        <percentage-chart
+                id="percentage-chart"
+                if.bind="groupedItems.length > 0"
+                cache-id.bind="cacheId"
+                perspective-id.bind="perspectiveId"
+                grouped-items.bind="groupedItems"
+                drilldown-id.two-way="drilldownId"
+                drilldown-items.two-way="drilldownItems"></percentage-chart>
 
-        <ul selectable="selected-id.two-way: selectedId">
-            <li class="card li-styling" repeat.for="item of items" data-id="${item.id}">
-                <div class="no-mouse">
-                    <div class="stretch">${item.code}</div>
-                    <div>${item.siteCode}</div>
-                </div>
-                <div class="no-mouse">
-                    <span class="bold">${item.name}</span>
-                    <span class="piped">${item.surname}</span>
-                </div>
-                <div class="suppressed no-mouse">${item.sectionCode}</div>
+        <ul selectable="selected-id.two-way: selectedId" id="master-list">
+            <li class="card li-styling" repeat.for="item of visibleItems" data-id="${item.id}">
+                <pragma-template html.bind="listTemplate" data-item.bind="item"></pragma-template>
             </li>
         </ul>
     </div>
 
-    <div if.bind="isGroupBox" >
+    <div if.bind="showGroupings" class="master-grouping">
         <div class="toolbar-no-padding">
             <span class="stretch default-padding-left">Group drill down order</span>
 
             <label class="square-icon-label">
                 <icon name="close"></icon>
-                <input type="checkbox" checked.bind="isGroupBox" class="hidden"/></input>
+                <input type="checkbox" checked.bind="showGroupings" class="hidden"/></input>
             </label>
         </div>
 
-        <order-group items.bind="orderItems" if.bind="isGroupBox"></order-group>
+        <order-group items.bind="groupingItems" if.bind="showGroupings"></order-group>
     </div>
 </template>
