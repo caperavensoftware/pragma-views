@@ -27,7 +27,7 @@ order-group {
 
     label {
         @include stretch();
-        @include no-mouse();
+        @include no-select();
         font-size: $rem-2;
     }
 

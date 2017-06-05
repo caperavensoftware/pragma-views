@@ -1,6 +1,7 @@
 import {bindable, inject, customAttribute, DOM} from 'aurelia-framework';
 import {InputListener, inputEventType} from './../lib/input-listener';
 import {DragManager} from './../lib/drag-manager';
+import {inBounds} from './../lib/canvas-helpers';
 
 @customAttribute('sortable')
 @inject(DOM.Element, InputListener, DragManager)
@@ -19,6 +20,20 @@ export class Sortable {
      * backup of element being dragged
      */
     elementBeingDragged;
+
+    /**
+     * The dimentions of the UL
+     */
+    listBounds;
+
+    get validDragTarget() {
+        return this._validDragTarget;
+    };
+
+    set validDragTarget(value) {
+        this._validDragTarget = value;
+        this.validDragTargetChanged();
+    }
 
     /**
      * @constructor
@@ -69,6 +84,8 @@ export class Sortable {
             }
         }
 
+        requestAnimationFrame(_ => this.listBounds = this.element.getBoundingClientRect());
+
         this.dragHandler = this.drag.bind(this);
         this.dropHandler = this.drop.bind(this);
         this.moveHandler = this.move.bind(this);
@@ -76,6 +93,8 @@ export class Sortable {
         this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
         this.inputListener.addEvent(this.element, inputEventType.drop, this.dropHandler);
         this.inputListener.addEvent(this.element, inputEventType.move, this.moveHandler);
+        this.inputListener.addEvent(this.dragManager.animationLayer, inputEventType.move, this.moveHandler);
+        this.inputListener.addEvent(this.dragManager.animationLayer, inputEventType.drop, this.dropHandler);
     }
 
     /**
@@ -86,6 +105,9 @@ export class Sortable {
 
         this.inputListener.removeEvent(this.element, inputEventType.drag);
         this.inputListener.removeEvent(this.element, inputEventType.drop);
+        this.inputListener.removeEvent(this.element, inputEventType.move);
+        this.inputListener.removeEvent(this.dragManager.animationLayer, inputEventType.move);
+        this.inputListener.removeEvent(this.dragManager.animationLayer, inputEventType.drop);
 
         this.dragHandler = null;
         this.dropHandler = null;
@@ -105,6 +127,7 @@ export class Sortable {
             const li = this.findParentLi(event.target);
             this.dragManager.startDrag(li);
             this.addPlaceholder(li);
+            this.validDragTarget = true;
         }
 
         return canDrag;
@@ -115,12 +138,33 @@ export class Sortable {
      * @param event
      */
     move(event) {
+        if (!this.inputListener.currentDraggedElement) {
+            return;
+        }
+
         const x = event.clientX ? event.clientX : event.touches[0].clientX;
-        const y = event.clientY ? event.clientY : event.touches[0].clientY;
+        const y = event.clientY ? event.clientY : event.touches.length > 0 ? event.touches[0].clientY : 0;
 
         this.dragManager.move(x, y);
 
+        requestAnimationFrame(_ => {
+            this.validDragTarget = inBounds({x: x, y: y}, this.listBounds);
+        });
+
         return true;
+    }
+
+    validDragTargetChanged() {
+        if(this.validDragTarget == null || this.validDragTarget == true) {
+            if (document.body.classList.contains("invalid-target")) {
+                document.body.classList.remove("invalid-target");
+            }
+        }
+        else {
+            if (!document.body.classList.contains("invalid-target")) {
+                document.body.classList.add("invalid-target");
+            }
+        }
     }
 
     /**
@@ -128,8 +172,14 @@ export class Sortable {
      * @param event
      */
     drop(event) {
+        this.validDragTarget = null;
+
         this.dragManager.drop();
         this.removePlaceholder();
+
+        if (this.validDragTarget) {
+            // perform move in list
+        }
     }
 
     /**
@@ -159,7 +209,7 @@ export class Sortable {
             this.placeholder.style.setProperty("--height", dimentions.height);
             this.elementBeingDragged = target;
 
-//            this.element.replaceChild(this.placeholder, target);
+            this.element.replaceChild(this.placeholder, target);
         });
     }
 
