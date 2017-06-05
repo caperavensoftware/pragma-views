@@ -93,12 +93,13 @@ export class Sortable {
 
         this.dragHandler = this.drag.bind(this);
         this.dropHandler = this.drop.bind(this);
-        this.moveAnimationLayerHandler = this.moveAnimationLayer.bind(this);
+        this.moveHandler = this.move.bind(this);
 
         this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
-        this.inputListener.addEvent(this.element, inputEventType.drop, this.dropHandler);
-        this.inputListener.addEvent(this.dragManager.animationLayer, inputEventType.move, this.moveAnimationLayerHandler);
-        this.inputListener.addEvent(this.dragManager.animationLayer, inputEventType.drop, this.dropHandler);
+
+        document.id = "document";
+        this.inputListener.addEvent(document, inputEventType.move, this.moveHandler);
+        this.inputListener.addEvent(document, inputEventType.drop, this.dropHandler);
     }
 
     /**
@@ -108,13 +109,12 @@ export class Sortable {
         this.childCollection = null;
 
         this.inputListener.removeEvent(this.element, inputEventType.drag);
-        this.inputListener.removeEvent(this.element, inputEventType.drop);
-        this.inputListener.removeEvent(this.element, inputEventType.move);
-        this.inputListener.removeEvent(this.dragManager.animationLayer, inputEventType.move);
-        this.inputListener.removeEvent(this.dragManager.animationLayer, inputEventType.drop);
+        this.inputListener.removeEvent(document, inputEventType.move);
+        this.inputListener.removeEvent(document, inputEventType.drop);
 
         this.dragHandler = null;
         this.dropHandler = null;
+        this.moveHandler = null;
         this.lastTarget = null;
 
         this.removePlaceholder();
@@ -140,7 +140,7 @@ export class Sortable {
         return canDrag;
     }
 
-    moveAnimationLayer(event) {
+    move(event) {
         if (!this.inputListener.currentDraggedElement) {
             return;
         }
