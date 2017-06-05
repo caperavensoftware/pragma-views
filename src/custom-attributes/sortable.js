@@ -26,11 +26,16 @@ export class Sortable {
      */
     listBounds;
 
-    get validDragTarget() {
+    /**
+     * What was the last target you draged over?
+     */
+    lastTarget;
+
+    get isValidDragTarget() {
         return this._validDragTarget;
     };
 
-    set validDragTarget(value) {
+    set isValidDragTarget(value) {
         this._validDragTarget = value;
         this.validDragTargetChanged();
     }
@@ -88,12 +93,11 @@ export class Sortable {
 
         this.dragHandler = this.drag.bind(this);
         this.dropHandler = this.drop.bind(this);
-        this.moveHandler = this.move.bind(this);
+        this.moveAnimationLayerHandler = this.moveAnimationLayer.bind(this);
 
         this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
         this.inputListener.addEvent(this.element, inputEventType.drop, this.dropHandler);
-        this.inputListener.addEvent(this.element, inputEventType.move, this.moveHandler);
-        this.inputListener.addEvent(this.dragManager.animationLayer, inputEventType.move, this.moveHandler);
+        this.inputListener.addEvent(this.dragManager.animationLayer, inputEventType.move, this.moveAnimationLayerHandler);
         this.inputListener.addEvent(this.dragManager.animationLayer, inputEventType.drop, this.dropHandler);
     }
 
@@ -111,6 +115,7 @@ export class Sortable {
 
         this.dragHandler = null;
         this.dropHandler = null;
+        this.lastTarget = null;
 
         this.removePlaceholder();
     }
@@ -127,35 +132,26 @@ export class Sortable {
             const li = this.findParentLi(event.target);
             this.dragManager.startDrag(li);
             this.addPlaceholder(li);
-            this.validDragTarget = true;
+            this.isValidDragTarget = true;
+            this.lastTarget = event.target;
         }
 
         return canDrag;
     }
 
-    /**
-     * Move item tracking
-     * @param event
-     */
-    move(event) {
+    moveAnimationLayer(event) {
         if (!this.inputListener.currentDraggedElement) {
             return;
         }
 
         const x = event.clientX ? event.clientX : event.touches[0].clientX;
-        const y = event.clientY ? event.clientY : event.touches.length > 0 ? event.touches[0].clientY : 0;
+        const y = event.clientY ? event.clientY : event.touches ? event.touches[0].clientY : 0;
 
         this.dragManager.move(x, y);
-
-        requestAnimationFrame(_ => {
-            this.validDragTarget = inBounds({x: x, y: y}, this.listBounds);
-        });
-
-        return true;
     }
 
     validDragTargetChanged() {
-        if(this.validDragTarget == null || this.validDragTarget == true) {
+        if(this.isValidDragTarget == null || this.isValidDragTarget == true) {
             if (document.body.classList.contains("invalid-target")) {
                 document.body.classList.remove("invalid-target");
             }
@@ -172,13 +168,13 @@ export class Sortable {
      * @param event
      */
     drop(event) {
-        this.validDragTarget = null;
+        this.isValidDragTarget = null;
 
         this.dragManager.drop();
         this.removePlaceholder();
 
-        if (this.validDragTarget) {
-            // perform move in list
+        if (this.isValidDragTarget) {
+            this.lastTarget = null;
         }
     }
 
@@ -187,8 +183,16 @@ export class Sortable {
      * @param element
      */
     findParentLi(element) {
+        if (!element) {
+            return null;
+        }
+
         if (element.tagName == "LI") {
             return element;
+        }
+
+        if (element == this.element || element == this.dragManager.animationLayer) {
+            return null;
         }
 
         return this.findParentLi(element.parentElement);
@@ -199,7 +203,6 @@ export class Sortable {
      * @param target
      */
     addPlaceholder(target) {
-        return;
         this.placeholder = document.createElement("DIV");
         this.placeholder.classList.add("place-holder");
 
@@ -209,6 +212,8 @@ export class Sortable {
             this.placeholder.style.setProperty("--height", dimentions.height);
             this.elementBeingDragged = target;
 
+            const targetIndex = this.childCollection.indexOf(target);
+            this.childCollection[targetIndex] = this.placeholder;
             this.element.replaceChild(this.placeholder, target);
         });
     }

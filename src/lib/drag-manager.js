@@ -59,8 +59,6 @@ export class DragManager {
             this.clone.style.setProperty("--width", dimention.width);
             this.clone.style.setProperty("--height", dimention.height);
         });
-
-        this.animationLayer.focus();
     }
 
     /**
