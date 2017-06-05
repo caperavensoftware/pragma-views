@@ -130,7 +130,8 @@ export class Sortable {
 
         if (canDrag) {
             const li = this.findParentLi(event.target);
-            this.dragManager.startDrag(li);
+            const dimentions = li.getBoundingClientRect();
+            this.dragManager.startDrag(li, dimentions);
             this.addPlaceholder(li);
             this.isValidDragTarget = true;
             this.lastTarget = event.target;
