@@ -21,7 +21,6 @@ order-group {
         @include flex-row();
         align-items: center;
         height: $order-group-height;
-        padding-left: $order-group-padding;
         padding-right: $order-group-padding;
         font-size: $rem-3;
     }

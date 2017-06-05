@@ -3,8 +3,8 @@
 <ul sortable="query.bind: sortableQuery">
     <li repeat.for="item of items" class="group-menu-item" >
         <div class.bind="item.isOn ? 'active' : 'inactive'">
-            <icon name="sorting"></icon>
-            <label class="bold default-padding-left">${item.title}</label>
+            <icon name="sorting" class="drag-handle"></icon>
+            <label class="bold">${item.title}</label>
             <input type="checkbox" checked.bind="item.isOn" class="switch"/>
         </div>
     </li>
