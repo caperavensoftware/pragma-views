@@ -8,35 +8,36 @@ order-group {
         opacity: 0.6;
     }
 
-    .group-menu-item {
-        margin-bottom: 0.1rem;
-
-        div {
-            @include flex();
-            @include flex-row();
-            align-items: center;
-            height: $order-group-height;
-            padding-left: $order-group-padding;
-            padding-right: $order-group-padding;
-            font-size: $rem-3;
-        }
-
-        label {
-            @include stretch();
-            @include no-mouse();
-            font-size: $rem-2;
-        }
-
-        icon {
-            cursor: pointer;
-        }
-
-        icon[aria-grabbed="true"] {
-            cursor: move;
-        }
-    }
-
     ul {
         width: 100%;
     }
 }
+
+.group-menu-item {
+    margin-bottom: 0.1rem;
+
+    div {
+        @include flex();
+        @include flex-row();
+        align-items: center;
+        height: $order-group-height;
+        padding-left: $order-group-padding;
+        padding-right: $order-group-padding;
+        font-size: $rem-3;
+    }
+
+    label {
+        @include stretch();
+        @include no-mouse();
+        font-size: $rem-2;
+    }
+
+    icon {
+        cursor: pointer;
+    }
+
+    icon[aria-grabbed="true"] {
+        cursor: move;
+    }
+}
+

@@ -1,8 +1,9 @@
 import {bindable, inject, customAttribute, DOM} from 'aurelia-framework';
 import {InputListener, inputEventType} from './../lib/input-listener';
+import {DragManager} from './../lib/drag-manager';
 
 @customAttribute('sortable')
-@inject(DOM.Element, InputListener)
+@inject(DOM.Element, InputListener, DragManager)
 export class Sortable {
     @bindable query;
     childCollection;
@@ -12,7 +13,7 @@ export class Sortable {
      * @param element
      * @param inputListener
      */
-    constructor(element, inputListener) {
+    constructor(element, inputListener, dragManager) {
         this.element = element;
 
         if (this.element.tagName !== "UL") {
@@ -24,6 +25,8 @@ export class Sortable {
         }
 
         this.inputListener = inputListener;
+        this.dragManager = dragManager;
+        this.dragManager.lockX = true;
     }
 
     /**
@@ -47,15 +50,6 @@ export class Sortable {
      * Aurelia lifecycle event
      */
     attached() {
-        this.animationLayer = document.getElementById("animation-layer");
-
-        if (!this.animationLayer) {
-            this.animationLayer = document.createElement("div");
-            this.animationLayer.classList.add("animation-layer");
-            this.animationLayer.classList.add("hidden");
-            document.body.appendChild(this.animationLayer);
-        }
-
         this.childCollection = Array.from(this.element.childNodes);
         for(let child of this.childCollection) {
             if (child.setAttribute) {
@@ -77,32 +71,60 @@ export class Sortable {
      */
     detached() {
         this.childCollection = null;
-        this.animationLayer = null;
 
         this.inputListener.removeEvent(this.element, inputEventType.drag);
         this.inputListener.removeEvent(this.element, inputEventType.drop);
-        this.inputListener.removeEvent(this.element, inputEventType.move);
 
         this.dragHandler = null;
         this.dropHandler = null;
     }
 
+    /**
+     * Start draging process
+     * @param event
+     * @returns {*|Function}
+     */
     drag(event) {
-        return event.target.matches(this.query);
+        const canDrag = event.target.matches(this.query);
+
+        if (canDrag) {
+            const li = this.findParentLi(event.target);
+            this.dragManager.startDrag(li);
+        }
+
+        return canDrag;
     }
 
-    drop(event) {
-        const dropTarget = event.target;
-        const dropSource = this.inputListener.currentDraggedElement;
-
-        console.log("dropSource");
-        console.log(dropSource);
-
-        console.log("dropTarget");
-        console.log(dropTarget);
-    }
-
+    /**
+     * Move item tracking
+     * @param event
+     */
     move(event) {
-        console.log(`${event.clientX} ${event.clientY}`);
+        const x = event.clientX ? event.clientX : event.touches[0].clientX;
+        const y = event.clientY ? event.clientY : event.touches[0].clientY;
+
+        this.dragManager.move(x, y);
     }
+
+    /**
+     * Perfom drop operation
+     * @param event
+     */
+    drop(event) {
+        this.dragManager.drop();
+    }
+
+    /**
+     * The item that has to be dragged is the li element, so find that element
+     * @param element
+     */
+    findParentLi(element) {
+        if (element.tagName == "LI") {
+            return element;
+        }
+
+        return this.findParentLi(element.parentElement);
+    }
+
+
 }
