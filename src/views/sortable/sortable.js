@@ -28,9 +28,6 @@ export class Sortable {
             targetElement.classList.remove("hidden");
             this.listElement.classList.add("hidden");
         });
-
-        this.clickHandler = this.click.bind(this);
-        this.cloneList.addEventListener("click", this.clickHandler);
     }
 
     getDimentions(list) {
@@ -44,14 +41,6 @@ export class Sortable {
                 resolve(result);
             });
         });
-    }
-
-    click(event) {
-        const target = event.target;
-
-        if (target.tagName !== "LI") {
-            return;
-        }
     }
 
     moveUp(item, children) {

@@ -5,8 +5,20 @@ import {DragManager} from './../lib/drag-manager';
 @customAttribute('sortable')
 @inject(DOM.Element, InputListener, DragManager)
 export class Sortable {
+    /**
+     * What css query must pass so that we know what element to use as the drag handel
+     */
     @bindable query;
+
+    /**
+     * We need to work with the children in array form. This contains the li elements in array form
+     */
     childCollection;
+
+    /**
+     * backup of element being dragged
+     */
+    elementBeingDragged;
 
     /**
      * @constructor
@@ -77,6 +89,8 @@ export class Sortable {
 
         this.dragHandler = null;
         this.dropHandler = null;
+
+        this.removePlaceholder();
     }
 
     /**
@@ -90,6 +104,7 @@ export class Sortable {
         if (canDrag) {
             const li = this.findParentLi(event.target);
             this.dragManager.startDrag(li);
+            this.addPlaceholder(li);
         }
 
         return canDrag;
@@ -104,6 +119,8 @@ export class Sortable {
         const y = event.clientY ? event.clientY : event.touches[0].clientY;
 
         this.dragManager.move(x, y);
+
+        return true;
     }
 
     /**
@@ -112,6 +129,7 @@ export class Sortable {
      */
     drop(event) {
         this.dragManager.drop();
+        this.removePlaceholder();
     }
 
     /**
@@ -126,5 +144,35 @@ export class Sortable {
         return this.findParentLi(element.parentElement);
     }
 
+    /**
+     * Add the placeholder element
+     * @param target
+     */
+    addPlaceholder(target) {
+        return;
+        this.placeholder = document.createElement("DIV");
+        this.placeholder.classList.add("place-holder");
 
+        requestAnimationFrame(_ => {
+            const dimentions = target.getBoundingClientRect();
+            this.placeholder.style.setProperty("--width", dimentions.width);
+            this.placeholder.style.setProperty("--height", dimentions.height);
+            this.elementBeingDragged = target;
+
+//            this.element.replaceChild(this.placeholder, target);
+        });
+    }
+
+    /**
+     * Remove the current placholder element and put back the element being dragged
+     */
+    removePlaceholder() {
+        if (!this.placeholder) {
+            return;
+        }
+
+        this.element.replaceChild(this.elementBeingDragged, this.placeholder);
+        this.placeholder = null;
+        this.elementBeingDragged = null;
+    }
 }

@@ -69,6 +69,11 @@ export class DragManager {
      */
     move(x, y) {
         requestAnimationFrame(_ => {
+            // clone can be removed before the animation frame returns
+            if (!this.clone) {
+                return;
+            }
+
             if (!this.lockX) {
                 this.clone.style.setProperty("--x", x);
             }
