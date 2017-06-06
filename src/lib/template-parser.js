@@ -82,6 +82,14 @@ export class TemplateParser {
         }
     }
 
+    getField(field){
+        if(this.fieldMap.has(field)){
+            return this.fieldMap.get(field);
+        }
+
+        return field;
+    }
+
     /**
      * Parse unknown object for particulars and navigate from here to more appropriate generators
      * @param obj: object to parse
@@ -188,7 +196,7 @@ export class TemplateParser {
      * @param select
      */
     parseSelect(select) {
-        const field = select.field;
+        const field = this.getField(select.field);
         const title = select.title;
         const description = select.description || "";
         const required = select.required || false;
@@ -297,7 +305,7 @@ export class TemplateParser {
      */
     parseCheckbox(element) {
         const title = element.title;
-        const field = element.field;
+        const field = this.getField(element.field);
         const description = element.description || "";
         const classes = this.processClasses(element);
         const attributes = this.processAttributes(element);
@@ -398,7 +406,7 @@ export class TemplateParser {
      */
     parseInput(input) {
         const title = input.title;
-        const field = input.field;
+        const field = this.getField(input.field);
         const description = input.description || "";
         const required = input.required | false;
         const classes = this.processClasses(input);
@@ -430,9 +438,9 @@ export class TemplateParser {
      */
     parseTextArea(memo) {
         const title = memo.title;
-        const field = memo.field;
+        const field = this.getField(memo.field);
         const description = memo.descriptor || "";
-        const required = input.required | false;
+        const required = memo.required | false;
         const classes = this.processClasses(memo);
         const attributes = this.processAttributes(memo);
 
