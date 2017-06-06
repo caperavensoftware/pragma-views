@@ -117,8 +117,6 @@ export class InputListener {
      * @param callback: what callback must be performed
      */
     postProcessEvent(event, eventType, callback) {
-        event.stopPropagation();
-
         if (!this.preProcess(event, eventType)) {
             return;
         }

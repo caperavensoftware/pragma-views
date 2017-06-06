@@ -114,14 +114,16 @@ export class Sortable {
     drag(event) {
         const canDrag = event.target.matches(this.query);
 
-        if (canDrag) {
-            const li = this.findParentLi(event.target);
+        requestAnimationFrame(_ => {
+            if (canDrag) {
+                const li = this.findParentLi(event.target);
 
-            this.dragManager.startDrag(li).then(_ => {
-                this.addPlaceholder(li);
-                this.lastTarget = event.target;
-            })
-        }
+                this.dragManager.startDrag(li).then(_ => {
+                    this.addPlaceholder(li);
+                    this.lastTarget = event.target;
+                })
+            }
+        });
 
         return canDrag;
     }
