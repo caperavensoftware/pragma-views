@@ -10,7 +10,7 @@ describe('TemplateParser Tests', function() {
     let templateParser;
 
     beforeEach(function() {
-        templateParser = new TemplateParser ();
+        templateParser = new TemplateParser ("model");
     });
     
     it('constructor', function() {
@@ -40,6 +40,7 @@ describe('TemplateParser Tests', function() {
     });
 
     it('parseObject, null', function() {
+
         // Act
         const result = templateParser.parseObject();
 
@@ -49,6 +50,9 @@ describe('TemplateParser Tests', function() {
 
     it('parseObject, known type', function() {
         // Arrange
+        const fieldMap = templateSample.fields;
+        templateParser.setFieldMap(fieldMap);
+
         const knownTypeSpy = sinon.spy(templateParser, "parseKnown");
 
         const parseObject = {
@@ -179,6 +183,9 @@ describe('TemplateParser Tests', function() {
 
     it('parseElements', function() {
         // Arrange
+        const fieldMap = templateSample.fields;
+        templateParser.setFieldMap(fieldMap);
+
         const elements = [
             {
                 "title": "Code",
@@ -215,6 +222,9 @@ describe('TemplateParser Tests', function() {
 
     it('parseInput', function() {
         // Arrange
+        const fieldMap = templateSample.fields;
+        templateParser.setFieldMap(fieldMap);
+
         const input = {
             "title": "Code",
             "field": "code",
@@ -232,7 +242,7 @@ describe('TemplateParser Tests', function() {
 
         // Assert
         assert(result.indexOf('id="code"') > 0);
-        assert(result.indexOf('title="Code"') > 0);
+        assert(result.indexOf('label="Code"') > 0);
         assert(result.indexOf('descriptor="max length of 50"') > 0);
         assert(result.indexOf('class="class1 class2"') > 0);
         assert(result.indexOf('type="text"') > 0);
@@ -241,6 +251,9 @@ describe('TemplateParser Tests', function() {
 
     it('parseTextArea', function() {
         // Arrange
+        const fieldMap = templateSample.fields;
+        templateParser.setFieldMap(fieldMap);
+
         const textarea = {
             "title": "Notes",
             "field": "notes",
@@ -256,7 +269,7 @@ describe('TemplateParser Tests', function() {
 
         // Assert
         assert(result.indexOf('id="notes"') > 0);
-        assert(result.indexOf('title="Notes"') > 0);
+        assert(result.indexOf('label="Notes"') > 0);
         assert(result.indexOf('descriptor=""') > 0);
         assert(result.indexOf('class="c1"') > 0);
         assert(result.indexOf('test="testing"') > 0);
