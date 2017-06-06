@@ -88,8 +88,8 @@ export class Sortable {
 
         document.id = "document";
         this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
-        this.inputListener.addEvent(document, inputEventType.move, this.moveHandler);
-        this.inputListener.addEvent(document, inputEventType.drop, this.dropHandler);
+        this.inputListener.addEvent(this.element, inputEventType.move, this.moveHandler);
+        this.inputListener.addEvent(this.element, inputEventType.drop, this.dropHandler);
     }
 
     /**
@@ -99,8 +99,8 @@ export class Sortable {
         this.childCollection = null;
 
         this.inputListener.removeEvent(this.element, inputEventType.drag);
-        this.inputListener.removeEvent(document, inputEventType.move);
-        this.inputListener.removeEvent(document, inputEventType.drop);
+        this.inputListener.removeEvent(this.element, inputEventType.move);
+        this.inputListener.removeEvent(this.element, inputEventType.drop);
 
         this.dragHandler = null;
         this.dropHandler = null;
@@ -119,11 +119,13 @@ export class Sortable {
         const canDrag = event.target.matches(this.query);
 
         if (canDrag) {
-            const li = this.findParentLi(event.target);
-            const dimentions = li.getBoundingClientRect();
-            this.dragManager.startDrag(li, dimentions);
-            this.addPlaceholder(li);
-            this.lastTarget = event.target;
+            requestAnimationFrame(_ => {
+                const li = this.findParentLi(event.target);
+                const dimentions = li.getBoundingClientRect();
+                this.dragManager.startDrag(li, dimentions);
+                this.addPlaceholder(li);
+                this.lastTarget = event.target;
+            })
         }
 
         return canDrag;

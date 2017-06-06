@@ -1,4 +1,7 @@
 order-group {
+    height: 100%;
+    display: flex;
+
     .active {
         background: $order-group-active;
     }
@@ -10,6 +13,7 @@ order-group {
 
     ul {
         width: 100%;
+        flex: 1;
     }
 }
 
