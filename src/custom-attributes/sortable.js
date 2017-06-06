@@ -155,7 +155,8 @@ export class Sortable {
             this.lastTarget = li;
 
             const index = this.childCollection.indexOf(li);
-            console.log(index);
+
+            let top = 0;
         }
     }
 
@@ -194,6 +195,7 @@ export class Sortable {
      * @param target
      */
     addPlaceholder(target) {
+        this.placeholderIndex = this.childCollection.indexOf(target);
         this.placeholder = document.createElement("DIV");
         this.placeholder.classList.add("place-holder");
 
@@ -218,6 +220,7 @@ export class Sortable {
         }
 
         this.element.replaceChild(this.elementBeingDragged, this.placeholder);
+        this.childCollection[this.placeholderIndex] = this.elementBeingDragged;
         this.placeholder = null;
         this.elementBeingDragged = null;
     }
