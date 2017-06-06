@@ -55,11 +55,14 @@ export class DragManager {
             this.animationLayer.classList.remove("hidden");
 
             requestAnimationFrame(_ => {
-                const dimentions = element.getBoundingClientRect();
-                this.clone.style.setProperty("--x", dimentions.left);
-                this.clone.style.setProperty("--y", dimentions.top);
-                this.clone.style.setProperty("--width", dimentions.width);
-                this.clone.style.setProperty("--height", dimentions.height);
+                // when this fires, the clone might have been released so before doing anything make sure it still exists
+                if (this.clone) {
+                    const dimentions = element.getBoundingClientRect();
+                    this.clone.style.setProperty("--x", dimentions.left);
+                    this.clone.style.setProperty("--y", dimentions.top);
+                    this.clone.style.setProperty("--width", dimentions.width);
+                    this.clone.style.setProperty("--height", dimentions.height);
+                }
 
                 resolve();
             });

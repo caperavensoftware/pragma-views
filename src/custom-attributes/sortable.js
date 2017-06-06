@@ -91,7 +91,7 @@ export class Sortable {
 
         document.id = "document";
         this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
-        this.inputListener.addEvent(this.element, inputEventType.move, this.inputListener.isMobile ? this.mobileMoveHandler : this.moveHandler);
+        this.inputListener.addEvent(this.element, inputEventType.move, this.inputListener.isMobile ? this.mobileMoveHandler : this.moveHandler, true);
         this.inputListener.addEvent(this.element, inputEventType.drop, this.dropHandler);
     }
 
@@ -275,7 +275,7 @@ export class Sortable {
      * Remove the current placholder element and put back the element being dragged
      */
     removePlaceholder() {
-        if (!this.placeholder) {
+        if (!this.placeholder || !this.elementBeingDragged) {
             return;
         }
 
