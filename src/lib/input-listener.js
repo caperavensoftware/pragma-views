@@ -69,7 +69,7 @@ export class InputListener {
         }
 
         const key = `${element.id}.${eventType}`;
-        const fn = event => this.postProcessEvent(event, eventType, element, callback);
+        const fn = event => this.postProcessEvent(event, eventType, callback);
         this.eventMap.set(key, fn);
         const eventName = this.eventTypeMap.get(eventType)[+ this.isMobile];
         element.addEventListener(eventName, fn, this.eventOptions[+ this.isMobile]);
@@ -116,7 +116,9 @@ export class InputListener {
      * @param element: what element is the event bound to (not the target, but the registered element)
      * @param callback: what callback must be performed
      */
-    postProcessEvent(event, eventType, element, callback) {
+    postProcessEvent(event, eventType, callback) {
+        event.stopPropagation();
+
         if (!this.preProcess(event, eventType)) {
             return;
         }

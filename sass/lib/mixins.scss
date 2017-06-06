@@ -81,9 +81,9 @@
   bottom: 0;
 }
 
-@mixin overflow-scroll {
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+@mixin overflow-scroll($overflow, $overflowWebkit) {
+  overflow-y: $overflow;
+  -webkit-overflow-scrolling: $overflowWebkit;
 }
 
 @mixin translateX($x) {

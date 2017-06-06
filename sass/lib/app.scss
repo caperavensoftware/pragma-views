@@ -47,6 +47,8 @@ label {
 }
 
 router-view {
+  --overflow: hidden;
+
   position:absolute;
   left:0;
   right:0;

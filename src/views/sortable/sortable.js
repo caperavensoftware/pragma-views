@@ -57,15 +57,4 @@ export class Sortable {
         itemToMove.style.setProperty("--top", this.dimentions.item.height);
     }
 
-    // this.dragItem = target;
-    //
-    // this.placeholder = document.createElement("li");
-    // this.placeholder.classList.add("place-holder");
-    // this.placeholder.style.setProperty("--height", this.dimentions.item.height);
-    //
-    // const children = Array.from(this.cloneList.childNodes);
-    // this.moveUp(event.target);
-    //
-    // this.cloneList.replaceChild(this.placeholder, this.dragItem);
-
 }

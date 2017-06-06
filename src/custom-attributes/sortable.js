@@ -131,15 +131,27 @@ export class Sortable {
             return;
         }
 
-        const x = event.clientX;
-        const y = event.clientY;
-        this.performMove(x, y, event.target);
+        requestAnimationFrame(_ => {
+            const x = event.clientX;
+            const y = event.clientY;
+            this.performMove(x, y, event.target);
+        });
     }
 
     mobileMove(event) {
-        const x = event.touches[0].clientX;
-        const y = event.touches[0].clientY;
-        this.performMove(x, y, event.target);
+        if (this.isBusyAnimating) {
+            return;
+        }
+
+        requestAnimationFrame(_ => {
+            const x = event.touches[0].clientX;
+            const y = event.touches[0].clientY;
+            const target = document.elementFromPoint(x, y);
+
+            this.performMove(x, y, target);
+        });
+
+        return true;
     }
 
     performMove(x, y, element) {

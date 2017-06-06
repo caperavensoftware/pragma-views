@@ -14,7 +14,15 @@ export class OrderGroup {
     }
     
     attached() {
+        const view = document.querySelector("router-view");
+        view.style.setProperty("--overflow", "none");
+        view.style.setProperty("--overflowWebkit", "none");
+    }
 
+    detached() {
+        const view = document.querySelector("router-view");
+        view.style.setProperty("--overflow", "scroll");
+        view.style.setProperty("--overflowWebkit", "touch");
     }
 }
 

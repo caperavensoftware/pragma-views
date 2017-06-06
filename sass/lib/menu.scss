@@ -42,8 +42,7 @@
 }
 
 [role="menu"] {
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+  @include overflow-scroll(scroll, touch);
   list-style: none;
   @include stretch();
 

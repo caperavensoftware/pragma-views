@@ -2,12 +2,15 @@
 @import './../lib/mixins';
 
 router-view {
+  --overflow: scroll;
+  --overflowWebkit: touch;
+
   position: absolute;
   left: 0;
   top: $app-toolbar-height;
   right: 0;
   bottom: 0;
-  @include overflow-scroll();
+  @include overflow-scroll(var(--overflow), var(--overflowWebkit));
 }
 
 .app-toolbar h3 {
