@@ -85,10 +85,11 @@ export class Sortable {
         this.dragHandler = this.drag.bind(this);
         this.dropHandler = this.drop.bind(this);
         this.moveHandler = this.move.bind(this);
+        this.mobileMoveHandler = this.mobileMove.bind(this);
 
         document.id = "document";
         this.inputListener.addEvent(this.element, inputEventType.drag, this.dragHandler);
-        this.inputListener.addEvent(this.element, inputEventType.move, this.moveHandler);
+        this.inputListener.addEvent(this.element, inputEventType.move, this.inputListener.isMobile ? this.mobileMoveHandler : this.moveHandler);
         this.inputListener.addEvent(this.element, inputEventType.drop, this.dropHandler);
     }
 
@@ -119,10 +120,9 @@ export class Sortable {
         const canDrag = event.target.matches(this.query);
 
         if (canDrag) {
-            requestAnimationFrame(_ => {
-                const li = this.findParentLi(event.target);
-                const dimentions = li.getBoundingClientRect();
-                this.dragManager.startDrag(li, dimentions);
+            const li = this.findParentLi(event.target);
+
+            this.dragManager.startDrag(li).then(_ => {
                 this.addPlaceholder(li);
                 this.lastTarget = event.target;
             })
@@ -132,16 +132,20 @@ export class Sortable {
     }
 
     move(event) {
-        if (!this.inputListener.currentDraggedElement) {
-            return;
-        }
+        const x = event.clientX;
+        const y = event.clientY;
+        this.performMove(x, y, event.target);
+    }
 
-        const x = event.clientX ? event.clientX : event.touches[0].clientX;
-        const y = event.clientY ? event.clientY : event.touches ? event.touches[0].clientY : 0;
+    mobileMove(event) {
+        const x = event.touches[0].clientX;
+        const y = event.touches[0].clientY;
+        this.performMove(x, y, event.target);
+    }
 
+    performMove(x, y, element) {
         this.dragManager.move(x, y);
-
-        this.processTarget(event.target);
+        this.processTarget(element);
     }
 
     processTarget(target) {
@@ -149,7 +153,9 @@ export class Sortable {
 
         if (li !== this.lastTarget) {
             this.lastTarget = li;
-            console.log(li);
+
+            const index = this.childCollection.indexOf(li);
+            console.log(index);
         }
     }
 

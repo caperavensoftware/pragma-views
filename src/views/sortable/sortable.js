@@ -57,10 +57,6 @@ export class Sortable {
         itemToMove.style.setProperty("--top", this.dimentions.item.height);
     }
 
-    moveDown(item, children) {
-
-    }
-
     // this.dragItem = target;
     //
     // this.placeholder = document.createElement("li");

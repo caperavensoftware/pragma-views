@@ -58,3 +58,11 @@
 .invalid-target {
   cursor: no-drop;
 }
+
+.moving {
+  --top: 0;
+  --duration: 0;
+  will-change: transform;
+  transition: transform calc(var(--duration) * 1ms) ease-out;
+  transform: translateY(calc(var(--top) * 1px));
+}

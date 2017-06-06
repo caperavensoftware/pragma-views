@@ -47,16 +47,23 @@ export class DragManager {
      * Move into animation layer
      * @param element
      */
-    startDrag(element, dimentions) {
-        this.clone = element.cloneNode(true);
-        this.clone.classList.add("drag-item");
-        this.animationLayer.appendChild(this.clone);
-        this.animationLayer.classList.remove("hidden");
+    startDrag(element) {
+        return new Promise(resolve => {
+            this.clone = element.cloneNode(true);
+            this.clone.classList.add("drag-item");
+            this.animationLayer.appendChild(this.clone);
+            this.animationLayer.classList.remove("hidden");
 
-        this.clone.style.setProperty("--x", dimentions.left);
-        this.clone.style.setProperty("--y", dimentions.top);
-        this.clone.style.setProperty("--width", dimentions.width);
-        this.clone.style.setProperty("--height", dimentions.height);
+            requestAnimationFrame(_ => {
+                const dimentions = element.getBoundingClientRect();
+                this.clone.style.setProperty("--x", dimentions.left);
+                this.clone.style.setProperty("--y", dimentions.top);
+                this.clone.style.setProperty("--width", dimentions.width);
+                this.clone.style.setProperty("--height", dimentions.height);
+
+                resolve();
+            });
+        });
     }
 
     /**
