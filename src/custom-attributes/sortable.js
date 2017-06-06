@@ -44,7 +44,7 @@ export class Sortable {
 
         this.inputListener = inputListener;
         this.dragManager = dragManager;
-        this.dragManager.lockX = true;
+        this.dragManager.lockX = false;
     }
 
     /**
@@ -180,6 +180,8 @@ export class Sortable {
     }
 
     swap(target, index) {
+        console.log(target, index);
+
         return new Promise(resolve => {
             if (this.placeholderIndex < index) {
                 this.element.insertBefore(target, this.placeholder);
@@ -188,8 +190,21 @@ export class Sortable {
                 this.element.insertBefore(this.placeholder, target);
             }
 
+            console.log("swapping -------------------------------------------------");
+            console.log(this.placeholderIndex);
+            console.log(index);
+
+            this.childCollection.splice(this.placeholderIndex, 1);
+
+            console.log(this.childCollection);
+
+            this.childCollection.splice(index, 0, this.placeholder);
+
+            console.log(this.childCollection);
+
             target.classList.remove("moving");
             this.placeholderIndex = index;
+            this.lastTarget = null;
 
             resolve();
         })
