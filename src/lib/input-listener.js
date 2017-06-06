@@ -43,7 +43,7 @@ export class InputListener {
         ]);
 
         this.isMobile = isMobile();
-        this.eventOptions = [null, {passive: true}];
+        this.eventOptions = [null, null];
     }
 
     /**
@@ -117,6 +117,8 @@ export class InputListener {
      * @param callback: what callback must be performed
      */
     postProcessEvent(event, eventType, callback) {
+        event.preventDefault();
+
         if (!this.preProcess(event, eventType)) {
             return;
         }

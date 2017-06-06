@@ -16,3 +16,8 @@ router-view {
 .app-toolbar h3 {
   margin-left: 2rem;
 }
+
+html {
+  touch-action: none;
+  overflow-y: hidden;
+}
