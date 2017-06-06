@@ -22,11 +22,6 @@ export class Sortable {
     elementBeingDragged;
 
     /**
-     * The dimentions of the UL
-     */
-    listBounds;
-
-    /**
      * What was the last target you draged over?
      */
     lastTarget;
@@ -132,6 +127,10 @@ export class Sortable {
     }
 
     move(event) {
+        if (this.isBusyAnimating) {
+            return;
+        }
+
         const x = event.clientX;
         const y = event.clientY;
         this.performMove(x, y, event.target);
@@ -149,15 +148,51 @@ export class Sortable {
     }
 
     processTarget(target) {
+        if (this.isBusyAnimating || target.classList.contains("place-holder") || !this.itemDimentions) {
+            return;
+        }
+
         const li = this.findParentLi(target);
 
-        if (li !== this.lastTarget) {
+        if (li && li !== this.lastTarget) {
             this.lastTarget = li;
 
             const index = this.childCollection.indexOf(li);
 
-            let top = 0;
+            let top = this.itemDimentions.height * (index > this.placeholderIndex ? -1 : 1);
+            const duration = 100;
+            li.classList.add("moving");
+            li.style.setProperty("--duration", duration);
+            li.style.setProperty("--top", top);
+
+            this.isBusyAnimating = true;
+
+            const interval = setInterval(_ => {
+                clearInterval(interval);
+
+                if (index != this.placeholderIndex) {
+                    this.swap(li, index).then(_ => {
+                        this.isBusyAnimating = false;
+                    });
+                }
+            }, duration);
         }
+    }
+
+    swap(target, index) {
+        return new Promise(resolve => {
+            if (this.placeholderIndex < index) {
+                this.element.insertBefore(target, this.placeholder);
+            }
+            else {
+                this.element.insertBefore(this.placeholder, target);
+            }
+
+            target.classList.remove("moving");
+            this.placeholderIndex = index;
+
+            resolve();
+        })
     }
 
     /**
@@ -168,6 +203,7 @@ export class Sortable {
         this.dragManager.drop();
         this.removePlaceholder();
         this.lastTarget = null;
+        this.childCollection = Array.from(this.element.childNodes);
     }
 
     /**
@@ -200,9 +236,9 @@ export class Sortable {
         this.placeholder.classList.add("place-holder");
 
         requestAnimationFrame(_ => {
-            const dimentions = target.getBoundingClientRect();
-            this.placeholder.style.setProperty("--width", dimentions.width);
-            this.placeholder.style.setProperty("--height", dimentions.height);
+            this.itemDimentions = target.getBoundingClientRect();
+            this.placeholder.style.setProperty("--width", this.itemDimentions.width);
+            this.placeholder.style.setProperty("--height", this.itemDimentions.height);
             this.elementBeingDragged = target;
 
             const targetIndex = this.childCollection.indexOf(target);
@@ -223,5 +259,7 @@ export class Sortable {
         this.childCollection[this.placeholderIndex] = this.elementBeingDragged;
         this.placeholder = null;
         this.elementBeingDragged = null;
+        this.itemDimentions = null;
+        this.placeholderIndex = null;
     }
 }
