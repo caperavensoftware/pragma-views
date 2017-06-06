@@ -10,6 +10,9 @@ export class Sortable {
      * What css query must pass so that we know what element to use as the drag handel
      */
     @bindable query;
+    @bindable datasource;
+
+    dsBackup;
 
     /**
      * We need to work with the children in array form. This contains the li elements in array form
@@ -25,6 +28,10 @@ export class Sortable {
      * What was the last target you draged over?
      */
     lastTarget;
+
+    datasourceChanged() {
+        this.dsBackup = this.datasource.slice(0);
+    }
 
     /**
      * @constructor
@@ -114,16 +121,14 @@ export class Sortable {
     drag(event) {
         const canDrag = event.target.matches(this.query);
 
-        requestAnimationFrame(_ => {
-            if (canDrag) {
-                const li = this.findParentLi(event.target);
+        if (canDrag) {
+            const li = this.findParentLi(event.target);
 
-                this.dragManager.startDrag(li).then(_ => {
-                    this.addPlaceholder(li);
-                    this.lastTarget = event.target;
-                })
-            }
-        });
+            this.dragManager.startDrag(li).then(_ => {
+                this.addPlaceholder(li);
+                this.lastTarget = event.target;
+            })
+        }
 
         return canDrag;
     }
@@ -133,11 +138,9 @@ export class Sortable {
             return;
         }
 
-        requestAnimationFrame(_ => {
-            const x = event.clientX;
-            const y = event.clientY;
-            this.performMove(x, y, event.target);
-        });
+        const x = event.clientX;
+        const y = event.clientY;
+        this.performMove(x, y, event.target);
     }
 
     mobileMove(event) {
@@ -145,13 +148,11 @@ export class Sortable {
             return;
         }
 
-        requestAnimationFrame(_ => {
-            const x = event.touches[0].clientX;
-            const y = event.touches[0].clientY;
-            const target = document.elementFromPoint(x, y);
+        const x = event.touches[0].clientX;
+        const y = event.touches[0].clientY;
+        const target = document.elementFromPoint(x, y);
 
-            this.performMove(x, y, target);
-        });
+        this.performMove(x, y, target);
 
         return true;
     }
@@ -205,6 +206,10 @@ export class Sortable {
             this.childCollection.splice(this.placeholderIndex, 1);
             this.childCollection.splice(index, 0, this.placeholder);
 
+            const dsBackup = this.dsBackup[this.placeholderIndex];
+            this.dsBackup.splice(this.placeholderIndex, 1);
+            this.dsBackup.splice(index, 0, dsBackup);
+
             target.classList.remove("moving");
             this.placeholderIndex = index;
             this.lastTarget = null;
@@ -222,6 +227,7 @@ export class Sortable {
         this.removePlaceholder();
         this.lastTarget = null;
         this.childCollection = Array.from(this.element.childNodes);
+        this.datasource = this.dsBackup;
     }
 
     /**

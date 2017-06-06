@@ -1,6 +1,6 @@
 
 <template>
-<ul sortable="query.bind: sortableQuery">
+<ul sortable="query.bind: sortableQuery; datasource.two-way: items">
     <li repeat.for="item of items" class="group-menu-item" >
         <div class.bind="item.isOn ? 'active' : 'inactive'">
             <icon name="sorting" class="drag-handle"></icon>
