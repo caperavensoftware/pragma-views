@@ -1,8 +1,8 @@
 
 import {expect} from 'chai';
 import 'aurelia-polyfills';
-import {PragmaMessages} from './../../../src/components/pragma-messages/pragma-messages';
 import {ElementMockup} from './../../mockups/element-mockup';
+import {PragmaMessages} from './../../../src/components/pragma-messages/pragma-messages';
 
 describe('PragmaMessages Tests', function() {
     let pragmaMessages;

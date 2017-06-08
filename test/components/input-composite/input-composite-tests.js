@@ -1,7 +1,7 @@
 import {expect, assert} from 'chai';
 import * as sinon from 'sinon';
-import {InputComposite} from './../../../src/components/input-composite/input-composite';
 import {ElementMockup} from './../../mockups/element-mockup';
+import {InputComposite} from './../../../src/components/input-composite/input-composite';
 
 describe('InputComposite Tests', function() {
     let inputComposite;

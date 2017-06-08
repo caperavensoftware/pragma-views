@@ -1,6 +1,7 @@
 
 import {expect} from 'chai';
 import 'aurelia-polyfills';
+import {ElementMockup} from './../../mockups/element-mockup';
 import {Assistant} from './../../../src/components/assistant/assistant';
 
 describe('Assistant Tests', function() {

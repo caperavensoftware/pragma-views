@@ -1,7 +1,7 @@
 import {expect, assert} from 'chai';
 import 'aurelia-polyfills';
-import {ElementMockup} from './../../../../node_modules/build-utilities/mockups/element-mockup';
-import {PragmaTemplate} from './../../../../app/src/components/pragma-template/pragma-template';
+import {ElementMockup} from './../../mockups/element-mockup';
+import {PragmaTemplate} from './../../../src/components/pragma-template/pragma-template';
 
 describe('PragmaTemplate Tests', function() {
     let instance;
