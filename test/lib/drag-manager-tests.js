@@ -1,6 +1,7 @@
 
 import {expect} from 'chai';
 import 'aurelia-polyfills';
+import './../mockups/document-mockup';
 import {DragManager} from './../../src/lib/drag-manager';
 
 describe('DragManager Tests', function() {

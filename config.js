@@ -7,6 +7,7 @@ System.config({
     "npm:*": "jspm_packages/npm/*",
     "github:*": "jspm_packages/github/*"
   },
+
   map: {
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@2.1.1",
     "aurelia-dialog": "npm:aurelia-dialog@1.0.0-rc.1.0.3",
