@@ -22,7 +22,8 @@ export function configure(aurelia) {
                 'components/pragma-options-toolbar/pragma-options-toolbar',
                 'components/pragma-dropdown-menu/pragma-dropdown-menu',
                 'components/pragma-template/pragma-template',
-                'components/group/group'
+                'components/group/group',
+                'components/sortable-list/sortable-list'
             )
             .plugin("aurelia-dialog");
 
