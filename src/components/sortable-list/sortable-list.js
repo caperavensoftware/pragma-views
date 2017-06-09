@@ -100,7 +100,7 @@ export class SortableList {
         const element = document.getElementById(id);
 
         if (element) {
-            return this.fabricateId(number++);
+            return this.fabricateId(number+1);
         }
 
         return id;
@@ -236,6 +236,10 @@ export class SortableList {
             const topElement = document.elementFromPoint(x, y);
             const topLi = this.findParentLi(topElement);
 
+            if (this.lastSelectedLi == topLi) {
+                return resolve();
+            }
+
             if (!topLi) {
                 return resolve();
             }
@@ -249,6 +253,8 @@ export class SortableList {
             topLi.style.setProperty("--duration", duration);
             topLi.style.setProperty("--top", top);
 
+            this.lastSelectedLi = topLi;
+
             const interval = setInterval(_ => {
                 clearInterval(interval);
 
@@ -258,6 +264,12 @@ export class SortableList {
                 else {
                     this.viewSlot.move(this.placeholderIndex, targetIndex);
                 }
+
+                const backup = this.items[this.placeholderIndex];
+                this.items.splice(this.placeholderIndex, 1);
+                this.items.splice(targetIndex, 0, backup);
+
+                console.log(this.items);
 
                 topLi.classList.remove("moving");
                 this.placeholderIndex = targetIndex;
