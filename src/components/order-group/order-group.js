@@ -11,7 +11,7 @@ export class OrderGroup {
     constructor(element) {
         this.element = element;
         this.templateHtml = [
-            `<div class="half-margin-right" class.bind="isOn ? 'active' : 'inactive'">`,
+            `<div class="group-order-item" class.bind="isOn ? 'active' : 'inactive'">`,
             '    <icon name="sorting" class="drag-handle"></icon>',
             '    <label class="bold stretch">${title}</label>',
             '    <input type="checkbox" checked.bind="isOn" class="switch"/>',

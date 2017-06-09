@@ -13,6 +13,7 @@ export class SortableList {
     @bindable items;
     @bindable html;
     @bindable sort;
+    @bindable itemStyle;
 
     viewFactory;
     animationLayer;
@@ -39,7 +40,7 @@ export class SortableList {
     }
 
     setupViews() {
-        let template = `<template><li>${this.html}</li></template>`;
+        let template = `<template><li class="${this.itemStyle}">${this.html}</li></template>`;
         let placeholderTemplate = `<template><div class="place-holder"></div></template>`;
 
         this.viewFactory = this.viewCompiler.compile(template, this.viewResources);
