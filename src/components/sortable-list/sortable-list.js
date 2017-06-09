@@ -32,6 +32,12 @@ export class SortableList {
 
         this.listElement.id = this.fabricateId(0);
 
+        this.setupViews();
+        this.setupEvents();
+        this.itemsChanged();
+    }
+
+    setupViews() {
         let template = `<template><li>${this.html}</li></template>`;
         let placeholderTemplate = `<template><div class="place-holder"></div></template>`;
 
@@ -39,7 +45,9 @@ export class SortableList {
         this.placeholderFactory = this.viewCompiler.compile(placeholderTemplate, this.viewResources);
 
         this.viewSlot = new ViewSlot(this.listElement, true);
+    }
 
+    setupEvents() {
         this.startDragHandler = this.startDrag.bind(this);
         this.moveHandler = this.move.bind(this);
         this.mobileMoveHandler = this.moveMobile.bind(this);
@@ -48,17 +56,24 @@ export class SortableList {
         this.inputListener.addEvent(this.listElement, inputEventType.drag, this.startDragHandler, true);
         this.inputListener.addEvent(this.listElement, inputEventType.move, this.inputListener.isMobile ? this.mobileMoveHandler : this.moveHandler, true);
         this.inputListener.addEvent(this.listElement, inputEventType.drop, this.dropHandler, true);
-
-        this.itemsChanged();
     }
 
     detached() {
+        this.disposeViews();
+        this.disposeEvents();
+    }
+
+    disposeViews() {
         this.viewSlot.removeAll(false, true);
         this.viewSlot = null;
 
         this.viewFactory.dispose();
         this.viewFactory = null;
 
+        this.domViewMap.clear();
+    }
+
+    disposeEvents() {
         this.inputListener.removeEvent(this.listElement, inputEventType.drag);
         this.inputListener.removeEvent(this.listElement, inputEventType.move);
         this.inputListener.removeEvent(this.listElement, inputEventType.drop);
@@ -66,8 +81,6 @@ export class SortableList {
         this.startDragHandler = null;
         this.moveHandler = null;
         this.dropHandler = null;
-
-        this.domViewMap.clear();
     }
 
     createAnimationLayer() {
@@ -150,11 +163,6 @@ export class SortableList {
         }
 
         this.elementBeingMoved = this.getEventTarget(event);
-
-        if (!this.elementBeingMoved) {
-            return;
-        }
-
         this.clone = this.elementBeingMoved.cloneNode(true);
 
         if (this.clone) {
@@ -206,10 +214,6 @@ export class SortableList {
     }
 
     performMove(x, y) {
-        if (!this.clone) {
-            return;
-        }
-
         this.clone.style.setProperty("--x", x);
         this.clone.style.setProperty("--y", y);
 
@@ -219,11 +223,6 @@ export class SortableList {
     swap(x, y) {
         return new Promise(resolve => {
             const topElement = document.elementFromPoint(x, y);
-
-            if (topElement == this.placeholder) {
-                return resolve();
-            }
-
             const topLi = this.findParentLi(topElement);
 
             if (!topLi) {
@@ -232,11 +231,6 @@ export class SortableList {
 
             const targetView = this.domViewMap.get(topLi);
             const targetIndex = this.viewSlot.children.indexOf(targetView);
-
-            if (targetIndex == -1 || this.placeholderIndex == targetIndex) {
-                return resolve();
-            }
-
             const top = this.itemDimentions.height * (targetIndex > this.placeholderIndex ? -1 : 1);
 
             const duration = 100;
