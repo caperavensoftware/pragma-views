@@ -1,7 +1,7 @@
 import {expect, assert} from 'chai';
 import 'aurelia-polyfills';
-import {ElementMockup} from './../../../../node_modules/build-utilities/mockups/element-mockup';
-import {Group} from './../../../../app/src/components/group/group';
+import {ElementMockup} from './../../mockups/element-mockup';
+import {Group} from './../../../src/components/group/group';
 
 describe('Group Tests', function() {
     let instance;

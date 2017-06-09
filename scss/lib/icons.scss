@@ -10,6 +10,21 @@
   }
 }
 
+icon > .icon {
+  @include no-mouse();
+}
+
+.drag-handle {
+  width: $deouble-padding;
+  height: $deouble-padding;
+
+  .icon {
+    width: $deouble-padding;
+    height: $deouble-padding;
+    transform: scale(0.5);
+  }
+}
+
 .assist-toolbar, .assist-search {
   .icon {
     width: $toolbar-icon-size;
@@ -87,7 +102,7 @@ form-search {
   }
 }
 
-pragma-dropdown-menu, .toolbar-no-padding, .group-menu-item {
+pragma-dropdown-menu, .toolbar-no-padding {
   icon, .icon {
     width: $default-padding;
     height: $default-padding;

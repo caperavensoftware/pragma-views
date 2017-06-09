@@ -1,15 +1,15 @@
 import {expect, assert} from 'chai';
 import 'aurelia-polyfills';
 import {ElementMockup} from './../../mockups/element-mockup';
-import {PragmaTemplate} from './../../../src/components/pragma-template/pragma-template';
+import {SortableList} from './../../../src/components/sortable-list/sortable-list';
 
-describe('PragmaTemplate Tests', function() {
+describe('SortableList Tests', function() {
     let instance;
     let element;
 
     beforeEach(function() {
         element = new ElementMockup();
-        instance = new PragmaTemplate(element);
+        instance = new SortableList(element);
     });
 
     it('constructor', function() {
@@ -17,6 +17,6 @@ describe('PragmaTemplate Tests', function() {
     });
 
     it('not constructor', function() {
-        expect(() => PragmaTemplate()).to.throw("Cannot call a class as a function");
+        expect(() => SortableList()).to.throw("Cannot call a class as a function");
     });
 });

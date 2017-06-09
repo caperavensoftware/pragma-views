@@ -131,3 +131,5 @@ export class ElementMockup {
 
     }
 }
+
+global.Element = new ElementMockup();

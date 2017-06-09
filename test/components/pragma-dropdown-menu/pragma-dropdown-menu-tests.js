@@ -1,6 +1,6 @@
 import {expect, assert} from 'chai';
-import {PragmaDropdownMenu} from './../../../src/components/pragma-dropdown-menu/pragma-dropdown-menu';
 import {ElementMockup} from './../../mockups/element-mockup';
+import {PragmaDropdownMenu} from './../../../src/components/pragma-dropdown-menu/pragma-dropdown-menu';
 
 describe('PragmaDropdownMenu Tests', function() {
     let instance;

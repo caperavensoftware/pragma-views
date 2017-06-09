@@ -11,6 +11,6 @@ pragma-dropdown-menu {
     align-items: center;
     justify-content: center;
 
-    @include overflow-scroll();
+    @include overflow-scroll(scroll, touch);
   }
 }

@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import 'aurelia-polyfills';
-import {MasterDetail} from './../../../src/components/master-detail/master-detail';
 import {ElementMockup} from './../../mockups/element-mockup';
 import './../../mockups/navigator-mockup';
+import {MasterDetail} from './../../../src/components/master-detail/master-detail';
 
 describe('MasterDetail Tests', function() {
     let masterDetail;

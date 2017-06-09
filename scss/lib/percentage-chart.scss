@@ -6,7 +6,7 @@ percentage-chart {
     padding-bottom: $half-padding;
     height: 20rem;
     overflow-y: auto;
-    @include overflow-scroll();
+    @include overflow-scroll(scroll, touch);
 }
 
 percentage-chart ul li {

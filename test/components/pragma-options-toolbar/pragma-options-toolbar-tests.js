@@ -1,6 +1,6 @@
 import {expect, assert} from 'chai';
-import {PragmaOptionsToolbar} from './../../../src/components/pragma-options-toolbar/pragma-options-toolbar';
 import {ElementMockup} from './../../mockups/element-mockup';
+import {PragmaOptionsToolbar} from './../../../src/components/pragma-options-toolbar/pragma-options-toolbar';
 
 describe('PragmaOptionsToolbar Tests', function() {
     let instance;

@@ -1,0 +1,71 @@
+.animation-layer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999999;
+
+  @include no-mouse();
+}
+
+.clone {
+  --x: 0;
+  --y: 0;
+  --width: 0;
+  --height: 0;
+
+  position: absolute;
+  width: calc(var(--width) * 1px);
+  height: calc(var(--height) * 1px);
+  transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px));
+  background: $sortable-background;
+  @include box-shadow(0, 0.5rem, 1rem, 0, 10, 25, 41, $default-shadow);
+  list-style-type: none;
+
+  @include no-mouse();
+}
+
+//.drag-item {
+//  --x: 0;
+//  --y: 0;
+//  --width: 0;
+//  --height: 0;
+//
+//  position: fixed;
+//  width: calc(var(--width) * 1px);
+//  height: calc(var(--height) * 1px);
+//  transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px));
+//
+//  background: $sortable-background;
+//  @include box-shadow(0, 0.5rem, 1rem, 0, 10, 25, 41, $default-shadow);
+//  list-style-type: none;
+//
+//  @include no-mouse();
+//}
+
+.place-holder {
+  --width: 0;
+  --height: 0;
+
+  width: calc(var(--width) * 1px);
+  height: calc(var(--height) * 1px);
+
+  @include border-box();
+  display: block;
+  border-color: $placholder-border;
+  border-style: dotted;
+  border-width: 1px;
+}
+
+.invalid-target {
+  cursor: no-drop;
+}
+
+.moving {
+  --top: 0;
+  --duration: 0;
+  will-change: transform;
+  transition: transform calc(var(--duration) * 1ms) ease-out;
+  transform: translateY(calc(var(--top) * 1px));
+}

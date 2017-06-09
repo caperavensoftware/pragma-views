@@ -14,6 +14,7 @@ export function configure(aurelia) {
                 'components/icons/icon.html',
                 'components/pragma-messages/pragma-messages',
                 'custom-attributes/selectable',
+                'custom-attributes/sortable',
                 'components/order-group/order-group',
                 'components/percentage-chart/percentage-chart',
                 'components/master-list-container/master-list-container',
@@ -21,7 +22,8 @@ export function configure(aurelia) {
                 'components/pragma-options-toolbar/pragma-options-toolbar',
                 'components/pragma-dropdown-menu/pragma-dropdown-menu',
                 'components/pragma-template/pragma-template',
-                'components/group/group'
+                'components/group/group',
+                'components/sortable-list/sortable-list'
             )
             .plugin("aurelia-dialog");
 

@@ -4,17 +4,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Application Title</title>
-    <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="./styles/desktop.css" media="screen and (min-device-width: 1200px)" >
-    <link rel="stylesheet" href="./styles/mobile.css" media="screen and (max-device-width: 500px)" >
-    <link rel="manifest" href="./manifest.json">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/utils/Draggable.min.js"></script>
-    <script src="./jspm_packages/system.js"></script>
-    <script src="./config.js"></script>
+    <link rel="stylesheet" href="./styles/style.css" async>
+    <link rel="stylesheet" href="./styles/desktop.css" media="screen and (min-device-width: 1200px)" async>
+    <link rel="stylesheet" href="./styles/mobile.css" media="screen and (max-device-width: 500px)" async>
+    <link rel="manifest" href="./manifest.json" async>
 </head>
 <body aurelia-app="main">
-    <script>
+    <div>Please wait while loading content</div>
+
+    <script async>
+        function jspmLoaded() {
+            System.import('aurelia-bootstrapper');
+        }
+    </script>
+
+    <script src="./jspm_packages/system.js" defer></script>
+    <script src="./config.js" defer onload="jspmLoaded()"></script>
+
+    <script async>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./service-worker.js', {scope: '/'})
                     .then(function(reg) {
@@ -23,8 +30,6 @@
                 console.log('Registration failed with ' + error);
             });
         }
-
-        System.import('aurelia-bootstrapper');
     </script>
 </body>
 </html>
