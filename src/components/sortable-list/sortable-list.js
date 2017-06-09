@@ -14,6 +14,7 @@ export class SortableList {
     @bindable html;
     @bindable sort;
     @bindable itemStyle;
+    @bindable selectQuery;
 
     viewFactory;
     animationLayer;
@@ -153,6 +154,11 @@ export class SortableList {
         }
 
         const topElement = document.elementFromPoint(x, y);
+
+        if (this.selectQuery && !topElement.matches(this.selectQuery)) {
+            return null;
+        }
+
         return this.findParentLi(topElement);
     }
 
