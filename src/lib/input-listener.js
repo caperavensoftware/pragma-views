@@ -117,10 +117,6 @@ export class InputListener {
      * @param callback: what callback must be performed
      */
     postProcessEvent(event, eventType, callback, preventDefault) {
-        if (preventDefault) {
-            event.preventDefault();
-        }
-
         if (!this.preProcess(event, eventType)) {
             return;
         }
@@ -129,6 +125,10 @@ export class InputListener {
 
         if (mayContinue === false) {
             return;
+        }
+
+        if (preventDefault) {
+            event.preventDefault();
         }
 
         const fn = this[`post${eventType}`];

@@ -12,6 +12,7 @@ export class SortableList {
     listElement;
     @bindable items;
     @bindable html;
+    @bindable sort;
 
     viewFactory;
     animationLayer;
@@ -158,8 +159,8 @@ export class SortableList {
     }
 
     startDrag(event) {
-        if (this.elementBeingMoved) {
-            return;
+        if (!this.sort || this.elementBeingMoved) {
+            return false;
         }
 
         this.elementBeingMoved = this.getEventTarget(event);

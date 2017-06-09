@@ -1,3 +1,9 @@
 <template>
-    <sortable-list items.bind="items" html.bind="templateHtml"></sortable-list>
+    <div class="container fullsize vertical">
+        <div class="half-padding">
+            <label for="edtSortable" class="default-margin-right">Sortable</label>
+            <input type="checkbox" checked.bind="sort" id="edtSortable">
+        </div>
+        <sortable-list items.bind="items" html.bind="templateHtml" class="stretch" sort.bind="sort"></sortable-list>
+    </div>
 </template>

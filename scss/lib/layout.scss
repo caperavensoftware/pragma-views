@@ -72,6 +72,14 @@ body {
   padding-bottom: $default-padding;
 }
 
+.default-margin-right {
+  margin-right: $default-padding;
+}
+
+.half-padding {
+  padding: $half-padding;
+}
+
 .half-padding-left {
   padding-left: $half-padding;
 }

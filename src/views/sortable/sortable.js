@@ -3,6 +3,7 @@ import {bindable} from 'aurelia-framework';
 export class Sortable {
     @bindable items;
     @bindable templateHtml;
+    @bindable sort;
 
     constructor() {
         this.items = [];
@@ -12,6 +13,7 @@ export class Sortable {
             });
         }
 
-        this.templateHtml = '<div class="card default-padding">${text}</div>'
+        this.templateHtml = '<div class="card default-padding">${text}</div>';
+        this.sort = false;
     }
 }
