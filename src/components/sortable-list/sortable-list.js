@@ -269,8 +269,6 @@ export class SortableList {
                 this.items.splice(this.placeholderIndex, 1);
                 this.items.splice(targetIndex, 0, backup);
 
-                console.log(this.items);
-
                 topLi.classList.remove("moving");
                 this.placeholderIndex = targetIndex;
             }, duration);
