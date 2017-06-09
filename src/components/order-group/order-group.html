@@ -1,12 +1,4 @@
 
 <template>
-<ul sortable="query.bind: sortableQuery; datasource.two-way: items">
-    <li repeat.for="item of items" class="group-menu-item" >
-        <div class.bind="item.isOn ? 'active' : 'inactive'">
-            <icon name="sorting" class="drag-handle"></icon>
-            <label class="bold">${item.title}</label>
-            <input type="checkbox" checked.bind="item.isOn" class="switch"/>
-        </div>
-    </li>
-</ul>
+    <sortable-list items.bind="items" html.bind="templateHtml" class="stretch" sort="true"></sortable-list>
 </template>

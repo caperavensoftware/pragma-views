@@ -67,10 +67,7 @@ export class SortableList {
     disposeViews() {
         this.viewSlot.removeAll(false, true);
         this.viewSlot = null;
-
-        this.viewFactory.dispose();
         this.viewFactory = null;
-
         this.domViewMap.clear();
     }
 
@@ -164,6 +161,12 @@ export class SortableList {
         }
 
         this.elementBeingMoved = this.getEventTarget(event);
+
+        // clicked on empty space
+        if (!this.elementBeingMoved) {
+            return false;
+        }
+
         this.clone = this.elementBeingMoved.cloneNode(true);
 
         if (this.clone) {

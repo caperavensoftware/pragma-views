@@ -6,11 +6,17 @@ import {bindable, customElement, inject} from 'aurelia-framework';
 export class OrderGroup {
     element;
     @bindable items;
-    @bindable sortableQuery;
+    @bindable templateHtml;
 
     constructor(element) {
         this.element = element;
-        this.sortableQuery = 'icon[name="sorting"]'
+        this.templateHtml = [
+            `<div class="half-margin-right" class.bind="isOn ? 'active' : 'inactive'">`,
+            '    <icon name="sorting" class="drag-handle"></icon>',
+            '    <label class="bold stretch">${title}</label>',
+            '    <input type="checkbox" checked.bind="isOn" class="switch"/>',
+            '</div>',
+        ].join("");
     }
     
     attached() {
