@@ -10,5 +10,11 @@ sortable-list {
     margin: 0;
     overflow: auto;
     @include overflow-scroll(scroll, touch);
+
+    li {
+      cursor: pointer;
+      list-style-type: none;
+      width: 100%;
+    }
   }
 }
