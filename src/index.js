@@ -1,5 +1,6 @@
 // components
 export * from './components/assistant/assistant';
+export * from './components/group/group';
 export * from './components/input-composite/input-composite';
 export * from './components/master-detail/master-detail';
 export * from './components/master-list-container/master-list-container';
@@ -9,6 +10,8 @@ export * from './components/percentage-chart/percentage-chart';
 export * from './components/pragma-dropdown-menu/pragma-dropdown-menu';
 export * from './components/pragma-messages/pragma-messages';
 export * from './components/pragma-options-toolbar/pragma-options-toolbar';
+export * from './components/sortable-list/sortable-list';
+export * from './components/pragma-template/pragma-template';
 
 // custom attributes
 export * from './custom-attributes/selectable';
@@ -17,10 +20,13 @@ export * from './custom-attributes/selectable';
 export * from './dialogs/dynamic-dialog/dynamic-dialog';
 
 // library
+export * from './lib/array-helpers';
+export * from './lib/canvas-helpers';
 export * from './lib/device-helper';
 export * from './lib/dynamic-schema';
 export * from './lib/dynamic-view-factory'
 export * from './lib/dynamic-view-loader';
 export * from './lib/group-worker';
+export * from './lib/input-listener';
 export * from './lib/template-parser';
 export * from './lib/template-parser-contstants';

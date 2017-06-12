@@ -1,0 +1,24 @@
+{
+  "source": [
+    {
+      "source": "dist/amd/**/*.*",
+      "target": "publish"
+    },
+    {
+      "source": "dist/commonjs/**/*.*",
+      "target": "publish"
+    },
+    {
+      "source": "dist/systemjs/**/*.*",
+      "target": "publish"
+    },
+    {
+      "source": "scss/**/*.*",
+      "target": "publish/amd/src"
+    },
+    {
+      "source": "developer-notes/**/*.*",
+      "target": "publish/amd/src"
+    }
+  ]
+}

@@ -9,7 +9,7 @@
             <div class="container horizontal-centered">
                 <progress max.bind="maxAggregate" value.bind="item.aggregate.value" class="no-mouse stretch"></progress>
                 <button if.bind="!item.lowestGroup" click.delegate="drilldown(item, $event)" class="icon-button icon-light">
-                    <icon name="leftarrow"></icon>
+                    <icon name="rightchevron" class="scaled"></icon>
                 </button>
             </div>
         </li>

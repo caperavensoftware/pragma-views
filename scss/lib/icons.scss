@@ -14,6 +14,10 @@ icon > .icon {
   @include no-mouse();
 }
 
+icon.scaled > .icon {
+  transform: scale(1.5);
+}
+
 .drag-handle {
   width: $deouble-padding;
   height: $deouble-padding;
