@@ -271,6 +271,7 @@ export class SortableList {
 
                 topLi.classList.remove("moving");
                 this.placeholderIndex = targetIndex;
+                this.lastSelectedLi = null;
             }, duration);
         });
     }
