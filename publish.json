@@ -14,11 +14,11 @@
     },
     {
       "source": "scss/**/*.*",
-      "target": "publish"
+      "target": "publish/amd/src"
     },
     {
-      "source": "developer-notes",
-      "target": "publish"
+      "source": "developer-notes/**/*.*",
+      "target": "publish/amd/src"
     }
   ]
 }
