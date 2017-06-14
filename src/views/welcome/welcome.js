@@ -14,7 +14,7 @@ export class Welcome {
     }
 
     attached() {
-        this.eventAggregator.publish("show-assistant", true);
+        this.eventAggregator.publish("show-assistant", false);
     }
 
     assist() {
