@@ -13,15 +13,20 @@ export class Assistant {
         this.eventAggregator = eventAggregator;
         this.dynamicViewLoader = dynamicViewLoader;
         this.changeAssistantContentHandler = this.changeAssistantContent.bind(this);
+        this.showAssistHandler = this.showAssist.bind(this);
     }
 
     attached() {
         this.assistSubscription = this.eventAggregator.subscribe("assistant", this.changeAssistantContentHandler);
+        this.showAssistEvent = this.eventAggregator.subscribe("show-assistant", this.showAssistHandler);
     }
 
     detached() {
         this.assistSubscription.dispose();
         this.assistSubscription = null;
+
+        this.showAssistEvent.dispose();
+        this.showAssistEvent = null;
 
         this.changeAssistantContentHandler = null;
     }
@@ -42,5 +47,9 @@ export class Assistant {
 
     changeAssistantContent(options) {
         this.dynamicViewLoader.load(options.view, this.assistantContainer, options.viewModel);
+    }
+
+    showAssist(details) {
+        this.isOpen = details === true;
     }
 }

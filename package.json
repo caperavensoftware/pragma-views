@@ -1,6 +1,6 @@
 {
     "name": "pragma-views",
-    "version": "0.0.46",
+    "version": "0.0.48",
     "description": "Package that provides all required parts for pragma visuals",
     "main": "commonjs/src/index.js",
     "scripts": {
