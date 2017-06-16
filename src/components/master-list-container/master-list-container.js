@@ -58,6 +58,22 @@ export class MasterListContainer {
     @bindable drilldownItems;
 
     /**
+     * This is used internally by the binding between the percentage chart and the dropdown breadcrumb
+     * Percentage chart will pick up changes of this propert and ract to it on it's own.
+     */
+    @bindable drilldownId;
+
+    /**
+     * List of items to show in the main dropdown
+     */
+    @bindable mainOptions;
+
+    /**
+     * Id of main options used
+     */
+    @bindable mainOptionsId;
+
+    /**
      * The masterlist defines the perspective for it's own consumption and those of it's children.
      * NOTE: each child must handle how it interacts with the cache.
      * @returns {string}
@@ -71,14 +87,42 @@ export class MasterListContainer {
         this.eventAggregator = eventAggregator;
         this.groupWorker = groupWorker;
         this.showGroupings = false;
+
+        this.mainOptions = [
+            {
+                id: 1,
+                title: "Query builder"
+            },
+            {
+                id: 2,
+                title: "Grouping"
+            },
+            {
+                id: 3,
+                title: "Sorting"
+            }
+        ];
     }
 
     attached() {
+        this.showQueryBuilderHandler = this.showQueryBuilder.bind(this);
+        this.showGroupingsViewHandler = this.showGroupingsView.bind(this);
+        this.showSortingHandler = this.showSorting.bind(this);
+
+        this.actions = new Map([
+            [1, this.showQueryBuilderHandler],
+            [2, this.showGroupingsViewHandler],
+            [3, this.showSortingHandler]
+        ]);
     }
 
     detached() {
         this.recordsRetrievedEvent.dispose();
         this.recordsRetrievedHandler = null;
+
+        this.showQueryBuilderHandler = null;
+        this.showGroupingsViewHandler = null;
+        this.showSortingHandler = null;
     }
 
     cacheIdChanged() {
@@ -136,5 +180,43 @@ export class MasterListContainer {
      */
     back() {
         this.eventAggregator.publish(`${this.cacheId}_${this.perspectiveId}_back`);
+    }
+
+    /**
+     * Show query builder
+     */
+    showQueryBuilder() {
+       console.log("show grouping");
+    }
+
+    /**
+     *  Show the grouping view
+     */
+    showGroupingsView() {
+        this.showGroupings = true;
+    }
+
+    /**
+     *  Show the sorting view
+     */
+    showSorting() {
+        console.log("show sorting");
+    }
+
+    /**
+     * Respond to request from main toolbar
+     */
+    mainOptionsIdChanged() {
+        if (this.mainOptionsId == -1) {
+            return;
+        }
+
+        const key = Number(this.mainOptionsId);
+
+        if (this.actions.has(key)) {
+            this.actions.get(key)();
+        }
+
+        this.mainOptionsId = -1;
     }
 }

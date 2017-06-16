@@ -11,10 +11,15 @@ pragma-dropdown-menu {
 
   .header {
     @include flex();
+    height: 100%;
     align-items: center;
 
     span {
       @include stretch();
+    }
+
+    icon {
+      margin-left: $default-padding;
     }
   }
 

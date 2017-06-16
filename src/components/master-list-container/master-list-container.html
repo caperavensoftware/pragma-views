@@ -1,26 +1,23 @@
 
 <template>
     <div>
-        <div class="toolbar-no-padding">
-            <button click.delegate="back()" class="button"><icon name="back"></icon></button>
+        <pragma-options-toolbar dropdown-items.bind="mainOptions" selected-id.two-way="mainOptionsId">
+            <div slot="items" class="container horizontal">
+                <button click.delegate="back()" class="button"><icon name="back" class="icon-button"></icon></button>
 
-            <span class="suppressed default-padding-right">GROUPED BY</span>
+                <span class="suppressed default-padding-right">GROUPED BY</span>
 
-            <pragma-dropdown-menu
-                    title.bind="drilldownId ? drilldownId : 'None'"
-                    aria-disabled.bind="!drilldownId"
-                    icon-name="dropdown"
-                    selected-id.two-way="drilldownId"
-                    class="left"
-                    items.bind="drilldownItems"
-                    id="dropdownMenu">
-            </pragma-dropdown-menu>
-
-            <label class="square-icon-label">
-                <icon name="rightchevron" class="scaled"></icon>
-                <input type="checkbox" checked.bind="showGroupings" class="hidden"/></input>
-            </label>
-        </div>
+                <pragma-dropdown-menu
+                        title.bind="drilldownId ? drilldownId : 'None'"
+                        aria-disabled.bind="!drilldownId"
+                        icon-name="dropdown"
+                        selected-id.two-way="drilldownId"
+                        class="left"
+                        items.bind="drilldownItems"
+                        id="dropdownMenu">
+                </pragma-dropdown-menu>
+            </div>
+        </pragma-options-toolbar>
 
         <percentage-chart
                 id="percentage-chart"

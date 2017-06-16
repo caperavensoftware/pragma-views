@@ -10,13 +10,8 @@ pragma-options-toolbar {
     @include stretch();
 
     div {
-      @include stretch();
+      @include fullsize();
+      align-items: center;
     }
-  }
-}
-
-pragma-options-toolbar pragma-dropdown-menu {
-  icon, .icon {
-    margin-top: 0.15rem;
   }
 }
