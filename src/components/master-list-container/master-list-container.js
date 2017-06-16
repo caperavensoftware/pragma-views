@@ -187,6 +187,17 @@ export class MasterListContainer {
      */
     showQueryBuilder() {
        console.log("show grouping");
+
+       const newTemplate = [
+            '<template>',
+                '<div class="container horizontal">',
+                   '<div>${code}</div>',
+                   '<div>${site}</div>',
+                '</div>',
+            '</template>'
+       ].join("");
+
+       this.listTemplate = newTemplate;
     }
 
     /**
