@@ -16,6 +16,10 @@ master-list-container > div {
 master-list-container {
     background: $list-view-container-background;
 
+    percentage-chart {
+        margin-top: $half-padding;
+    }
+
     #master-list {
         display: block;
         width: 100%;

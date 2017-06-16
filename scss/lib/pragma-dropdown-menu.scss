@@ -34,8 +34,7 @@ pragma-dropdown-menu {
 
   li {
     position: relative;
-    padding-top: $half-padding;
-    padding-bottom: $half-padding;
+    padding: $default-padding;
     @include flex();
     @include flex-row();
     align-items: center;
