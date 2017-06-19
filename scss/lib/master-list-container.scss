@@ -1,18 +1,3 @@
-master-list-container ul li div {
-    @include flex();
-    @include flex-row();
-    align-items: center;
-    display: flex; 
-}
-
-master-list-container > div {
-    width: 100%;
-    height: 100%;
-
-    @include flex();
-    @include flex-column();
-}
-
 master-list-container {
     background: $list-view-container-background;
 
@@ -27,15 +12,26 @@ master-list-container {
         overflow: auto;
     }
 
+    .grid-view {
+        .li-styling {
+            display: table;
+
+            pragma-template {
+                @include no-mouse();
+                display: table;
+
+                compose {
+                    display: table;
+                }
+            }
+        }
+    }
+
     .li-styling {
         margin: 3px;
         padding: 10px;
         position: relative;
         background: whitesmoke;
-
-        pragma-template {
-            @include no-mouse();
-        }
     }
 
     .li-styling:hover {

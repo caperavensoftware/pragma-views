@@ -29,7 +29,12 @@ export class MasterListContainer {
     /**
      * This is an array of strings defining what fields are currently being grouped on
      */
-    @bindable groupedItems
+    @bindable groupedItems;
+
+    /**
+     * Define the columns shown in grid view
+     */
+    @bindable columnsManager;
 
     /**
      * This property is responsible for showing and hiding the grouping mechanism.
@@ -186,18 +191,9 @@ export class MasterListContainer {
      * Show query builder
      */
     showQueryBuilder() {
-       console.log("show grouping");
-
-       const newTemplate = [
-            '<template>',
-                '<div class="container horizontal">',
-                   '<div>${code}</div>',
-                   '<div>${site}</div>',
-                '</div>',
-            '</template>'
-       ].join("");
-
-       this.listTemplate = newTemplate;
+        const rows = this.columnsManager.rowsHtml();
+        this.listTemplate = rows;
+        this.element.querySelector("#master-list").classList.add("grid-view");
     }
 
     /**
