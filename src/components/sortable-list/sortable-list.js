@@ -15,6 +15,7 @@ export class SortableList {
     viewFactory;
     animationLayer;
     placeholderIndex;
+    containerDimentions;
 
     constructor(element, viewCompiler, container, viewResources, templatingEngine, inputListener) {
         this.element = element;
@@ -34,6 +35,8 @@ export class SortableList {
         this.setupViews();
         this.setupEvents();
         this.itemsChanged();
+
+        this.containerDimentions = this.element.querySelector("ul").getBoundingClientRect();
     }
 
     setupViews() {
@@ -152,7 +155,7 @@ export class SortableList {
     }
 
     createHighlight() {
-        this.highlight = createHighlightFor(this.elementBeingMoved, this.itemDimentions);
+        this.highlight = createHighlightFor(this.elementBeingMoved, this.itemDimentions, this.containerDimentions);
         this.animationLayer.appendChild(this.highlight);
     }
 
@@ -203,29 +206,26 @@ export class SortableList {
 
     highlightLiAt(x, y) {
         const topElement = document.elementFromPoint(x, y);
-        const topLi = findParentLi(topElement);
-
-        if (!topLi || topLi == this.lastTopLi) {
+        if (!topElement) {
             return;
         }
 
+        const topLi = findParentLi(topElement);
+
         this.lastTopLi = topLi;
 
-
         requestAnimationFrame(_ => {
-            const dimentions = topLi.getBoundingClientRect();
-            setStyleDimentions(this.highlight, dimentions);
+            const dimentions = topLi ? topLi.getBoundingClientRect() : topElement.getBoundingClientRect();
+            setStyleDimentions(this.highlight, dimentions, this.containerDimentions);
         })
     }
 
-    performDrop(event) {
-        const topLi = getValidLi(event, this.selectQuery);
-
-        if (topLi == null) {
+    performDrop() {
+        if (this.lastTopLi == null) {
             return this.replacePlaceholder(this.placeholderIndex);
         }
 
-        const targetView = this.domViewMap.get(topLi);
+        const targetView = this.domViewMap.get(this.lastTopLi);
         const targetIndex = this.viewSlot.children.indexOf(targetView);
 
         this.replacePlaceholder(targetIndex);
@@ -245,7 +245,7 @@ export class SortableList {
             return;
         }
 
-        this.performDrop(event);
+        this.performDrop();
 
         this.animationLayer.removeChild(this.clone);
         this.animationLayer.removeChild(this.highlight);

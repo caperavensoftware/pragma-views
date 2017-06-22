@@ -60,11 +60,12 @@
 
   display: block;
   position: absolute;
-  left: calc(var(--left) * 1px);
-  top: calc(var(--top) * 1px);
   width: calc(var(--width) * 1px);
   height: calc(var(--height) * 1px);
 
   background: hotpink;
   opacity: 0.2;
+  will-change: transform;
+  transform: translate(calc(var(--left) * 1px), calc(var(--top) * 1px));
+  transition: transform 0.05s linear;
 }

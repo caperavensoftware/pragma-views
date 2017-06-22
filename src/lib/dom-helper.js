@@ -60,10 +60,10 @@ export function getValidLi(event, selectQuery) {
  * Create a highlight rect that is the same size as the given element
  * @param element
  */
-export function createHighlightFor(element, dimentions) {
+export function createHighlightFor(element, dimentions, containerDimentions) {
     const highlight = document.createElement("DIV");
     highlight.classList.add('highlight');
-    setStyleDimentions(highlight, dimentions);
+    setStyleDimentions(highlight, dimentions, containerDimentions);
 
     return highlight;
 }
@@ -73,7 +73,7 @@ export function createHighlightFor(element, dimentions) {
  * @param element
  * @param dimentions
  */
-export function setStyleDimentions(element, dimentions) {
+export function setStyleDimentions(element, dimentions, containerDimentions) {
     element.style.setProperty("--left", dimentions.left);
     element.style.setProperty("--top", dimentions.top);
     element.style.setProperty("--width", dimentions.width);
