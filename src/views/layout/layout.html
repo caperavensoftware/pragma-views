@@ -1,11 +1,13 @@
 <template>
     <master-detail is-master-visible="true">
         <div slot="master">
-            <pragma-list></pragma-list>
+            <ul class="fullsize">
+                <li repeat.for="item of items">${item.title}</li>
+            </ul>
         </div>
 
         <div slot="detail">
-            <pragma-form></pragma-form>
+
         </div>
     </master-detail>
 </template>

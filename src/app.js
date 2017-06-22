@@ -17,7 +17,8 @@ export class App {
             {route: ['master-view'], name: 'master-view',      moduleId: 'views/master-view/master-view',      nav: true, title: 'Master View'},
             {route: ['group-test'], name: 'group-test',      moduleId: 'views/group-test/group-test',      nav: true, title: 'Group Tests'},
             {route: ['grid-test'], name: 'grid-test',      moduleId: 'views/grid-test/grid-test',      nav: true, title: 'Grid Tests'},
-            {route: ['sortable'], name: 'sortable',      moduleId: 'views/sortable/sortable',      nav: true, title: 'Sortable'}
+            {route: ['sortable'], name: 'sortable',      moduleId: 'views/sortable/sortable',      nav: true, title: 'Sortable'},
+            {route: ['layout'], name: 'layout',      moduleId: 'views/layout/layout',      nav: true, title: 'Layout'}
         ]);
 
         this.router = router;

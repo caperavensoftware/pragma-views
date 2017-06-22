@@ -46,6 +46,8 @@ export function configure(config) {
         './components/pragma-options-toolbar/pragma-options-toolbar',
         './components/sortable-list/sortable-list',
         './components/pragma-template/pragma-template',
+        './components/pragma-list/pragma-list',
+        './components/pragma-form/pragma-form',
         './custom-attributes/selectable'
     );
 }
