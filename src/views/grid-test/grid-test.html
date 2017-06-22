@@ -1,11 +1,11 @@
 <template>
     <master-detail is-master-visible="true">
         <div slot="master">
-            <pragma-list></pragma-list>
+            <pragma-list items.bind="items"></pragma-list>
         </div>
 
         <div slot="detail">
-            <pragma-form></pragma-form>
+            <pragma-form schema.bind="schema"></pragma-form>
         </div>
     </master-detail>
 </template>

@@ -1,0 +1,17 @@
+pragma-list {
+  display: block;
+  @include fullsize();
+  @include flex();
+  @include flex-column();
+
+  ul {
+    display: block;
+    overflow: auto;
+    @include fullsize();
+    @include overflow-scroll(scroll, touch);
+
+    li {
+      cursor: pointer;
+    }
+  }
+}

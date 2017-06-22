@@ -35,6 +35,9 @@ export function configure(config) {
     config.globalResources(
         './components/assistant/assistant',
         './components/group/group',
+        './components/form-search/form-search.html',
+        './components/icons/icon.html',
+        './components/icons/icons.html',
         './components/input-composite/input-composite',
         './components/master-detail/master-detail',
         './components/master-list-container/master-list-container',
