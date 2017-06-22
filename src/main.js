@@ -17,7 +17,6 @@ export function configure(aurelia) {
                 'components/order-group/order-group',
                 'components/percentage-chart/percentage-chart',
                 'components/master-list-container/master-list-container',
-                'components/pragma-grid/pragma-grid',
                 'components/pragma-options-toolbar/pragma-options-toolbar',
                 'components/pragma-dropdown-menu/pragma-dropdown-menu',
                 'components/pragma-template/pragma-template',
@@ -26,7 +25,9 @@ export function configure(aurelia) {
                 'components/pragma-list/pragma-list',
                 'components/pragma-form/pragma-form'
             )
-            .plugin("aurelia-dialog");
+            .plugin(
+                "aurelia-dialog"
+            );
 
         aurelia.start().then(() => {
             aurelia.setRoot();

@@ -7,6 +7,7 @@
     "test": "nyc mocha --compilers js:babel-core/register --recursive",
     "build": "bucli -c all",
     "run": "bucli -c all && http-server",
+    "browser": "start chrome http://localhost:8080",
     "build-publish": "bucli -p"
   },
   "keywords": [],

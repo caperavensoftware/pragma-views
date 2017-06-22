@@ -1,3 +1,7 @@
 <template>
-    <div>Control</div>
+    <ul>
+        <li repeat.for="item of items">${item.description}</li>
+    </ul>
+
+    <form-search search.two-way="searchText"></form-search>
 </template>
