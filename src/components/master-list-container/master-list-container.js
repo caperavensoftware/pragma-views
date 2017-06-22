@@ -2,12 +2,14 @@ import {customElement, bindable, inject} from 'aurelia-framework';
 import {GroupWorker} from './../../lib/group-worker';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {arraysAreTheSame} from './../../lib/array-helpers';
+import {populateTemplate, gridGroupTemplate} from './../../lib/template-parser-contstants';
 
 @customElement('master-list-container')
 @inject(GroupWorker, EventAggregator, Element)
 export class MasterListContainer {
     element = null;
     groupedItems;
+    currentPerspective;
 
     /**
      * Items that are being displayed in the collection.
@@ -29,7 +31,12 @@ export class MasterListContainer {
     /**
      * This is an array of strings defining what fields are currently being grouped on
      */
-    @bindable groupedItems
+    @bindable groupedItems;
+
+    /**
+     * Define the columns shown in grid view
+     */
+    @bindable columnsManager;
 
     /**
      * This property is responsible for showing and hiding the grouping mechanism.
@@ -48,6 +55,11 @@ export class MasterListContainer {
     @bindable listTemplate;
 
     /**
+     * What does a aggregate group look like
+     */
+    @bindable groupTemplate;
+
+    /**
      * This is a string value used to name the data cache this control has to work with
      */
     @bindable cacheId;
@@ -56,6 +68,22 @@ export class MasterListContainer {
      * This is a property that allows drilldown items to flow between child controls
      */
     @bindable drilldownItems;
+
+    /**
+     * This is used internally by the binding between the percentage chart and the dropdown breadcrumb
+     * Percentage chart will pick up changes of this propert and ract to it on it's own.
+     */
+    @bindable drilldownId;
+
+    /**
+     * List of items to show in the main dropdown
+     */
+    @bindable mainOptions;
+
+    /**
+     * Id of main options used
+     */
+    @bindable mainOptionsId;
 
     /**
      * The masterlist defines the perspective for it's own consumption and those of it's children.
@@ -71,14 +99,58 @@ export class MasterListContainer {
         this.eventAggregator = eventAggregator;
         this.groupWorker = groupWorker;
         this.showGroupings = false;
+
+        this.mainOptions = [
+            {
+                id: 1,
+                title: "Query builder"
+            },
+            {
+                id: 2,
+                title: "Grouping"
+            },
+            {
+                id: 3,
+                title: "Sorting"
+            }
+        ];
+
+        this.groupTemplate = populateTemplate(gridGroupTemplate, {
+            "__title__": "${title}",
+            "__aggregate__": "${aggregate.aggregate}",
+            "__value__": "${aggregate.value}"
+        });
+
+        console.log(this.groupTemplate);
     }
 
     attached() {
+        this.showQueryBuilderHandler = this.showQueryBuilder.bind(this);
+        this.showGroupingsViewHandler = this.showGroupingsView.bind(this);
+        this.showSortingHandler = this.showSorting.bind(this);
+
+        this.actions = new Map([
+            [1, this.showQueryBuilderHandler],
+            [2, this.showGroupingsViewHandler],
+            [3, this.showSortingHandler]
+        ]);
+
+        this.onGetDataHandler = this.onGetData.bind(this);
+        this.onGetDataEvent = this.eventAggregator.subscribe(`${this.cacheId}_${this.perspectiveId}`, this.onGetDataHandler);
     }
 
     detached() {
         this.recordsRetrievedEvent.dispose();
         this.recordsRetrievedHandler = null;
+
+        this.showQueryBuilderHandler = null;
+        this.showGroupingsViewHandler = null;
+        this.showSortingHandler = null;
+
+        this.onGetDataEvent.dispose();
+        this.onGetDataEvent = null;
+        this.onGetDataHandler = null;
+        this.currentPerspective = null;
     }
 
     cacheIdChanged() {
@@ -136,5 +208,73 @@ export class MasterListContainer {
      */
     back() {
         this.eventAggregator.publish(`${this.cacheId}_${this.perspectiveId}_back`);
+    }
+
+    /**
+     * Show query builder
+     */
+    showQueryBuilder() {
+        const rows = this.columnsManager.rowsHtml();
+        this.listTemplate = rows;
+        this.element.querySelector("#master-list").classList.add("grid-view");
+    }
+
+    /**
+     *  Show the grouping view
+     */
+    showGroupingsView() {
+        this.showGroupings = true;
+    }
+
+    /**
+     *  Show the sorting view
+     */
+    showSorting() {
+        console.log("show sorting");
+    }
+
+    /**
+     * Respond to request from main toolbar
+     */
+    mainOptionsIdChanged() {
+        if (this.mainOptionsId == -1) {
+            return;
+        }
+
+        const key = Number(this.mainOptionsId);
+
+        if (this.actions.has(key)) {
+            this.actions.get(key)();
+        }
+
+        this.mainOptionsId = -1;
+    }
+
+    /**
+     * perspective data was returned, update the display items
+     * @param args
+     */
+    onGetData(args) {
+        this.currentPerspective = args;
+
+        const result = [];
+
+        for (let group of args.items) {
+            result.push(group);
+            this.getRowsForPerspectiveGroupRecursive(group, result);
+        }
+
+        this.visibleItems = result;
+    }
+
+    getRowsForPerspectiveGroupRecursive(item, result) {
+        if (!item.isGroup) {
+            result.push(item);
+        }
+        else {
+            for(let item of item.items) {
+                this.getRowsForPerspectiveGroupRecursive(item, result);
+            }
+        }
     }
 }

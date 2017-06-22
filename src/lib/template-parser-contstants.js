@@ -71,6 +71,28 @@ export const listTemplate1 = `
 </template>
 `;
 
+export const gridRowTemplate = `
+<template>
+    <div class="grid-row">
+        __row-cells__
+    </div>
+</template>
+`;
+
+export const gridRowCellTemplate = `
+    <div data-column-index="__index__" class="row-cell">__field__</div>
+`;
+
+export const gridGroupTemplate = `
+<template>
+    <div class="container horizontal">
+        <h4>__title__</h4>
+        <div>__aggregate__</div>
+        <div>__value__</div>
+    </div>
+</template>
+`;
+
 export function populateTemplate(template, map) {
     let result = template;
     const keys = Object.keys(map);

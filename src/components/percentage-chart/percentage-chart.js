@@ -72,6 +72,7 @@ export class PercentageChart {
     detached()
     {
         this.onGetDataEvent.dispose();
+        this.onGetDataEvent = null;
         this.onGetDataHandler = null;
 
         this.onBackEvent.dispose();

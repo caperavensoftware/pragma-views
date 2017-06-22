@@ -13,6 +13,10 @@ export class Welcome {
         this.eventAggregator = eventAggregator;
     }
 
+    attached() {
+        this.eventAggregator.publish("show-assistant", false);
+    }
+
     assist() {
         const html = '<button click.delegate="sayHello()">Click Me</button>'
 

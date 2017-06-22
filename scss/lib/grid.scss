@@ -1,0 +1,38 @@
+.grid-row {
+  display: block;
+  white-space: nowrap;
+
+  compose, pragma-template {
+    display: block;
+  }
+}
+
+.row-cell {
+  --width: 100;
+
+  display: inline-block;
+  white-space: normal;
+  width: calc(var(--width) * 1px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-right: $default-padding;
+}
+
+.grid-group {
+  height: $default-padding;
+  margin: $default-padding $half-padding;
+  opacity: $suppressed-opacity;
+
+  .container {
+    align-items: center;
+
+    h4 {
+      margin: 0;
+      opacity: 1;
+    }
+
+    div {
+      margin-left: $default-padding;
+    }
+  }
+}

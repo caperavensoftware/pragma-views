@@ -1,6 +1,7 @@
 import {bindable, inject} from 'aurelia-framework';
 import {GroupWorker} from './../../lib/group-worker';
 import {listTemplate1, populateTemplate} from './../../lib/template-parser-contstants';
+import {ColumnsManager, Column} from './../../components/master-list-container/columns-template';
 
 @inject(Element, GroupWorker)
 export class MasterView {
@@ -13,6 +14,8 @@ export class MasterView {
 
     @bindable toolbarSelectedId;
     @bindable toolbarItems;
+
+    @bindable columnsManager;
 
     constructor(element, groupWorker) {
         this.groupingItems = orderGroupItems;
@@ -35,7 +38,16 @@ export class MasterView {
                 title: "Do Something",
                 iconName: null
             }
-        ]
+        ];
+
+        const columnItems = [
+            new Column("Code", "code", 100, 0),
+            new Column("Site", "site", 100, 1),
+            new Column("Name", "name", 100, 2),
+            new Column("Surname", "surname", 100, 3),
+            new Column("Section", "section", 100, 4)];
+
+        this.columnsManager = new ColumnsManager(columnItems);
     }
 
     attached() {

@@ -22,7 +22,9 @@ export function configure(aurelia) {
                 'components/pragma-dropdown-menu/pragma-dropdown-menu',
                 'components/pragma-template/pragma-template',
                 'components/group/group',
-                'components/sortable-list/sortable-list'
+                'components/sortable-list/sortable-list',
+                'components/pragma-list/pragma-list',
+                'components/pragma-form/pragma-form'
             )
             .plugin("aurelia-dialog");
 
