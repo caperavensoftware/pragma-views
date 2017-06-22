@@ -2,12 +2,14 @@ import {customElement, bindable, inject} from 'aurelia-framework';
 import {GroupWorker} from './../../lib/group-worker';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {arraysAreTheSame} from './../../lib/array-helpers';
+import {populateTemplate, gridGroupTemplate} from './../../lib/template-parser-contstants';
 
 @customElement('master-list-container')
 @inject(GroupWorker, EventAggregator, Element)
 export class MasterListContainer {
     element = null;
     groupedItems;
+    currentPerspective;
 
     /**
      * Items that are being displayed in the collection.
@@ -51,6 +53,11 @@ export class MasterListContainer {
      * This represents the html structure that will be used as the template for the items
      */
     @bindable listTemplate;
+
+    /**
+     * What does a aggregate group look like
+     */
+    @bindable groupTemplate;
 
     /**
      * This is a string value used to name the data cache this control has to work with
@@ -107,6 +114,14 @@ export class MasterListContainer {
                 title: "Sorting"
             }
         ];
+
+        this.groupTemplate = populateTemplate(gridGroupTemplate, {
+            "__title__": "${title}",
+            "__aggregate__": "${aggregate.aggregate}",
+            "__value__": "${aggregate.value}"
+        });
+
+        console.log(this.groupTemplate);
     }
 
     attached() {
@@ -119,6 +134,9 @@ export class MasterListContainer {
             [2, this.showGroupingsViewHandler],
             [3, this.showSortingHandler]
         ]);
+
+        this.onGetDataHandler = this.onGetData.bind(this);
+        this.onGetDataEvent = this.eventAggregator.subscribe(`${this.cacheId}_${this.perspectiveId}`, this.onGetDataHandler);
     }
 
     detached() {
@@ -128,6 +146,11 @@ export class MasterListContainer {
         this.showQueryBuilderHandler = null;
         this.showGroupingsViewHandler = null;
         this.showSortingHandler = null;
+
+        this.onGetDataEvent.dispose();
+        this.onGetDataEvent = null;
+        this.onGetDataHandler = null;
+        this.currentPerspective = null;
     }
 
     cacheIdChanged() {
@@ -225,5 +248,33 @@ export class MasterListContainer {
         }
 
         this.mainOptionsId = -1;
+    }
+
+    /**
+     * perspective data was returned, update the display items
+     * @param args
+     */
+    onGetData(args) {
+        this.currentPerspective = args;
+
+        const result = [];
+
+        for (let group of args.items) {
+            result.push(group);
+            this.getRowsForPerspectiveGroupRecursive(group, result);
+        }
+
+        this.visibleItems = result;
+    }
+
+    getRowsForPerspectiveGroupRecursive(item, result) {
+        if (!item.isGroup) {
+            result.push(item);
+        }
+        else {
+            for(let item of item.items) {
+                this.getRowsForPerspectiveGroupRecursive(item, result);
+            }
+        }
     }
 }

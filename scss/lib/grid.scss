@@ -17,3 +17,22 @@
   overflow: hidden;
   margin-right: $default-padding;
 }
+
+.grid-group {
+  height: $default-padding;
+  margin: $default-padding $half-padding;
+  opacity: $suppressed-opacity;
+
+  .container {
+    align-items: center;
+
+    h4 {
+      margin: 0;
+      opacity: 1;
+    }
+
+    div {
+      margin-left: $default-padding;
+    }
+  }
+}

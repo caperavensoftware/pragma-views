@@ -29,8 +29,8 @@
                 drilldown-items.two-way="drilldownItems"></percentage-chart>
 
         <ul selectable="selected-id.two-way: selectedId" id="master-list">
-            <li class="card li-styling" repeat.for="item of visibleItems" data-id="${item.id}">
-                <pragma-template html.bind="listTemplate" data-item.bind="item"></pragma-template>
+            <li class.bind="item.isGroup ? 'grid-group' : 'card li-styling'" repeat.for="item of visibleItems" data-id="${item.id}">
+                <pragma-template html.bind="item.isGroup ? groupTemplate : listTemplate" data-item.bind="item"></pragma-template>
             </li>
         </ul>
     </div>
